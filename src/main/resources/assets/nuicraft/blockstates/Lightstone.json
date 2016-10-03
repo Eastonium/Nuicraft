@@ -1,0 +1,40 @@
+{
+	"forge_marker": 1,
+    "defaults": {
+        "model": "nuicraft:obj/Lightstone.obj",
+		"custom": { "flip-v": true }
+    },
+    "variants": {
+        "facing=up": [{
+			"transform": {
+				"translation": [ 0, -0.25, 0 ]
+			}
+		}],
+        "facing=east": [{
+			"transform": {
+				"translation": [ -0.4, 0, 0 ],
+				"rotation": [{"z": -30}],
+				"post-rotation": [{"y": 90}]
+			}
+		}],
+        "facing=south": [{
+			"transform": {
+				"translation": [ 0, 0, -0.4 ],
+				"rotation": [{"x": 30}]
+			}
+		}],
+        "facing=west": [{
+			"transform": {
+				"translation": [ 0.4, 0, 0 ],
+				"rotation": [{"z": 30}],
+				"post-rotation": [{"y": 90}]
+			}
+		}],
+        "facing=north": [{
+			"transform": {
+				"translation": [ 0, 0, 0.4 ],
+				"rotation": [{"x": -30}]
+			}
+		}]
+    }
+}

@@ -1,0 +1,13 @@
+MataAkaku
+MataHau
+MataMiru
+MataPakari
+MataKaukau
+NuvaAkaku
+NuvaHau
+NuvaMiru
+NuvaPakari
+NuvaKaukau
+NuvaKakama
+Ignika
+Vahi

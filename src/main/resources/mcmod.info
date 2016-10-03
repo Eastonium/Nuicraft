@@ -1,0 +1,16 @@
+[
+{
+  "modid": "nuicraft",
+  "name": "NuiCraft",
+  "description": "The essence of the Bionicle Universe in Minecraft!",
+  "version": "V0.8.1.1",
+  "mcversion": "1.10.2",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["Eastonium147"],
+  "credits": "Eastonium147- Mod-Maker; DualM- Former Mod-Maker; TFGalvatron- Ideas/Textures; bijutdo- Textures; John_the_Late- Visionary Mastermind",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

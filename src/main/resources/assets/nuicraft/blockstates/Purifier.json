@@ -1,0 +1,55 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "nuicraft:obj/Purifier.obj",
+		"custom": { "flip-v": true }
+    },
+    "variants": {
+		"normal": [{}],
+		"inventory": [{
+			"transform": {
+				"gui": {
+					"rotation": [{"x": 30}, {"y": 225}],
+					"translation": [ 0.15, 0.15, 0],
+					"scale":[ 0.5, 0.5, 0.5 ]
+				},
+				"ground": {
+					"translation": [ -0.1, 0, 0 ],
+					"scale":[ 0.25, 0.25, 0.25 ]
+				},
+				"fixed": {
+					"translation": [ -0.2, 0.1, 0 ],
+					"scale":[ 0.5, 0.5, 0.5 ]
+				},
+				"thirdperson_righthand": {
+					"rotation": [{"x": 75}, {"y": 45}],
+					"translation": [ 0, 0, 0 ],
+					"scale": [ 0.375, 0.375, 0.375 ]
+				},
+				"thirdperson_lefthand": {
+					"rotation": [{"x": 75}, {"y": 225}],
+					"translation": [ 0, 0, 0 ],
+					"scale": [ 0.375, 0.375, 0.375 ]
+				},
+				"firstperson_righthand": {
+					"rotation": [{"y": 45}],
+					"translation": [ 0, 0, 0 ],
+					"scale": [ 0.50, 0.50, 0.50 ]
+				},
+				"firstperson_lefthand": {
+					"rotation": [{"y": 225}],
+					"translation": [ 0, 0, 0 ],
+					"scale": [ 0.50, 0.50, 0.50 ]
+				}			
+			}
+		}],
+		"facing=north,part=foot": [{}],
+        "facing=east,part=foot":  [{}],
+        "facing=south,part=foot": [{}],
+        "facing=west,part=foot":  [{}],
+        "facing=north,part=head": [{ "y": 90 }],
+        "facing=east,part=head":  [{ "y": 180 }],
+        "facing=south,part=head": [{ "y": 270 }],
+		"facing=west,part=head":  [{}]
+    }
+}

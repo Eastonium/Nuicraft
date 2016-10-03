@@ -1,0 +1,18 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "orientable",
+		"textures": {
+			"top": "nuicraft:blocks/MakutaStone",
+			"front": "nuicraft:blocks/MakutaStoneFace",
+			"side": "nuicraft:blocks/MakutaStone"
+		}
+	},
+    "variants": {
+		"inventory": [{}],
+		"facing=north": [{}],
+		"facing=south": { "y": 180 },
+		"facing=west": { "y": 270 },
+		"facing=east": { "y": 90 }
+    }
+}

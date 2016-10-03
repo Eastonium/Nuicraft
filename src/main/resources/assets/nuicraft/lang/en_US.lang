@@ -1,0 +1,97 @@
+itemGroup.bioBlockTab=NuiCraft Blocks
+itemGroup.bioMaterialTab=NuiCraft Materials
+itemGroup.bioWeaponTab=NuiCraft Tools
+itemGroup.bioMaskTab=NuiCraft Masks
+
+tile.fluid.protodermisEnergized.name=Energized Protodermis
+tile.fluid.protodermis.name=Liquid Protodermis
+tile.fluid.protodermisMolten.name=Molten Protodermis
+tile.fluid.protosteelMolten.name=Molten Protosteel
+tile.fluid.antidermis.name=Antidermis
+
+fluid.protodermisEnergized=Energized Protodermis
+fluid.protodermis=Liquid Protodermis
+fluid.protodermisMolten=Molten Protodermis
+fluid.protosteelMolten=Molten Protosteel
+fluid.antidermis=Antidermis
+
+tile.MaskForge.name=Mask Forge
+tile.Purifier.name=Purifier
+item.purifierItem.name=Purifier
+
+entity.nuicraft.Mahi.name=Mahi
+
+tile.KoroBlock_Onu_0.name=Onu-Koro Lightstone Lamp
+tile.KoroBlock_Onu_1.name=Smooth Onu-Koro Stone
+tile.KoroBlock_Onu_2.name=Onu-Koro Stone
+tile.KoroBlock_Po_1.name=Smooth Po-Koro Stone
+tile.KoroBlock_Po_2.name=Po-Koro Stone
+tile.KoroBlock_Ta_0.name=Ta-Koro Lava Light
+tile.KoroBlock_Ta_1.name=Smooth Ta-Koro Stone
+tile.KoroBlock_Ta_2.name=Ta-Koro Stone
+tile.KoroBlock_Ta_3.name=Ta-Koro Bricks
+tile.KoroBlock_Trdx_1.name=Large Infected Bricks
+tile.KoroBlock_Trdx_2.name=Infected Bricks
+tile.KoroBlock_Ko_1.name=Ko-Koro Ice Block
+tile.KoroBlock_Ko_2.name=Ko-Koro Ice Bricks
+tile.KoroBlock_Ga_1.name=Ga-Koro Smooth Seaweed
+tile.KoroBlock_Ga_2.name=Ga-Koro Smooth Seaweed
+tile.KoroBlock_Ga_3.name=Ga-Koro Rough Seaweed
+
+tile.NuvaCube.name=Nuva Cube
+tile.CrystalizedProtodermis.name=Crystalized Protodermis
+tile.MataNuiStone.name=Mata Nui Stone
+tile.MakutaStone.name=Makuta Stone
+tile.Lightstone.name=Lightstone
+tile.LightstoneOre.name=Lightstone Ore
+tile.HeatstoneOre.name=Heatstone Ore
+tile.ProtodermisOre.name=Protodermis Ore
+tile.Bamboo.name=Bamboo
+
+tile.BlockProtodermis.name=Protodermis Block
+tile.BlockProtosteel.name=Protosteel Block
+
+item.ingotProtodermis.name=Protodermis Ingot
+item.ingotProtosteel.name=Protosteel Ingot
+item.nuggetProtodermis.name=Protodermis Nugget
+item.nuggetProtosteel.name=Protosteel Nugget
+item.nuicraft.nuggetIron.name=Iron Nugget
+item.rawProtodermis.name=Raw Liquid Protodermis Blob
+item.Lightstone.name=Lightstones
+item.heatstone.name=Heatstone
+item.heatstoneLighter.name=Heatstone Lighter
+item.sluice.name=Sluice
+item.bambooStick.name=Bamboo Stick
+item.bambooItem.name=Bamboo
+item.KolhiiBall.name=Kolhii Ball
+
+item.discFlying.name=Flying Disc (You shouldn't have this)
+item.kanokaBamboo.name=Bamboo Disc
+item.kanokaTime.name=The Disc of Time
+
+item.discLauncher.name=Disc Launcher
+
+item.protoSword.name=Protodermis Sword
+item.protoPick.name=Protodermis Pickaxe
+item.protoAxe.name=Protodermis Hatchet
+item.protoShovel.name=Protodermis Shovel
+item.protoHoe.name=Protodermis Sythe
+
+item.maskMataGold.name=Golden Kanohi Mata
+
+item.maskMataKakama.name=Kanohi Kakama - Mask of Speed
+item.maskMataPakari.name=Kanohi Pakari - Mask of Strength
+item.maskMataKaukau.name=Kanohi Kaukau - Mask of Water Breathing
+item.maskMataMiru.name=Kanohi Miru - Mask of Levitation
+item.maskMataHau.name=Kanohi Hau - Mask of Shielding (WIP)
+item.maskMataAkaku.name=Kanohi Akaku - Mask of X-Ray Vision (WIP)
+
+item.maskNuvaKakama.name=Kanohi Nuva Kakama - Mask of Speed
+item.maskNuvaPakari.name=Kanohi Nuva Pakari - Mask of Strength
+item.maskNuvaKaukau.name=Kanohi Nuva Kaukau - Mask of Water Breathing
+item.maskNuvaMiru.name=Kanohi Nuva Miru - Mask of Levitation
+item.maskNuvaHau.name=Kanohi Nuva Hau - Mask of Shielding (WIP)
+item.maskNuvaAkaku.name=Kanohi Nuva Akaku - Mask of X-Ray Vision (WIP)
+
+item.maskIgnika.name=Kanohi Ignika - Legendary Mask of Life
+item.maskVahi.name=Kanohi Vahi - Legendary Mask of Time

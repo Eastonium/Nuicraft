@@ -1,0 +1,144 @@
+package eastonium.nuicraft.kanohi;
+
+import java.util.List;
+
+import eastonium.nuicraft.Bionicle;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class ItemColoredMask extends ItemMask {
+	public static final int DEFAULT_COLOR = 11324652;
+	public static final int WHITE_COLOR = 16777215;
+
+	public ItemColoredMask(boolean isShiny){
+		super(isShiny);
+	}
+
+	@Override
+	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String layer){
+		//TODO Golden/Silver/Copper masks with different texture
+		if(!this.hasColor(stack)){
+			return Bionicle.MODID + ":textures/models/masks/" + this.getUnlocalizedName().substring(9) + "_" + this.getMetal(stack) + ".png";
+		}
+		if(layer == null){
+			return Bionicle.MODID + ":textures/models/masks/" + this.getUnlocalizedName().substring(9) + ".png";
+		}
+		return Bionicle.MODID + ":textures/models/masks/blank.png";
+	}
+
+	@Override
+	public boolean hasOverlay(ItemStack stack){
+        return getColor(stack) >= 0;
+    }
+	
+	@Override
+	public boolean hasColor(ItemStack stack){
+		if(!stack.hasTagCompound()){
+			return false;
+		}
+		if(!stack.getTagCompound().hasKey("display", 10)){
+			return false;
+		}
+		return stack.getTagCompound().getCompoundTag("display").hasKey("color", 3);
+	}
+
+	@Override
+	public int getColor(ItemStack stack){
+		NBTTagCompound nbttagcompound = stack.getTagCompound();
+		if(nbttagcompound != null){
+			NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
+			if(nbttagcompound1 != null && nbttagcompound1.hasKey("color", 3)){
+				return nbttagcompound1.getInteger("color");
+			}
+		}
+		return DEFAULT_COLOR;
+	}
+
+	@Override
+	public void removeColor(ItemStack stack){
+		NBTTagCompound nbttagcompound = stack.getTagCompound();
+		if(nbttagcompound != null){
+			NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
+			if(nbttagcompound1.hasKey("color")){
+				nbttagcompound1.removeTag("color");
+			}
+		}
+	}
+
+	@Override
+	public void setColor(ItemStack stack, int color){
+		NBTTagCompound nbttagcompound = stack.getTagCompound();
+		if(nbttagcompound == null){
+			nbttagcompound = new NBTTagCompound();
+			stack.setTagCompound(nbttagcompound);
+		}
+		NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
+		if(!nbttagcompound.hasKey("display", 10)){
+			nbttagcompound.setTag("display", nbttagcompound1);
+		}
+		nbttagcompound1.setInteger("color", color);
+	}
+	
+	public byte getMetal(ItemStack stack){
+		NBTTagCompound nbttagcompound = stack.getTagCompound();
+		if(nbttagcompound != null){
+			NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
+			if(nbttagcompound1 != null && nbttagcompound1.hasKey("metal", 1)){
+				return nbttagcompound1.getByte("metal");
+			}
+		}
+		return (byte)0;
+		//return stack.getTagCompound().getCompoundTag("display").getByte("metal");
+	}
+	
+	public void removeMetal(ItemStack stack){
+		NBTTagCompound nbttagcompound = stack.getTagCompound();
+		if(nbttagcompound != null){
+			NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
+			if(nbttagcompound1.hasKey("metal")){
+				nbttagcompound1.removeTag("metal");
+			}
+		}
+	}
+	
+	public void setMetal(ItemStack stack, byte metal){
+		NBTTagCompound nbttagcompound = stack.getTagCompound();
+		if(nbttagcompound == null){
+			nbttagcompound = new NBTTagCompound();
+			stack.setTagCompound(nbttagcompound);
+		}
+		NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
+		if(!nbttagcompound.hasKey("display", 10)){
+			nbttagcompound.setTag("display", nbttagcompound1);
+		}
+		nbttagcompound1.setByte("metal", metal);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List list){
+		ItemStack itemstack = new ItemStack(item);
+		this.setMetal(itemstack, (byte)1);//Gold
+		list.add(itemstack);
+		
+		itemstack = itemstack.copy();//Silver
+		this.setMetal(itemstack, (byte)2);
+		list.add(itemstack);
+		
+		itemstack = itemstack.copy();//Bronze
+		this.setMetal(itemstack, (byte)3);
+		list.add(itemstack);
+		
+		itemstack = itemstack.copy();//Colorable
+		this.removeMetal(itemstack);
+		this.setColor(itemstack, DEFAULT_COLOR);
+		list.add(itemstack);
+	}
+}
