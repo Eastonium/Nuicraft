@@ -3,9 +3,8 @@ package eastonium.nuicraft.machine.maskForge;
 import java.util.List;
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
+import eastonium.nuicraft.NuiCraftBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -19,7 +18,6 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
@@ -30,9 +28,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -50,15 +46,11 @@ public class BlockMaskForge extends BlockContainer {
 	
 	public BlockMaskForge(){
 		super(Material.IRON);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(LEVEL, Integer.valueOf(0)));
-		this.setCreativeTab(Bionicle.bioBlockTab);
+        setDefaultState(blockState.getBaseState().withProperty(LEVEL, Integer.valueOf(0)));
+		setCreativeTab(NuiCraft.bio_block_tab);
+		setUnlocalizedName(NuiCraft.MODID + ".mask_forge");
+		setRegistryName("mask_forge");
 	}
-	
-	public Block setName(String name){
-        super.setUnlocalizedName(name);
-        this.setRegistryName(Bionicle.MODID, name);
-        return this;
-    }
 	
 	public void addCollisionBoxesToList(World worldIn, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity){
 		addCollisionBoxToList(pos, mask, list, AABB_LEGS);
@@ -73,7 +65,7 @@ public class BlockMaskForge extends BlockContainer {
         float f = (float)pos.getY() + (float)(i + 13) / 16.0F;
 
         if (i > 0 && entityIn.getEntityBoundingBox().minY <= (double)f && !entityIn.isImmuneToFire()){
-        	entityIn.attackEntityFrom(DamageSource.lava, 2.0F);
+        	entityIn.attackEntityFrom(DamageSource.LAVA, 2.0F);
             entityIn.setFire(7);
         }
     }
@@ -86,7 +78,7 @@ public class BlockMaskForge extends BlockContainer {
 
 	public static void updateLavaLevel(int level, World worldIn, BlockPos pos){
 		TileEntity tileentity = worldIn.getTileEntity(pos);
-		worldIn.setBlockState(pos, Bionicle.MaskForge.getDefaultState().withProperty(LEVEL, level));
+		worldIn.setBlockState(pos, NuiCraftBlocks.mask_forge.getDefaultState().withProperty(LEVEL, level));
 		if (tileentity != null){
             tileentity.validate();
             worldIn.setTileEntity(pos, tileentity);
@@ -112,10 +104,10 @@ public class BlockMaskForge extends BlockContainer {
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
 		if(worldIn.isRemote) return true;
 		ItemStack itemstack = playerIn.inventory.getCurrentItem();
-		if (itemstack != null && itemstack.getItem() == Items.LAVA_BUCKET){
+		if (!itemstack.isEmpty() && itemstack.getItem() == Items.LAVA_BUCKET){
 			int i = ((Integer)state.getValue(LEVEL)).intValue();
 			if (i < 4){				
 				TileEntity tileEntity = worldIn.getTileEntity(pos);
@@ -129,7 +121,7 @@ public class BlockMaskForge extends BlockContainer {
 			return true;
 		}
 		if(playerIn.isSneaking()) return true;
-		playerIn.openGui(Bionicle.modInstance, GuiHandlerMaskForge.getGuiID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+		playerIn.openGui(NuiCraft.modInstance, GuiHandlerMaskForge.getGuiID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
 

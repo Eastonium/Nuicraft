@@ -5,14 +5,14 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
+import eastonium.nuicraft.CommonProxyBionicle;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -64,10 +64,12 @@ public class BionicleFluidUtil {
 
 	private static <T extends Block & IFluidBlock> T registerFluidBlock(T block) {
 		String fluidName = "fluid." + block.getFluid().getName();
-		block.setRegistryName(Bionicle.MODID + "." + fluidName);
-		block.setUnlocalizedName(fluidName);
-		GameRegistry.register(block);
-		GameRegistry.register(new ItemBlock(block), block.getRegistryName());
+		block.setRegistryName(fluidName);
+		block.setUnlocalizedName(NuiCraft.MODID + "." + fluidName);
+//		CommonProxyBionicle.registerBlock(block); TODO 
+//		GameRegistry.register(block);
+//		CommonProxyBionicle.registerItem(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+//		GameRegistry.register(new ItemBlock(block), block.getRegistryName());
 		modFluidBlocks.add(block);
 		return block;
 	}

@@ -1,6 +1,6 @@
 package eastonium.nuicraft.particle;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class LighstoneFX extends Particle {
-	private final ResourceLocation particleRL = new ResourceLocation(Bionicle.MODID + ":particle/lightstoneParticle");
+	private final ResourceLocation particleRL = new ResourceLocation(NuiCraft.MODID + ":particle/lightstone_particle");
 
 	/**
 	 * Construct a new LightstoneFX at the given [x,y,z] position with the given initial velocity.
@@ -23,12 +23,12 @@ public class LighstoneFX extends Particle {
 		/*motionX = 0;
 		motionY = 0;
 		motionZ = 0;*/
-		motionX = (this.rand.nextFloat() - 0.5F) * 0.05F;
-		motionY = (this.rand.nextFloat() - 0.5F) * 0.05F;
-		motionZ = (this.rand.nextFloat() - 0.5F) * 0.05F;
+		motionX = (rand.nextFloat() - 0.5F) * 0.05F;
+		motionY = (rand.nextFloat() - 0.5F) * 0.05F;
+		motionZ = (rand.nextFloat() - 0.5F) * 0.05F;
 		
-        this.particleMaxAge = 50;//(int)(20.0D / (Math.random() * 0.8D + 0.2D));
-        this.particleScale *= this.rand.nextFloat() * 0.35F + 0.3F;
+        particleMaxAge = 50;//(int)(20.0D / (Math.random() * 0.8D + 0.2D));
+        particleScale *= rand.nextFloat() * 0.35F + 0.3F;
 
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(particleRL.toString());
 		setParticleTexture(sprite);
@@ -49,19 +49,19 @@ public class LighstoneFX extends Particle {
 		prevPosY = posY;
 		prevPosZ = posZ;
 
-		moveEntity(motionX, motionY, motionZ);
+		move(motionX, motionY, motionZ);
 		
 		motionX *= 0.95D;
 		motionY *= 0.95D;
 		motionZ *= 0.95D;
 		this.particleScale *= 0.99F;
 
-		if(isCollided){
-			this.setExpired();
-		}
+//		if(isCollided){
+//			this.setExpired();
+//		}
 
-		if(this.particleMaxAge-- <= 0){
-			this.setExpired();
+		if(particleMaxAge-- <= 0){
+			setExpired();
 		}
 	}
 }

@@ -2,9 +2,9 @@ package eastonium.nuicraft.blocks;
 
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
+import eastonium.nuicraft.NuiCraftBlocks;
+import eastonium.nuicraft.NuiCraftItems;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -26,18 +26,18 @@ public class BlockProtodermisDeposit extends BlockOre {
 	public static final PropertyInteger DROPS = PropertyInteger.create("drops", 0, 4);
 
 	public BlockProtodermisDeposit(){
-		super();
-		this.setDefaultState(this.blockState.getBaseState().withProperty(DROPS, 0));
+		super("protodermis_ore");
+		setDefaultState(blockState.getBaseState().withProperty(DROPS, 0));
 	}
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune){
-		return Bionicle.rawProtodermis;
+		return NuiCraftItems.raw_protodermis;
 	}
 
 	@Override
 	public int quantityDroppedWithBonus(int fortune, Random random){
-		return this.quantityDropped(random) + random.nextInt(fortune + 1);
+		return quantityDropped(random) + random.nextInt(fortune + 1);
 	}
 
 	@Override
@@ -46,15 +46,16 @@ public class BlockProtodermisDeposit extends BlockOre {
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ){
-		if(heldItem != null && heldItem.getItem() == Bionicle.sluice){
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
+		ItemStack heldItem = playerIn.getHeldItem(hand);
+		if(heldItem != null && heldItem.getItem() == NuiCraftItems.sluice){
 			if(worldIn.isRemote){
 				for (int i = 0; i < 5; ++i){
 					worldIn.spawnParticle(EnumParticleTypes.ITEM_CRACK, hitX + pos.getX(), hitY + pos.getY(), hitZ + pos.getZ(), 
 							((double)worldIn.rand.nextFloat() - 0.5D) * 0.2D, 
 	    					((double)worldIn.rand.nextFloat()) * 0.2D, 
 	    					((double)worldIn.rand.nextFloat() - 0.5D) * 0.2D,
-							new int[] {Item.getIdFromItem(Bionicle.rawProtodermis)});
+							new int[] {Item.getIdFromItem(NuiCraftItems.raw_protodermis)});
 				}
 			}else{
 				int drops = state.getValue(DROPS);
@@ -63,12 +64,12 @@ public class BlockProtodermisDeposit extends BlockOre {
 				double posX = (hitX < 1.0F && hitX > 0F) ? hitX : ((hitX - 0.5) * f) + 0.5;
 				double posY = (hitY < 1.0F && hitY > 0F) ? hitY : ((hitY - 0.5) * f) + 0.5;
 				double posZ = (hitZ < 1.0F && hitZ > 0F) ? hitZ : ((hitZ - 0.5) * f) + 0.5;
-				EntityItem entityitem = new EntityItem(worldIn, posX + pos.getX(), posY + pos.getY(), posZ + pos.getZ(), new ItemStack(Bionicle.rawProtodermis));
+				EntityItem entityitem = new EntityItem(worldIn, posX + pos.getX(), posY + pos.getY(), posZ + pos.getZ(), new ItemStack(NuiCraftItems.raw_protodermis));
 				float f3 = 0.06F;
 				entityitem.motionX = worldIn.rand.nextGaussian() * (double)f3;
 				entityitem.motionY = worldIn.rand.nextGaussian() * (double)f3 + 0.20000000298023224D;
 				entityitem.motionZ = worldIn.rand.nextGaussian() * (double)f3;
-				worldIn.spawnEntityInWorld(entityitem);
+				worldIn.spawnEntity(entityitem);
 
 				if(drops <= 0){
 					worldIn.setBlockState(pos, Blocks.STONE.getDefaultState());
@@ -83,21 +84,21 @@ public class BlockProtodermisDeposit extends BlockOre {
 
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state){
 		if(state.getValue(DROPS) == 0){
-			worldIn.setBlockState(pos, this.getDefaultState().withProperty(DROPS, 1 + worldIn.rand.nextInt(3)));
+			worldIn.setBlockState(pos, getDefaultState().withProperty(DROPS, 1 + worldIn.rand.nextInt(3)));
 		}
 	}
 
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer){
-		if(worldIn.isRemote) return this.getDefaultState();
+		if(worldIn.isRemote) return getDefaultState();
 		if(placer instanceof EntityPlayer && ((EntityPlayer)placer).capabilities.isCreativeMode){
-			return this.getDefaultState().withProperty(DROPS, 1 + worldIn.rand.nextInt(3));
+			return getDefaultState().withProperty(DROPS, 1 + worldIn.rand.nextInt(3));
 		}
-		return this.getDefaultState().withProperty(DROPS, 1);
+		return getDefaultState().withProperty(DROPS, 1);
 	}
 
 	@Override
 	public IBlockState getStateFromMeta(int meta){
-		return this.getDefaultState().withProperty(DROPS, meta);
+		return getDefaultState().withProperty(DROPS, meta);
 	}
 
 	@Override

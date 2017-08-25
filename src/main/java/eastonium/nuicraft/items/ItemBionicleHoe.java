@@ -1,6 +1,6 @@
 package eastonium.nuicraft.items;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,16 +15,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ItemBionicleHoe extends ItemHoe {
-	public ItemBionicleHoe(ToolMaterial par1){
+	public ItemBionicleHoe(String name, ToolMaterial par1){
 		super(par1);
-		this.setCreativeTab(Bionicle.bioToolTab);
+		setCreativeTab(NuiCraft.bio_tool_tab);
+		setUnlocalizedName(NuiCraft.MODID + "." + name);
+		setRegistryName(name);
 	}
-	
-	public Item setName(String name){
-        super.setUnlocalizedName(name);
-        this.setRegistryName(Bionicle.MODID, name);
-        return this;
-    }
 	
 	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase playerIn) {
@@ -48,14 +44,14 @@ public class ItemBionicleHoe extends ItemHoe {
 
     @Override
     public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer player, EntityLivingBase entity, EnumHand hand){
-        if (entity.worldObj.isRemote){
+        if (entity.world.isRemote){
             return false;
         }
         if (entity instanceof net.minecraftforge.common.IShearable){
             net.minecraftforge.common.IShearable target = (net.minecraftforge.common.IShearable)entity;
             BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
-            if (target.isShearable(itemstack, entity.worldObj, pos)){
-                java.util.List<ItemStack> drops = target.onSheared(itemstack, entity.worldObj, pos,
+            if (target.isShearable(itemstack, entity.world, pos)){
+                java.util.List<ItemStack> drops = target.onSheared(itemstack, entity.world, pos,
                         net.minecraft.enchantment.EnchantmentHelper.getEnchantmentLevel(net.minecraft.init.Enchantments.FORTUNE, itemstack));
                 java.util.Random rand = new java.util.Random();
                 for(ItemStack stack : drops){
@@ -73,14 +69,14 @@ public class ItemBionicleHoe extends ItemHoe {
 
     @Override
     public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, net.minecraft.entity.player.EntityPlayer player){
-        if (player.worldObj.isRemote || player.capabilities.isCreativeMode){
+        if (player.world.isRemote || player.capabilities.isCreativeMode){
             return false;
         }
-        Block block = player.worldObj.getBlockState(pos).getBlock();
+        Block block = player.world.getBlockState(pos).getBlock();
         if (block instanceof net.minecraftforge.common.IShearable){
             net.minecraftforge.common.IShearable target = (net.minecraftforge.common.IShearable)block;
-            if (target.isShearable(itemstack, player.worldObj, pos)){
-                java.util.List<ItemStack> drops = target.onSheared(itemstack, player.worldObj, pos,
+            if (target.isShearable(itemstack, player.world, pos)){
+                java.util.List<ItemStack> drops = target.onSheared(itemstack, player.world, pos,
                         net.minecraft.enchantment.EnchantmentHelper.getEnchantmentLevel(net.minecraft.init.Enchantments.FORTUNE, itemstack));
                 java.util.Random rand = new java.util.Random();
 
@@ -89,9 +85,9 @@ public class ItemBionicleHoe extends ItemHoe {
                     double d  = (double)(rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
                     double d1 = (double)(rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
                     double d2 = (double)(rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-                    net.minecraft.entity.item.EntityItem entityitem = new net.minecraft.entity.item.EntityItem(player.worldObj, (double)pos.getX() + d, (double)pos.getY() + d1, (double)pos.getZ() + d2, stack);
+                    net.minecraft.entity.item.EntityItem entityitem = new net.minecraft.entity.item.EntityItem(player.world, (double)pos.getX() + d, (double)pos.getY() + d1, (double)pos.getZ() + d2, stack);
                     entityitem.setDefaultPickupDelay();
-                    player.worldObj.spawnEntityInWorld(entityitem);
+                    player.world.spawnEntity(entityitem);
                 }
                 itemstack.damageItem(1, player);
                 player.addStat(net.minecraft.stats.StatList.getBlockStats(block));

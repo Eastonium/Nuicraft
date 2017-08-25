@@ -1,6 +1,6 @@
 package eastonium.nuicraft.blocks;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -9,16 +9,12 @@ import net.minecraft.item.Item;
 import net.minecraft.util.EnumBlockRenderType;
 
 public class BlockNuvaCube extends Block {	
-    public BlockNuvaCube(){
+    public BlockNuvaCube() {
         super(Material.ROCK);
-        this.setSoundType(SoundType.STONE);
-        this.setCreativeTab(Bionicle.bioBlockTab);
-    }
-    
-    public Block setName(String name){
-        super.setUnlocalizedName(name);
-        this.setRegistryName(Bionicle.MODID, name);
-        return this;
+        setSoundType(SoundType.STONE);
+        setCreativeTab(NuiCraft.bio_block_tab);
+        setUnlocalizedName(NuiCraft.MODID + ".nuva_cube");
+        setRegistryName("nuva_cube");
     }
 
     /*public static boolean isEnderEyeInserted(int var0){

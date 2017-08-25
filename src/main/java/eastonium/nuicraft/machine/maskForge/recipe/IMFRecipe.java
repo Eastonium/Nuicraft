@@ -1,12 +1,13 @@
 package eastonium.nuicraft.machine.maskForge.recipe;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 public interface IMFRecipe {
 	
-	boolean matches(ItemStack[] inputStacks);
+	boolean matches(NonNullList<ItemStack> inputStacks);
 	
 	ItemStack getOutput();
 	
-	ItemStack[] getRemainingItems();
+	NonNullList<ItemStack> getRemainingItems();
 }

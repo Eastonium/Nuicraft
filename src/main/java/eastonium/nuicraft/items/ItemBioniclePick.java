@@ -1,18 +1,14 @@
 package eastonium.nuicraft.items;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 
 public class ItemBioniclePick extends ItemPickaxe {
-	public ItemBioniclePick(ToolMaterial par1){
+	public ItemBioniclePick(String name, ToolMaterial par1){
 		super(par1);
-		this.setCreativeTab(Bionicle.bioToolTab);
+		setCreativeTab(NuiCraft.bio_tool_tab);
+		setUnlocalizedName(NuiCraft.MODID + "." + name);
+		setRegistryName(name);
 	}
-	
-	public Item setName(String name){
-        super.setUnlocalizedName(name);
-        this.setRegistryName(Bionicle.MODID, name);
-        return this;
-    }
 }

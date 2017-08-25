@@ -1,19 +1,15 @@
 package eastonium.nuicraft.items;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
 import net.minecraft.item.Item;
 
 public class ItemSluice extends Item {	
 	
 	public ItemSluice(){
-		this.maxStackSize = 1;
-		this.setCreativeTab(Bionicle.bioToolTab);
+		maxStackSize = 1;
+		setCreativeTab(NuiCraft.bio_tool_tab);
+		setUnlocalizedName(NuiCraft.MODID + ".sluice");
+		setRegistryName("sluice");
 	}
-	
-	public Item setName(String name){
-        super.setUnlocalizedName(name);
-        this.setRegistryName(Bionicle.MODID, name);
-        return this;
-    }
 }
 

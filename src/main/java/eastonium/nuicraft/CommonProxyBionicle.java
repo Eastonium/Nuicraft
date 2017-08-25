@@ -1,210 +1,83 @@
 package eastonium.nuicraft;
 
+import eastonium.nuicraft.blocks.BlockBamboo;
+import eastonium.nuicraft.blocks.BlockBionicleStone;
+import eastonium.nuicraft.blocks.BlockKoro;
+import eastonium.nuicraft.blocks.BlockLightstone;
+import eastonium.nuicraft.blocks.BlockMetal;
+import eastonium.nuicraft.blocks.BlockNuvaCube;
+import eastonium.nuicraft.blocks.BlockOre;
+import eastonium.nuicraft.blocks.BlockProtodermisDeposit;
 import eastonium.nuicraft.fluid.BionicleFluidUtil;
+import eastonium.nuicraft.items.ItemBionicleAxe;
+import eastonium.nuicraft.items.ItemBionicleHoe;
+import eastonium.nuicraft.items.ItemBioniclePick;
+import eastonium.nuicraft.items.ItemBionicleShovel;
+import eastonium.nuicraft.items.ItemBionicleSword;
 import eastonium.nuicraft.items.ItemBlockKoro;
-import eastonium.nuicraft.kanohi.RecipeColoredMaskDyes;
+import eastonium.nuicraft.items.ItemHeatstoneLighter;
+import eastonium.nuicraft.items.ItemNormal;
+import eastonium.nuicraft.items.ItemSluice;
+import eastonium.nuicraft.kanohi.ItemColoredMask;
+import eastonium.nuicraft.kanohi.ItemGoldMataMask;
+import eastonium.nuicraft.kanohi.ItemMask;
+import eastonium.nuicraft.kanohi.ItemMaskMeta;
 import eastonium.nuicraft.kanoka.EntityDisc;
+import eastonium.nuicraft.kanoka.ItemBambooDisc;
+import eastonium.nuicraft.kanoka.ItemDiscLauncher;
+import eastonium.nuicraft.kanoka.ItemKanokaDisc;
+import eastonium.nuicraft.machine.maskForge.BlockMaskForge;
 import eastonium.nuicraft.machine.maskForge.GuiHandlerMaskForge;
 import eastonium.nuicraft.machine.maskForge.TileInventoryMaskForge;
+import eastonium.nuicraft.machine.purifier.BlockPurifier;
 import eastonium.nuicraft.machine.purifier.GuiHandlerPurifier;
+import eastonium.nuicraft.machine.purifier.ItemPurifier;
 import eastonium.nuicraft.machine.purifier.TileInventoryPurifier;
 import eastonium.nuicraft.mobs.mahi.EntityMahi;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
+@Mod.EventBusSubscriber
 public class CommonProxyBionicle 
 {
 	public void preInit(){
-		NetworkRegistry.INSTANCE.registerGuiHandler(Bionicle.modInstance, GuiHandler.getInstance());
+		NetworkRegistry.INSTANCE.registerGuiHandler(NuiCraft.modInstance, GuiHandler.getInstance());
 		
-		registerFluidModels();
-
-		registerBlock(Bionicle.MaskForge);
 		GameRegistry.registerTileEntity(TileInventoryMaskForge.class, "tileEntityMaskForge");
 		GuiHandler.getInstance().registerGuiHandler(new GuiHandlerMaskForge(), GuiHandlerMaskForge.getGuiID());
 		
-		registerBlock(Bionicle.Purifier);
 		GameRegistry.registerTileEntity(TileInventoryPurifier.class, "tileEntityPurifier");
 		GuiHandler.getInstance().registerGuiHandler(new GuiHandlerPurifier(), GuiHandlerPurifier.getGuiID());
-		registerItem(Bionicle.purifierItem);
-		
-		GameRegistry.register(Bionicle.StoneKoroBlock);
-		GameRegistry.register(new ItemBlockKoro(Bionicle.StoneKoroBlock), Bionicle.StoneKoroBlock.getRegistryName());
-		GameRegistry.register(Bionicle.LitKoroBlock);
-		GameRegistry.register(new ItemBlockKoro(Bionicle.LitKoroBlock), Bionicle.LitKoroBlock.getRegistryName());
-		GameRegistry.register(Bionicle.IceKoroBlock);
-		GameRegistry.register(new ItemBlockKoro(Bionicle.IceKoroBlock), Bionicle.IceKoroBlock.getRegistryName());
-		GameRegistry.register(Bionicle.LeafyKoroBlock);
-		GameRegistry.register(new ItemBlockKoro(Bionicle.LeafyKoroBlock), Bionicle.LeafyKoroBlock.getRegistryName());
-				
-		registerBlock(Bionicle.NuvaCube);
-		//registerBlock(Bionicle.Seal);//Crystalized protodermis
-		registerBlock(Bionicle.MataNuiStone);
-		registerBlock(Bionicle.MakutaStone);
-		registerBlock(Bionicle.Lightstone);
-		registerBlock(Bionicle.LightstoneOre);
-		registerBlock(Bionicle.HeatstoneOre);
-		registerBlock(Bionicle.ProtodermisOre);
-		
-		registerBlock(Bionicle.Bamboo);
-		
-		registerBlock(Bionicle.BlockProtodermis);
-		registerBlock(Bionicle.BlockProtosteel);
-		
-		registerItem(Bionicle.ingotProtodermis);
-		registerItem(Bionicle.ingotProtosteel);
-		registerItem(Bionicle.nuggetProtodermis);
-		registerItem(Bionicle.nuggetProtosteel);
-		registerItem(Bionicle.nuggetIron);
-		//registerItem(Bionicle.rodProtodermis);
-		//registerItem(Bionicle.rodProtosteel);
-		registerItem(Bionicle.rawProtodermis);
-		registerItem(Bionicle.rawHeatstone);
-		registerItem(Bionicle.bambooStick);		
-		
-	    registerItem(Bionicle.discLauncher);
-	    registerItem(Bionicle.swordProtodermis);
 	    
-	    registerItem(Bionicle.pickProtodermis);	    
-	    registerItem(Bionicle.hatchetProtodermis);	    
-	    registerItem(Bionicle.shovelProtodermis);	    
-	    registerItem(Bionicle.sytheProtodermis);
-		registerItem(Bionicle.heatstoneLighter);
-		registerItem(Bionicle.sluice);
-		
-		registerItem(Bionicle.kanokaFlying);
-		registerItem(Bionicle.kanokaDisc);
-		registerItem(Bionicle.bambooDisc);
-		registerItem(Bionicle.kanokaTime);		
-
-		registerItem(Bionicle.maskMataGold);
-		
-		registerItem(Bionicle.maskMataKakama);
-	    registerItem(Bionicle.maskMataPakari);	    
-	    registerItem(Bionicle.maskMataKaukau);
-	    registerItem(Bionicle.maskMataMiru);	    
-	    registerItem(Bionicle.maskMataHau);	    
-	    registerItem(Bionicle.maskMataAkaku);
-	    
-	    registerItem(Bionicle.maskNuvaKakama);	    
-	    registerItem(Bionicle.maskNuvaPakari);
-	    registerItem(Bionicle.maskNuvaKaukau);
-	    registerItem(Bionicle.maskNuvaMiru);
-	    registerItem(Bionicle.maskNuvaHau);
-	    registerItem(Bionicle.maskNuvaAkaku);	    
-	    
-	    registerItem(Bionicle.maskIgnika);	    
-	    registerItem(Bionicle.maskVahi);
-		
-		OreDictionary.registerOre("gemLightstone", Bionicle.Lightstone);
-		OreDictionary.registerOre("oreLightstone", Bionicle.LightstoneOre);
-		OreDictionary.registerOre("oreHeatstone", Bionicle.HeatstoneOre);
-		OreDictionary.registerOre("oreProtodermis", Bionicle.ProtodermisOre);
-		
-	    OreDictionary.registerOre("cropBamboo", Bionicle.Bamboo);
-		
-		OreDictionary.registerOre("blockProtodermis", Bionicle.BlockProtodermis);
-		OreDictionary.registerOre("blockProtosteel", Bionicle.BlockProtosteel);		
-		OreDictionary.registerOre("ingotProtodermis", Bionicle.ingotProtodermis);
-	    OreDictionary.registerOre("ingotProtosteel", Bionicle.ingotProtosteel);
-	    OreDictionary.registerOre("nuggetProtodermis", Bionicle.nuggetProtodermis);
-	    OreDictionary.registerOre("nuggetProtosteel", Bionicle.nuggetProtosteel);
-	    OreDictionary.registerOre("nuggetIron", Bionicle.nuggetIron);
-	    //OreDictionary.registerOre("stickProtodermis", Bionicle.rodProtodermis);
-	    //OreDictionary.registerOre("stickProtosteel", Bionicle.rodProtosteel);
-	    
-		OreDictionary.registerOre("gemHeatstone", Bionicle.rawHeatstone);
-	    OreDictionary.registerOre("stickBamboo", Bionicle.bambooStick);
-	    
-	    EntityRegistry.registerModEntity(EntityDisc.class, "Kanoka_Disc", 1, Bionicle.modInstance, 64, 10, true);
+	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "entityKanokaDisk"), EntityDisc.class, "Kanoka_Disc", 1, NuiCraft.modInstance, 64, 10, true);
 	    //TODO Bamboo disc here
-	    EntityRegistry.registerModEntity(EntityMahi.class, "Mahi", 3, Bionicle.modInstance, 64, 1, true, 0xE6C381, 0xD1322B);
-
+	    
+	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "entityMahi"), EntityMahi.class, "Mahi", 3, NuiCraft.modInstance, 64, 1, true, 0xE6C381, 0xD1322B);
 		EntityRegistry.addSpawn(EntityMahi.class, 15, 2, 5, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.PLAINS, Biomes.MUTATED_PLAINS, Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU);
-	    
-	    CraftingManager.getInstance().addRecipe(new RecipeColoredMaskDyes());
-
-//Smelting Recipes
-	    GameRegistry.addSmelting(Bionicle.ProtodermisOre, new ItemStack(Bionicle.rawProtodermis, 2), 0.7F);
-	    GameRegistry.addSmelting(Bionicle.rawProtodermis, new ItemStack(Bionicle.ingotProtodermis, 1), 0.7F);
-	    //GameRegistry.addSmelting(Bionicle.heatstoneLighter, new ItemStack(Bionicle.heatstoneLighter), 0.3F);
-	    
-	    GameRegistry.addSmelting(new ItemStack(Bionicle.StoneKoroBlock, 1, 1), new ItemStack(Bionicle.StoneKoroBlock, 1, 0), 0.2F);
-	    GameRegistry.addSmelting(Blocks.SANDSTONE, new ItemStack(Bionicle.StoneKoroBlock, 1, 3), 0.2F);
-	    GameRegistry.addSmelting(new ItemStack(Bionicle.StoneKoroBlock, 1, 3), new ItemStack(Bionicle.StoneKoroBlock, 1, 2), 0.2F);
-	    GameRegistry.addSmelting(new ItemStack(Bionicle.StoneKoroBlock, 1, 5), new ItemStack(Bionicle.StoneKoroBlock, 1, 4), 0.2F);
-//Shaped Crafting Recipes
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.MaskForge, 1), new Object[] {"#X#", "#W#", "# #", '#', Bionicle.ingotProtodermis, 'X', Items.CAULDRON, 'W', Blocks.FURNACE});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.purifierItem, 1), new Object[] {"BIC", "III", 'B', Items.BUCKET, 'I', Bionicle.ingotProtodermis, 'C', Items.CAULDRON});
-	    
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 4, 1), new Object[]{"X#", "#X", '#', Blocks.COBBLESTONE, 'X', Blocks.STAINED_HARDENED_CLAY});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 4, 1), new Object[]{"#X", "X#", '#', Blocks.COBBLESTONE, 'X', Blocks.STAINED_HARDENED_CLAY});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.LitKoroBlock, 1), new Object[]{ "X", "#", 'X', new ItemStack(Bionicle.StoneKoroBlock, 1, 1), '#', Bionicle.Lightstone});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.LitKoroBlock, 1), new Object[]{ "#", "X", 'X', new ItemStack(Bionicle.StoneKoroBlock, 1, 1), '#', Bionicle.Lightstone});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 4, 5), new Object[]{ " X ", "X#X", " X ", 'X', Blocks.COBBLESTONE, '#', Items.COAL});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 4, 6), new Object[]{ "XX", "XX", 'X', new ItemStack(Bionicle.StoneKoroBlock, 1, 5)});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.LitKoroBlock, 4, 1), new Object[]{ " X ", "X#X", " X ", 'X', new ItemStack(Bionicle.StoneKoroBlock, 1, 5), '#', Items.LAVA_BUCKET});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 4, 8), new Object[]{ " X ", "X#X", " X ", 'X', Blocks.NETHER_BRICK, '#', Items.ROTTEN_FLESH});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 1, 7), new Object[]{"X", 'X', new ItemStack(Bionicle.StoneKoroBlock, 1, 8)});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 1, 8), new Object[]{"X", 'X', new ItemStack(Bionicle.StoneKoroBlock, 1, 7)});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.IceKoroBlock, 4, 0), new Object[]{ "XX", "XX", 'X', Blocks.ICE});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.IceKoroBlock, 4, 0), new Object[]{ "XX", "XX", 'X', Blocks.PACKED_ICE});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.IceKoroBlock, 4, 1), new Object[]{ "XX", "XX", 'X', new ItemStack(Bionicle.IceKoroBlock, 1, 0)});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.LeafyKoroBlock, 2, 0), new Object[]{ "XX", "XX", 'X', Blocks.LEAVES});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.LeafyKoroBlock, 4, 1), new Object[]{ " X ", "X#X", " X ", 'X', new ItemStack(Bionicle.LeafyKoroBlock, 1, 0), '#', Items.WATER_BUCKET});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.LeafyKoroBlock, 2, 2), new Object[]{ "XX", "XX", 'X', Blocks.VINE});
-	    
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.MataNuiStone, 4), new Object[] { "X#", "#X", 'X', Blocks.STONE, '#', Blocks.SANDSTONE});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.MataNuiStone, 4), new Object[] { "#X", "X#", 'X', Blocks.STONE, '#', Blocks.SANDSTONE});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.MakutaStone, 4), new Object[] { "X#", "#X", 'X', Blocks.OBSIDIAN, '#', Blocks.NETHER_BRICK});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.MakutaStone, 4), new Object[] { "#X", "X#", 'X', Blocks.OBSIDIAN, '#', Blocks.NETHER_BRICK});
-	    	    
-	    GameRegistry.addShapelessRecipe(new ItemStack(Bionicle.ingotProtodermis, 9), Bionicle.BlockProtodermis);
-	    GameRegistry.addShapelessRecipe(new ItemStack(Bionicle.ingotProtosteel, 9), Bionicle.BlockProtosteel);
-	    GameRegistry.addShapelessRecipe(new ItemStack(Bionicle.nuggetProtodermis, 9), Bionicle.ingotProtodermis);
-	    GameRegistry.addShapelessRecipe(new ItemStack(Bionicle.nuggetProtosteel, 9), Bionicle.ingotProtosteel);
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.BlockProtodermis, 1), new Object[] { "XXX", "XXX", "XXX", 'X', Bionicle.ingotProtodermis});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.BlockProtosteel, 1), new Object[] { "XXX", "XXX", "XXX", 'X', Bionicle.ingotProtosteel});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.ingotProtodermis, 1), new Object[] { "XXX", "XXX", "XXX", 'X', Bionicle.nuggetProtodermis});
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.ingotProtosteel, 1), new Object[] { "XXX", "XXX", "XXX", 'X', Bionicle.nuggetProtosteel});
-
-	    GameRegistry.addRecipe(new ShapedOreRecipe(Items.IRON_INGOT, new Object[] { "XXX", "XXX", "XXX", 'X', "nuggetIron"}));
-	    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Bionicle.nuggetIron, 9), new Object[] { "X", 'X', "ingotIron"}));
-	    
-	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.bambooStick, 1), new Object[] {"#", "#", "#", '#', Bionicle.Bamboo});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.bambooDisc, 2), new Object[] {"###", '#', Bionicle.Bamboo});
-        
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.heatstoneLighter, 1, 128), new Object[] { "X#X", " X ", 'X', Items.IRON_INGOT, '#', Bionicle.rawHeatstone});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.discLauncher, 1), new Object[] {"# #", " # ", " # ", '#', Items.IRON_INGOT});
-        GameRegistry.addRecipe(new ShapedOreRecipe(Bionicle.sluice, new Object[] {"I", "N", "N", 'I', "ingotIron", 'N', "nuggetIron"}));
-        
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.swordProtodermis, 1), new Object[] {"#", "#", "X", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.pickProtodermis, 1), new Object[] {"###", " X ", " X ", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.hatchetProtodermis, 1), new Object[] {"##", "#X", " X", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.hatchetProtodermis, 1), new Object[] {"##", "X#", "X ", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.shovelProtodermis, 1), new Object[] {"#", "X", "X", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.sytheProtodermis, 1), new Object[] {" ##", "#  ", " X ", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
-        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.sytheProtodermis, 1), new Object[] {"## ", "  #", " X ", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
+		
+		registerFluidModels();
 	}
 	
 	private void registerFluidModels() {
@@ -214,7 +87,7 @@ public class CommonProxyBionicle
 	private void registerFluidModel(IFluidBlock fluidBlock) {
 		Item item = Item.REGISTRY.getObject(((Block)fluidBlock).getRegistryName());
 		ModelBakery.registerItemVariants(item);
-		ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Bionicle.MODID + ":fluid", fluidBlock.getFluid().getName());
+		ModelResourceLocation modelResourceLocation = new ModelResourceLocation(NuiCraft.MODID + ":fluid", fluidBlock.getFluid().getName());
 		ModelLoader.setCustomMeshDefinition(item, MeshDefinitionFix.create(stack -> modelResourceLocation));
 		ModelLoader.setCustomStateMapper((Block) fluidBlock, new StateMapperBase() {
 			@Override
@@ -223,22 +96,208 @@ public class CommonProxyBionicle
 			}
 		});
 	}
-	
-	private static void registerBlock(Block block){
-		GameRegistry.register(block);
-		GameRegistry.register(new ItemBlock(block), block.getRegistryName());
-	}
-	
-	private static void registerItem(Item item){
-		GameRegistry.register(item);
-	}
 
 	public ModelBiped getArmorModel(int id){
 		return null;
 	}
 	
 	public void init(){
+	    //TODO CraftingManager.addRecipe(new RecipeColoredMaskDyes());
+
+		//Smelting Recipes
+	    GameRegistry.addSmelting(NuiCraftBlocks.protodermis_ore, new ItemStack(NuiCraftItems.raw_protodermis, 2), 0.7F);
+	    GameRegistry.addSmelting(NuiCraftItems.raw_protodermis, new ItemStack(NuiCraftItems.ingot_protodermis, 1), 0.7F);
+	    //GameRegistry.addSmelting(Bionicle.heatstoneLighter, new ItemStack(Bionicle.heatstoneLighter), 0.3F);
+	    
+	    GameRegistry.addSmelting(new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 1), new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 0), 0.2F);
+	    GameRegistry.addSmelting(Blocks.SANDSTONE, new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 3), 0.2F);
+	    GameRegistry.addSmelting(new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 3), new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 2), 0.2F);
+	    GameRegistry.addSmelting(new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 5), new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 4), 0.2F);
+	    
+//Shaped Crafting Recipes
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.MaskForge, 1), new Object[] {"#X#", "#W#", "# #", '#', Bionicle.ingotProtodermis, 'X', Items.CAULDRON, 'W', Blocks.FURNACE});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.purifierItem, 1), new Object[] {"BIC", "III", 'B', Items.BUCKET, 'I', Bionicle.ingotProtodermis, 'C', Items.CAULDRON});
+//	    
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 4, 1), new Object[]{"X#", "#X", '#', Blocks.COBBLESTONE, 'X', Blocks.STAINED_HARDENED_CLAY});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 4, 1), new Object[]{"#X", "X#", '#', Blocks.COBBLESTONE, 'X', Blocks.STAINED_HARDENED_CLAY});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.LitKoroBlock, 1), new Object[]{ "X", "#", 'X', new ItemStack(Bionicle.StoneKoroBlock, 1, 1), '#', Bionicle.Lightstone});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.LitKoroBlock, 1), new Object[]{ "#", "X", 'X', new ItemStack(Bionicle.StoneKoroBlock, 1, 1), '#', Bionicle.Lightstone});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 4, 5), new Object[]{ " X ", "X#X", " X ", 'X', Blocks.COBBLESTONE, '#', Items.COAL});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 4, 6), new Object[]{ "XX", "XX", 'X', new ItemStack(Bionicle.StoneKoroBlock, 1, 5)});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.LitKoroBlock, 4, 1), new Object[]{ " X ", "X#X", " X ", 'X', new ItemStack(Bionicle.StoneKoroBlock, 1, 5), '#', Items.LAVA_BUCKET});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 4, 8), new Object[]{ " X ", "X#X", " X ", 'X', Blocks.NETHER_BRICK, '#', Items.ROTTEN_FLESH});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 1, 7), new Object[]{"X", 'X', new ItemStack(Bionicle.StoneKoroBlock, 1, 8)});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.StoneKoroBlock, 1, 8), new Object[]{"X", 'X', new ItemStack(Bionicle.StoneKoroBlock, 1, 7)});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.IceKoroBlock, 4, 0), new Object[]{ "XX", "XX", 'X', Blocks.ICE});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.IceKoroBlock, 4, 0), new Object[]{ "XX", "XX", 'X', Blocks.PACKED_ICE});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.IceKoroBlock, 4, 1), new Object[]{ "XX", "XX", 'X', new ItemStack(Bionicle.IceKoroBlock, 1, 0)});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.LeafyKoroBlock, 2, 0), new Object[]{ "XX", "XX", 'X', Blocks.LEAVES});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.LeafyKoroBlock, 4, 1), new Object[]{ " X ", "X#X", " X ", 'X', new ItemStack(Bionicle.LeafyKoroBlock, 1, 0), '#', Items.WATER_BUCKET});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.LeafyKoroBlock, 2, 2), new Object[]{ "XX", "XX", 'X', Blocks.VINE});
+//	    
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.MataNuiStone, 4), new Object[] { "X#", "#X", 'X', Blocks.STONE, '#', Blocks.SANDSTONE});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.MataNuiStone, 4), new Object[] { "#X", "X#", 'X', Blocks.STONE, '#', Blocks.SANDSTONE});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.MakutaStone, 4), new Object[] { "X#", "#X", 'X', Blocks.OBSIDIAN, '#', Blocks.NETHER_BRICK});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.MakutaStone, 4), new Object[] { "#X", "X#", 'X', Blocks.OBSIDIAN, '#', Blocks.NETHER_BRICK});
+//	    	    
+//	    GameRegistry.addShapelessRecipe(new ItemStack(Bionicle.ingotProtodermis, 9), Bionicle.BlockProtodermis);
+//	    GameRegistry.addShapelessRecipe(new ItemStack(Bionicle.ingotProtosteel, 9), Bionicle.BlockProtosteel);
+//	    GameRegistry.addShapelessRecipe(new ItemStack(Bionicle.nuggetProtodermis, 9), Bionicle.ingotProtodermis);
+//	    GameRegistry.addShapelessRecipe(new ItemStack(Bionicle.nuggetProtosteel, 9), Bionicle.ingotProtosteel);
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.BlockProtodermis, 1), new Object[] { "XXX", "XXX", "XXX", 'X', Bionicle.ingotProtodermis});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.BlockProtosteel, 1), new Object[] { "XXX", "XXX", "XXX", 'X', Bionicle.ingotProtosteel});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.ingotProtodermis, 1), new Object[] { "XXX", "XXX", "XXX", 'X', Bionicle.nuggetProtodermis});
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.ingotProtosteel, 1), new Object[] { "XXX", "XXX", "XXX", 'X', Bionicle.nuggetProtosteel});
+//
+//	    GameRegistry.addRecipe(new ShapedOreRecipe(Items.IRON_INGOT, new Object[] { "XXX", "XXX", "XXX", 'X', "nuggetIron"}));
+//	    GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Bionicle.nuggetIron, 9), new Object[] { "X", 'X', "ingotIron"}));
+//	    
+//	    GameRegistry.addShapedRecipe(new ItemStack(Bionicle.bambooStick, 1), new Object[] {"#", "#", "#", '#', Bionicle.Bamboo});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.bambooDisc, 2), new Object[] {"###", '#', Bionicle.Bamboo});
+//        
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.heatstoneLighter, 1, 128), new Object[] { "X#X", " X ", 'X', Items.IRON_INGOT, '#', Bionicle.rawHeatstone});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.discLauncher, 1), new Object[] {"# #", " # ", " # ", '#', Items.IRON_INGOT});
+//        GameRegistry.addRecipe(new ShapedOreRecipe(Bionicle.sluice, new Object[] {"I", "N", "N", 'I', "ingotIron", 'N', "nuggetIron"}));
+//        
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.swordProtodermis, 1), new Object[] {"#", "#", "X", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.pickProtodermis, 1), new Object[] {"###", " X ", " X ", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.hatchetProtodermis, 1), new Object[] {"##", "#X", " X", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.hatchetProtodermis, 1), new Object[] {"##", "X#", "X ", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.shovelProtodermis, 1), new Object[] {"#", "X", "X", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.sytheProtodermis, 1), new Object[] {" ##", "#  ", " X ", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
+//        GameRegistry.addShapedRecipe(new ItemStack(Bionicle.sytheProtodermis, 1), new Object[] {"## ", "  #", " X ", '#', Bionicle.ingotProtodermis, 'X', Bionicle.bambooStick});
 		
+		//TODO Find where these are supposed to actually go
+		OreDictionary.registerOre("gemLightstone", NuiCraftBlocks.lightstone);
+		OreDictionary.registerOre("oreLightstone", NuiCraftBlocks.lightstone_ore);
+		OreDictionary.registerOre("oreHeatstone", NuiCraftBlocks.heatstone_ore);
+		OreDictionary.registerOre("oreProtodermis", NuiCraftBlocks.protodermis_ore);
+		
+	    OreDictionary.registerOre("cropBamboo", NuiCraftBlocks.bamboo);
+		
+		OreDictionary.registerOre("blockProtodermis", NuiCraftBlocks.block_protodermis);
+		OreDictionary.registerOre("blockProtosteel", NuiCraftBlocks.block_protosteel);		
+		OreDictionary.registerOre("ingotProtodermis", NuiCraftItems.ingot_protodermis);
+	    OreDictionary.registerOre("ingotProtosteel", NuiCraftItems.ingot_protosteel);
+	    OreDictionary.registerOre("nuggetProtodermis", NuiCraftItems.nugget_protodermis);
+	    OreDictionary.registerOre("nuggetProtosteel", NuiCraftItems.nugget_protosteel);
+	    //OreDictionary.registerOre("stickProtodermis", Bionicle.rodProtodermis);
+	    //OreDictionary.registerOre("stickProtosteel", Bionicle.rodProtosteel);
+	    
+		OreDictionary.registerOre("gemHeatstone", NuiCraftItems.raw_heatstone);
+	    OreDictionary.registerOre("stickBamboo", NuiCraftItems.bamboo_stick);
+	}
+	
+	@SubscribeEvent
+	public static void registerBlocks(RegistryEvent.Register<Block> event) {
+		event.getRegistry().registerAll(
+			new BlockMaskForge().setHardness(3.5F),
+			new BlockPurifier().setHardness(3.5F),
+
+			new BlockKoro("stone_koro_block", Material.ROCK, MapColor.OBSIDIAN).setHardness(1.5F).setResistance(5F),//.setHarvestLevel("pickaxe", 0),		
+			new BlockKoro("lit_koro_block", Material.REDSTONE_LIGHT, MapColor.OBSIDIAN).setLightLevel(1.0F).setHardness(1.5F).setResistance(5F),//.setHarvestLevel("pickaxe", 0),
+			new BlockKoro("icy_koro_block", Material.PACKED_ICE, MapColor.ICE).setHardness(1.5F).setResistance(3F),//.setHarvestLevel("pickaxe", 0),		
+			new BlockKoro("leafy_koro_block", Material.LEAVES, MapColor.FOLIAGE).setHardness(1.5F).setResistance(3F),//.setHarvestLevel("axe", 0),
+			
+			new BlockNuvaCube().setLightLevel(0.625F).setHardness(-1.0F).setResistance(6000000.0F),
+			
+			//new BlockCrystalizedProtodermis().setBlockUnbreakable().setLightOpacity(3).setResistance(6000000.0F).setStepSound(Block.soundTypeGlass).setCreativeTab(bioBlockTab),
+			
+			new BlockBionicleStone("matanui_stone").setHardness(1.5F).setResistance(10.0F),
+			new BlockBionicleStone("makuta_stone").setHardness(1.5F).setResistance(10.0F),
+			new BlockLightstone().setHardness(0.0F).setLightLevel(1.0F),
+			
+			new BlockOre("lightstone_ore").setLightLevel(0.625F).setHardness(3.0F).setResistance(5.0F).setTickRandomly(true),//.setHarvestLevel("pickaxe", 2),
+			new BlockOre("heatstone_ore").setHardness(3.0F).setResistance(5.0F),//.setHarvestLevel("pickaxe", 2),
+			new BlockProtodermisDeposit().setHardness(3.0F).setResistance(5.0F),//.setHarvestLevel("pickaxe", 1),
+			
+			new BlockBamboo().setHardness(0.2F),
+			
+			new BlockMetal("block_protodermis", Material.IRON).setHardness(5.0F).setResistance(10.0F),
+			new BlockMetal("block_protosteel", Material.IRON).setHardness(5.0F).setResistance(10.0F)
+		);
+	}
+	
+	@SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+		event.getRegistry().registerAll(
+			new ItemBlock(NuiCraftBlocks.mask_forge).setRegistryName(NuiCraftBlocks.mask_forge.getRegistryName()),
+			//new ItemBlock(NuiCraftBlocks.purifier).setRegistryName(NuiCraftBlocks.purifier.getRegistryName()),
+			
+			new ItemBlockKoro(NuiCraftBlocks.stone_koro_block),
+			new ItemBlockKoro(NuiCraftBlocks.lit_koro_block),
+			new ItemBlockKoro(NuiCraftBlocks.icy_koro_block),
+			new ItemBlockKoro(NuiCraftBlocks.leafy_koro_block),
+
+			new ItemBlock(NuiCraftBlocks.nuva_cube).setRegistryName(NuiCraftBlocks.nuva_cube.getRegistryName()),
+			
+			new ItemBlock(NuiCraftBlocks.matanui_stone).setRegistryName(NuiCraftBlocks.matanui_stone.getRegistryName()),
+			new ItemBlock(NuiCraftBlocks.makuta_stone).setRegistryName(NuiCraftBlocks.makuta_stone.getRegistryName()),
+			new ItemBlock(NuiCraftBlocks.lightstone).setRegistryName(NuiCraftBlocks.lightstone.getRegistryName()),
+
+			new ItemBlock(NuiCraftBlocks.lightstone_ore).setRegistryName(NuiCraftBlocks.lightstone_ore.getRegistryName()),
+			new ItemBlock(NuiCraftBlocks.heatstone_ore).setRegistryName(NuiCraftBlocks.heatstone_ore.getRegistryName()),
+			new ItemBlock(NuiCraftBlocks.protodermis_ore).setRegistryName(NuiCraftBlocks.protodermis_ore.getRegistryName()),
+			
+			new ItemBlock(NuiCraftBlocks.bamboo).setRegistryName(NuiCraftBlocks.bamboo.getRegistryName()),
+			new ItemBlock(NuiCraftBlocks.block_protodermis).setRegistryName(NuiCraftBlocks.block_protodermis.getRegistryName()),
+			new ItemBlock(NuiCraftBlocks.block_protosteel).setRegistryName(NuiCraftBlocks.block_protosteel.getRegistryName()),
+				
+			new ItemPurifier(),
+
+			new ItemNormal("ingot_protodermis"),		
+			new ItemNormal("ingot_protosteel"),
+			new ItemNormal("nugget_protodermis"),
+			new ItemNormal("nugget_protosteel"),
+			new ItemNormal("raw_protodermis"),
+			new ItemNormal("raw_heatstone"),	    
+			new ItemNormal("bamboo_stick"),
+		    	    
+		    /*EntityRegistry.registerModEntity(EntityKolhiiBall.class, "Kolhii_Ball", 10, this, 64, 10, true),
+		    new ItemKolhiiBall().setName("KolhiiBall"),
+		    GameRegistry.registerItem(kolhiiBall, "kolhii_ball"),
+		    */
+
+			//Kanoka
+			new ItemNormal("kanoka_flying").setCreativeTab(null),
+			new ItemBambooDisc(),
+			new ItemKanokaDisc(),
+			new ItemNormal("kanoka_time", true).setCreativeTab(NuiCraft.bio_tool_tab),
+			
+			//Weapons	    
+			new ItemDiscLauncher(),	    
+			new ItemBionicleSword("protodermis_sword", NuiCraft.PROTODERMIS),
+			
+			//Tools	    
+			new ItemBioniclePick("protodermis_pick", NuiCraft.PROTODERMIS),
+			new ItemBionicleAxe("protodermis_axe", NuiCraft.PROTODERMIS, 2.0F, -2.9F),
+			new ItemBionicleShovel("protodermis_shovel", NuiCraft.PROTODERMIS),
+			new ItemBionicleHoe("protodermis_sythe", NuiCraft.PROTODERMIS),
+		    
+			new ItemHeatstoneLighter(),
+			new ItemSluice(),
+			
+			//Mata Masks
+			new ItemGoldMataMask(),
+			new ItemColoredMask("mask_mata_kakama"),
+			new ItemColoredMask("mask_mata_pakari"),
+			new ItemColoredMask("mask_mata_kaukau"),
+			new ItemColoredMask("mask_mata_miru"),
+			new ItemColoredMask("mask_mata_hau"),
+			new ItemColoredMask("mask_mata_akaku"),
+			
+			//Nuva Masks
+			new ItemMask("mask_nuva_kakama"),
+			new ItemMask("mask_nuva_pakari"),
+			new ItemMask("mask_nuva_kaukau"),
+			new ItemMask("mask_nuva_miru"),
+			new ItemMask("mask_nuva_hau"),
+			new ItemMask("mask_nuva_akaku"),
+			
+			//Legendary Masks    
+			new ItemMaskMeta("mask_ignika", 3, true),
+			new ItemMaskMeta("mask_vahi", 2, true)
+		);
 	}
 
 	/*public void sendRequestEventPacket(byte eventType, int originX, int originY, int originZ, byte sideHit, byte rangeX, byte rangeY, byte rangeZ, String data) {

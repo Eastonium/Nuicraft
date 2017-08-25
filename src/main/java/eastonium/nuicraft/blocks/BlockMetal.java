@@ -1,6 +1,6 @@
 package eastonium.nuicraft.blocks;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -8,15 +8,11 @@ import net.minecraft.item.Item;
 
 public class BlockMetal extends Block {
 
-	public BlockMetal(Material materialIn) {
+	public BlockMetal(String name, Material materialIn) {
 		super(materialIn);
-		this.setSoundType(SoundType.METAL);
-		this.setCreativeTab(Bionicle.bioBlockTab);
+		setSoundType(SoundType.METAL);
+		setCreativeTab(NuiCraft.bio_block_tab);
+		setUnlocalizedName(NuiCraft.MODID + "." + name);
+		setRegistryName(name);
 	}
-	
-	public Block setName(String name){
-        super.setUnlocalizedName(name);
-        this.setRegistryName(Bionicle.MODID, name);
-        return this;
-    }
 }

@@ -1,20 +1,21 @@
 package eastonium.nuicraft.machine.maskForge.recipe;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraftItems;
 import eastonium.nuicraft.kanoka.ItemKanokaDisc;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
-public class KanokaMFRecipe implements IMFRecipe{
+public class KanokaMFRecipe implements IMFRecipe {
 
-	ItemStack[] inputStacks;
+	NonNullList<ItemStack> inputStacks;
 
 	@Override
-	public boolean matches(ItemStack[] inputStacks) {
+	public boolean matches(NonNullList<ItemStack> inputStacks) {
 		int totalProtoIngots = 0;
 		for(ItemStack stack : inputStacks){
-			if(stack != null){
-				if(stack.getItem() == Bionicle.ingotProtodermis){
-					totalProtoIngots += stack.stackSize;
+			if(!stack.isEmpty()){
+				if(stack.getItem() == NuiCraftItems.ingot_protodermis){
+					totalProtoIngots += stack.getCount();
 				}else return false;
 			}
 		}
@@ -24,20 +25,20 @@ public class KanokaMFRecipe implements IMFRecipe{
 
 	@Override
 	public ItemStack getOutput() {
-		ItemStack randKanoka = new ItemStack(Bionicle.kanokaDisc);
+		ItemStack randKanoka = new ItemStack(NuiCraftItems.kanoka_disc);
 		ItemKanokaDisc.setKanokaNumber(randKanoka, 0, 0, 0);
 		return randKanoka;
 	}
 
 	@Override
-	public ItemStack[] getRemainingItems() {
+	public NonNullList<ItemStack> getRemainingItems() {
 		int remaining = 3;
-		for(int i = 0; i < inputStacks.length; i++){
-			if(inputStacks[i] != null){
-				int min = Math.min(inputStacks[i].stackSize, remaining);
-				inputStacks[i].stackSize -= min;
+		for(int i = 0; i < inputStacks.size(); i++){
+			if(!inputStacks.get(i).isEmpty()){
+				int min = Math.min(inputStacks.get(i).getCount(), remaining);
+				inputStacks.get(i).shrink(min);
 				remaining -= min;
-				if(inputStacks[i].stackSize <= 0) inputStacks[i] = null;
+				if(inputStacks.get(i).getCount() <= 0) inputStacks.set(i, ItemStack.EMPTY);
 			}
 			if(remaining <= 0) break;
 		}

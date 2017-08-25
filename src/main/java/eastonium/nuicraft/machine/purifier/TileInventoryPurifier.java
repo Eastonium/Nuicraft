@@ -2,7 +2,7 @@ package eastonium.nuicraft.machine.purifier;
 
 import java.util.Arrays;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.machine.maskForge.recipe.IMFRecipe;
 import eastonium.nuicraft.machine.maskForge.recipe.MFRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,16 +17,15 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
@@ -41,7 +40,7 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 	public static final int FILTER_SLOT_NUMBER = FIRST_ITEM_SLOT_NUMBER + ITEM_SLOTS_COUNT;
 	public static final int OUTPUT_SLOT_NUMBER = FILTER_SLOT_NUMBER + 1;
 
-	private ItemStack[] pureItemstacks = new ItemStack[TOTAL_SLOTS_COUNT];
+	private NonNullList<ItemStack> pureItemstacks = NonNullList.<ItemStack>withSize(TOTAL_SLOTS_COUNT, ItemStack.EMPTY);
     protected FluidTank rawTank = new FluidTank(BUCKET_VOLUME * 16);
     protected FluidTank pureTank = new FluidTank(BUCKET_VOLUME * 4);
 
@@ -56,7 +55,7 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 	public double fractionOfTankRemaining(FluidTank tank){
 		if(isTankEmpty(tank)) return 0;
 		double fraction = tank.getFluidAmount() / (double)tank.getCapacity();
-		return MathHelper.clamp_double(fraction, 0.0, 1.0);
+		return MathHelper.clamp(fraction, 0.0, 1.0);
 	}
 
 	/*public double fractionLeftOfCompletion(){
@@ -110,26 +109,26 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 	public void update(){
 		boolean needsUpdate = false;
 
-		if(!this.worldObj.isRemote){
-			if(this.pureItemstacks[INPUT_SLOT_NUMBER] != null){
-				ItemStack item = this.pureItemstacks[INPUT_SLOT_NUMBER];
-				if(item.getItem() == Items.LAVA_BUCKET && this.rawTank.getCapacity() - this.rawTank.getFluidAmount() >= BUCKET_VOLUME){
-					this.fill(new FluidStack(FluidRegistry.LAVA, BUCKET_VOLUME), true);
-					this.pureItemstacks[INPUT_SLOT_NUMBER] = item.getItem().getContainerItem(pureItemstacks[INPUT_SLOT_NUMBER]);
+		if(!world.isRemote){
+			if(!pureItemstacks.get(INPUT_SLOT_NUMBER).isEmpty()){
+				ItemStack item = pureItemstacks.get(INPUT_SLOT_NUMBER);
+				if(item.getItem() == Items.LAVA_BUCKET && rawTank.getCapacity() - rawTank.getFluidAmount() >= BUCKET_VOLUME){
+					fill(new FluidStack(FluidRegistry.LAVA, BUCKET_VOLUME), true);
+					setInventorySlotContents(INPUT_SLOT_NUMBER, item.getItem().getContainerItem(pureItemstacks.get(INPUT_SLOT_NUMBER)));
 					needsUpdate = true;
 				}
-				if(item.getItem() == Items.BUCKET && this.pureItemstacks[OUTPUT_SLOT_NUMBER] == null){
-					this.pureItemstacks[OUTPUT_SLOT_NUMBER] = new ItemStack(Items.BUCKET, 1);
-					this.decrStackSize(INPUT_SLOT_NUMBER, 1);
+				if(item.getItem() == Items.BUCKET && pureItemstacks.get(OUTPUT_SLOT_NUMBER).isEmpty()){
+					setInventorySlotContents(OUTPUT_SLOT_NUMBER, new ItemStack(Items.BUCKET, 1));
+					decrStackSize(INPUT_SLOT_NUMBER, 1);
 				}
 			}
-			if(this.pureItemstacks[OUTPUT_SLOT_NUMBER] != null && this.pureItemstacks[OUTPUT_SLOT_NUMBER].getItem() == Items.BUCKET && 
-					this.pureItemstacks[OUTPUT_SLOT_NUMBER].stackSize == 1 && this.pureTank.getFluidAmount() >= BUCKET_VOLUME){
-				this.pureItemstacks[OUTPUT_SLOT_NUMBER] = new ItemStack(Items.WATER_BUCKET, 1);
-				this.pureTank.drainInternal(BUCKET_VOLUME, true);
+			if(!pureItemstacks.get(OUTPUT_SLOT_NUMBER).isEmpty() && pureItemstacks.get(OUTPUT_SLOT_NUMBER).getItem() == Items.BUCKET && 
+					pureItemstacks.get(OUTPUT_SLOT_NUMBER).getCount() == 1 && pureTank.getFluidAmount() >= BUCKET_VOLUME){
+				this.setInventorySlotContents(OUTPUT_SLOT_NUMBER, new ItemStack(Items.WATER_BUCKET, 1));
+				pureTank.drainInternal(BUCKET_VOLUME, true);
 				needsUpdate = true;
 			}
-			if(this.pureItemstacks[FILTER_SLOT_NUMBER] != null && !isTankEmpty(this.rawTank) && !isTankFull(pureTank)){
+			if(!pureItemstacks.get(FILTER_SLOT_NUMBER).isEmpty() && !isTankEmpty(rawTank) && !isTankFull(pureTank)){
 				rawTank.drainInternal(2, true);
 				pureTank.fillInternal(new FluidStack(FluidRegistry.WATER, 2), true);
 				needsUpdate = true;
@@ -152,7 +151,7 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 			}*/
 		}		
 		if (needsUpdate){
-			this.markDirty();
+			markDirty();
 		}
 	}
 
@@ -197,27 +196,27 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 
 	@Override
 	public int getSizeInventory(){
-		return this.pureItemstacks.length;
+		return pureItemstacks.size();
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int par1){
-		return this.pureItemstacks[par1];
+	public ItemStack getStackInSlot(int slot){
+		return pureItemstacks.get(slot);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int slotIndex, int count){
 		ItemStack currentStack = getStackInSlot(slotIndex);
-		if(currentStack == null) return null;
+		if(currentStack.isEmpty()) return ItemStack.EMPTY;
 
-		ItemStack newStack;
-		if(currentStack.stackSize <= count){
+		ItemStack newStack = ItemStack.EMPTY;
+		if(currentStack.getCount() <= count){
 			newStack = currentStack;
-			setInventorySlotContents(slotIndex, null);
+			setInventorySlotContents(slotIndex, ItemStack.EMPTY);
 		}else{
 			newStack = currentStack.splitStack(count);
-			if (currentStack.stackSize == 0){
-				setInventorySlotContents(slotIndex, null);
+			if (currentStack.getCount() == 0){
+				setInventorySlotContents(slotIndex, ItemStack.EMPTY);
 			}
 		}
 		markDirty();
@@ -227,15 +226,15 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 	@Override
 	public ItemStack removeStackFromSlot(int slotIndex) {
 		ItemStack stack = getStackInSlot(slotIndex);
-		if (stack != null) setInventorySlotContents(slotIndex, null);
+		if (!stack.isEmpty()) setInventorySlotContents(slotIndex, ItemStack.EMPTY);
 		return stack;
 	}
 
 	@Override
 	public void setInventorySlotContents(int slotIndex, ItemStack stack){
-		pureItemstacks[slotIndex] = stack;
-		if (stack != null && stack.stackSize > getInventoryStackLimit()) {
-			stack.stackSize = getInventoryStackLimit();
+		pureItemstacks.set(slotIndex, stack);
+		if (!stack.isEmpty() && stack.getCount() > getInventoryStackLimit()) {
+			stack.setCount(getInventoryStackLimit());
 		}
 		markDirty();
 	}
@@ -246,8 +245,8 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer player){
-		if (this.worldObj.getTileEntity(this.pos) != this) return false;
+	public boolean isUsableByPlayer(EntityPlayer player){
+		if (world.getTileEntity(pos) != this) return false;
 		final double X_CENTRE_OFFSET = 0.5;
 		final double Y_CENTRE_OFFSET = 0.5;
 		final double Z_CENTRE_OFFSET = 0.5;
@@ -288,8 +287,8 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 	public int getField(int id){
 		if(id == RAWPRO_FIELD_ID) return rawProgress;
 		if(id == PUREPRO_FIELD_ID) return pureProgress;
-		if(id == RAW_AMOUNT_FIELD_ID) return this.rawTank.getFluidAmount();
-		if(id == PURE_AMOUNT_FIELD_ID) return this.pureTank.getFluidAmount();
+		if(id == RAW_AMOUNT_FIELD_ID) return rawTank.getFluidAmount();
+		if(id == PURE_AMOUNT_FIELD_ID) return pureTank.getFluidAmount();
 		System.err.println("Invalid field ID in TileInventoryPurifier.getField:" + id);
 		return 0;
 	}
@@ -301,18 +300,18 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 		}else if(id == PUREPRO_FIELD_ID){
 			pureProgress = (short)value;
 		}else if(id == RAW_AMOUNT_FIELD_ID){
-			FluidStack flStack = new FluidStack(FluidRegistry.LAVA, Math.abs(this.rawTank.getFluidAmount() - value));
-			if(value > this.rawTank.getFluidAmount()){
-				this.rawTank.fillInternal(flStack, true);
-			}else if(value < this.rawTank.getFluidAmount()){
-				this.rawTank.drainInternal(flStack, true);
+			FluidStack flStack = new FluidStack(FluidRegistry.LAVA, Math.abs(rawTank.getFluidAmount() - value));
+			if(value > rawTank.getFluidAmount()){
+				rawTank.fillInternal(flStack, true);
+			}else if(value < rawTank.getFluidAmount()){
+				rawTank.drainInternal(flStack, true);
 			}
 		}else if(id == PURE_AMOUNT_FIELD_ID){
-			FluidStack flStack = new FluidStack(FluidRegistry.WATER, Math.abs(this.pureTank.getFluidAmount() - value));
-			if(value > this.pureTank.getFluidAmount()){
-				this.pureTank.fillInternal(flStack, true);
-			}else if(value < this.pureTank.getFluidAmount()){
-				this.pureTank.drainInternal(flStack, true);
+			FluidStack flStack = new FluidStack(FluidRegistry.WATER, Math.abs(pureTank.getFluidAmount() - value));
+			if(value > pureTank.getFluidAmount()){
+				pureTank.fillInternal(flStack, true);
+			}else if(value < pureTank.getFluidAmount()){
+				pureTank.drainInternal(flStack, true);
 			}
 		}else{
 			System.err.println("Invalid field ID in TileInventoryPurifier.setField:" + id);
@@ -328,19 +327,19 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound){
 		super.writeToNBT(tagCompound);		
 		NBTTagList dataForAllSlots = new NBTTagList();
-		for (int i = 0; i < this.pureItemstacks.length; ++i){
-			if (this.pureItemstacks[i] != null){
+		for (int i = 0; i < pureItemstacks.size(); ++i){
+			if (!pureItemstacks.get(i).isEmpty()){
 				NBTTagCompound dataForThisSlot = new NBTTagCompound();
 				dataForThisSlot.setByte("Slot", (byte)i);
-				this.pureItemstacks[i].writeToNBT(dataForThisSlot);
+				pureItemstacks.get(i).writeToNBT(dataForThisSlot);
 				dataForAllSlots.appendTag(dataForThisSlot);
 			}
 		}
 		tagCompound.setTag("Items", dataForAllSlots);		
-		tagCompound.setShort("rawPro", (short)this.rawProgress);
-		tagCompound.setShort("purePro", (short)this.pureProgress);
-		tagCompound.setShort("rawAmount", (short)this.rawTank.getFluidAmount());
-		tagCompound.setShort("pureAmount", (short)this.pureTank.getFluidAmount());
+		tagCompound.setShort("rawPro", (short)rawProgress);
+		tagCompound.setShort("purePro", (short)pureProgress);
+		tagCompound.setShort("rawAmount", (short)rawTank.getFluidAmount());
+		tagCompound.setShort("pureAmount", (short)pureTank.getFluidAmount());
 		return tagCompound;
 	}
 
@@ -349,18 +348,18 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 		super.readFromNBT(nbtTagCompound);
 		final byte NBT_TYPE_COMPOUND = 10;  // See NBTBase.createNewByType() for a listing
 		NBTTagList dataForAllSlots = nbtTagCompound.getTagList("Items", NBT_TYPE_COMPOUND);		
-		this.clear();
+		clear();
 		for(int i = 0; i < dataForAllSlots.tagCount(); ++i){
 			NBTTagCompound dataForOneSlot = dataForAllSlots.getCompoundTagAt(i);
 			byte slotNumber = dataForOneSlot.getByte("Slot");
-			if (slotNumber >= 0 && slotNumber < this.pureItemstacks.length){
-				this.pureItemstacks[slotNumber] = ItemStack.loadItemStackFromNBT(dataForOneSlot);
+			if (slotNumber >= 0 && slotNumber < pureItemstacks.size()){
+				setInventorySlotContents(slotNumber, new ItemStack(dataForOneSlot));
 			}
 		}
-		this.rawProgress = nbtTagCompound.getShort("rawPro");
-		this.pureProgress = nbtTagCompound.getShort("purePro");
-		this.rawTank.fillInternal(new FluidStack(FluidRegistry.LAVA, nbtTagCompound.getShort("rawAmount")), true);
-		this.pureTank.fillInternal(new FluidStack(FluidRegistry.WATER, nbtTagCompound.getShort("pureAmount")), true);
+		rawProgress = nbtTagCompound.getShort("rawPro");
+		pureProgress = nbtTagCompound.getShort("purePro");
+		rawTank.fillInternal(new FluidStack(FluidRegistry.LAVA, nbtTagCompound.getShort("rawAmount")), true);
+		pureTank.fillInternal(new FluidStack(FluidRegistry.WATER, nbtTagCompound.getShort("pureAmount")), true);
 	}
 
 	@Override
@@ -368,7 +367,7 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 		NBTTagCompound nbtTagCompound = new NBTTagCompound();
 		writeToNBT(nbtTagCompound);
 		final int METADATA = 0;
-		return new SPacketUpdateTileEntity(this.pos, METADATA, nbtTagCompound);
+		return new SPacketUpdateTileEntity(pos, METADATA, nbtTagCompound);
 	}
 
 	@Override
@@ -379,7 +378,7 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 	
 	@Override
 	public void clear() {
-		Arrays.fill(pureItemstacks, null);
+		pureItemstacks = NonNullList.<ItemStack>withSize(TOTAL_SLOTS_COUNT, ItemStack.EMPTY);
 	}
 
 	@Override
@@ -392,11 +391,16 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 	}	
 	@Override
 	public ITextComponent getDisplayName() {
-		return new TextComponentString(this.getName());
+		return new TextComponentString(getName());
 	}
 	
 	@Override
 	public void openInventory(EntityPlayer player) {}
 	@Override
 	public void closeInventory(EntityPlayer player) {}
+
+	@Override
+	public boolean isEmpty() {
+		return false;//TODO do something with this?
+	}
 }

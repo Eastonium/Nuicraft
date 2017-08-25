@@ -2,7 +2,7 @@ package eastonium.nuicraft.mobs.mahi;
 
 import javax.annotation.Nullable;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -21,19 +21,19 @@ import net.minecraft.world.storage.loot.LootTableList;
 
 public class EntityMahi extends EntityAnimal {
 	
-	public static final ResourceLocation ENTITIES_MAHI = LootTableList.register(new ResourceLocation(Bionicle.MODID, "entities/mahi"));
+	public static final ResourceLocation ENTITIES_MAHI = LootTableList.register(new ResourceLocation(NuiCraft.MODID, "entities/mahi"));
 
 	public EntityMahi(World world) {
 		super(world);
-		this.setSize(1.0F, 1.1F);
-		this.setPathPriority(PathNodeType.WATER, -1.0F);
+		setSize(1.0F, 1.1F);
+		setPathPriority(PathNodeType.WATER, -1.0F);
 	}
 	
     protected void initEntityAI(){
-    	this.tasks.addTask(0, new EntityAISwimming(this));
-		this.tasks.addTask(1, new EntityAIWander(this, 0.4D));
-		this.tasks.addTask(2, new EntityAILookIdle(this));
-		this.tasks.addTask(3, new EntityAIPanic(this, 0.6D));
+    	tasks.addTask(0, new EntityAISwimming(this));
+		tasks.addTask(1, new EntityAIWander(this, 0.4D));
+		tasks.addTask(2, new EntityAILookIdle(this));
+		tasks.addTask(3, new EntityAIPanic(this, 0.6D));
     }
 	
 	protected boolean canDespawn(){

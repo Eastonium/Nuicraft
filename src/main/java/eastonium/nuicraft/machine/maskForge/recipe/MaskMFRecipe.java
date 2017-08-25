@@ -1,29 +1,31 @@
 package eastonium.nuicraft.machine.maskForge.recipe;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraftItems;
 import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanoka.ItemKanokaDisc;
+import eastonium.nuicraft.machine.maskForge.TileInventoryMaskForge;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import scala.actors.threadpool.Arrays;
 
 public class MaskMFRecipe implements IMFRecipe {
 
 	private final ItemStack recipeOutput;
 	private final int[] requiredKanokaTypes;
-	private ItemStack[] returnStacks = null;
+	private NonNullList<ItemStack> returnStacks = NonNullList.<ItemStack>withSize(TileInventoryMaskForge.INPUT_SLOTS_COUNT, ItemStack.EMPTY);;
 
-	public MaskMFRecipe(ItemStack output, int[] kanokaTypes){
-		this.recipeOutput = output;
-		this.requiredKanokaTypes = kanokaTypes;
+	public MaskMFRecipe(ItemStack recipeOutput, int[] requiredKanokaTypes){
+		this.recipeOutput = recipeOutput;
+		this.requiredKanokaTypes = requiredKanokaTypes;
 	}
 
 	@Override
-	public boolean matches(ItemStack[] inputStacks){
-		int[] tempKanokaTypes = new int[6];
+	public boolean matches(NonNullList<ItemStack> inputStacks){
+		int[] tempKanokaTypes = new int[TileInventoryMaskForge.INPUT_SLOTS_COUNT];
 		int i = 0;
 		for(ItemStack stack : inputStacks){
-			if(stack != null){
-				if(stack.getItem() == Bionicle.kanokaDisc){
+			if(!stack.isEmpty()){
+				if(stack.getItem() == NuiCraftItems.kanoka_disc){
 					tempKanokaTypes[i] = (int)ItemKanokaDisc.getKanokaNumber(stack)[1];
 					i++;
 				}else return false;
@@ -43,21 +45,21 @@ public class MaskMFRecipe implements IMFRecipe {
 	@Override
 	public ItemStack getOutput() {
 		if (this.recipeOutput.getItem() instanceof ItemColoredMask){
-			ItemColoredMask itemMask = (ItemColoredMask)this.recipeOutput.getItem();
-			ItemStack output = this.recipeOutput.copy();
+			ItemColoredMask itemMask = (ItemColoredMask)recipeOutput.getItem();
+			ItemStack output = recipeOutput.copy();
 			itemMask.setColor(output, itemMask.DEFAULT_COLOR);
 			return output;
 		}
-		return this.recipeOutput.copy();
+		return recipeOutput.copy();
 	}
 
 	@Override
-	public ItemStack[] getRemainingItems() {
-		for(int i = 0; i < returnStacks.length; i++){
-			if(returnStacks[i] != null){
-				returnStacks[i].stackSize--;
-				if(returnStacks[i].stackSize <= 0){
-					returnStacks[i] = null;
+	public NonNullList<ItemStack> getRemainingItems() {
+		for(int i = 0; i < returnStacks.size(); i++){
+			if(!returnStacks.get(i).isEmpty()){
+				returnStacks.get(i).shrink(1);;
+				if(returnStacks.get(i).getCount() <= 0){
+					returnStacks.set(i, ItemStack.EMPTY);
 				}
 			}
 		}

@@ -4,7 +4,7 @@
         "normal": {
 			"model": "cross",
 			"textures": {
-				"cross": "nuicraft:blocks/Bamboo"
+				"cross": "nuicraft:blocks/bamboo"
 			}
 		}
     }

@@ -1,0 +1,19 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "cube",
+		"textures": {
+			"down": "nuicraft:blocks/nuva_cube_bottom",
+			"up": "nuicraft:blocks/nuva_cube_top",
+			"north": "nuicraft:blocks/nuva_cube_front",
+			"south": "nuicraft:blocks/nuva_cube_back",
+			"west": "nuicraft:blocks/nuva_cube_right",
+			"east": "nuicraft:blocks/nuva_cube_left",
+			"particle": "nuicraft:blocks/nuva_cube_front"
+		}
+	},
+    "variants": {
+		"inventory": [{}],
+        "normal": [{}]
+    }
+}

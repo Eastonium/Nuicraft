@@ -1,6 +1,6 @@
 package eastonium.nuicraft.kanoka;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraftItems;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -16,7 +16,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
@@ -34,9 +33,9 @@ public class EntityDisc extends EntityThrowable {
 		super(world);
 	}
 
-	public EntityDisc(World par1World, EntityLivingBase par2EntityLivingBase, NBTTagCompound nbtTags, boolean dropOnImpact){
+	public EntityDisc(World par1World, EntityLivingBase par2EntityLivingBase, NBTTagCompound nbtData, boolean dropOnImpact){
 		super(par1World, par2EntityLivingBase);
-		this.nbtData = nbtTags;
+		this.nbtData = nbtData;
 		this.dropOnImpact = dropOnImpact;
 	}
 
@@ -57,11 +56,11 @@ public class EntityDisc extends EntityThrowable {
 	@Override
 	protected void onImpact(RayTraceResult result){
 		if(nbtData != null){
-			if (!this.worldObj.isRemote){
-				ItemStack discDrop = new ItemStack(Bionicle.kanokaDisc, 1);
+			if (!world.isRemote){
+				ItemStack discDrop = new ItemStack(NuiCraftItems.kanoka_disc, 1);
 				discDrop.setTagCompound(nbtData);
-				if(dropOnImpact && this.worldObj.getGameRules().getBoolean("doTileDrops") && result.entityHit == null){
-					this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, discDrop));
+				if(dropOnImpact && world.getGameRules().getBoolean("doTileDrops") && result.entityHit == null){
+					this.world.spawnEntity(new EntityItem(world, posX, posY, posZ, discDrop));
 				}
 				this.setDead();
 			}
@@ -94,23 +93,23 @@ public class EntityDisc extends EntityThrowable {
 				}
 			}
 		}else/* if(nbtData == null)*/{
-			this.onImpactBamboo(result);
+			onImpactBamboo(result);
 		}
 	}
 
 	private void onImpactBamboo(RayTraceResult result){
 		if (result.entityHit != null){
-			result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 5);            
+			result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), 5);            
 		}
 		for (int i = 0; i < 5; ++i){
-			this.worldObj.spawnParticle(EnumParticleTypes.ITEM_CRACK, this.posX, this.posY, this.posZ, 
-					((double)this.rand.nextFloat() - 0.5D) * 0.08D, 
-					((double)this.rand.nextFloat() - 0.5D) * 0.08D, 
-					((double)this.rand.nextFloat() - 0.5D) * 0.08D, 
-					new int[] {Item.getIdFromItem(Bionicle.bambooDisc)});
+			this.world.spawnParticle(EnumParticleTypes.ITEM_CRACK, posX, posY, posZ, 
+					((double)rand.nextFloat() - 0.5D) * 0.08D, 
+					((double)rand.nextFloat() - 0.5D) * 0.08D, 
+					((double)rand.nextFloat() - 0.5D) * 0.08D, 
+					new int[] {Item.getIdFromItem(NuiCraftItems.kanoka_bamboo)});
 		}
-		if (!this.worldObj.isRemote){
-			this.setDead();
+		if (!world.isRemote){
+			setDead();
 		}
 	}
 
@@ -123,12 +122,12 @@ public class EntityDisc extends EntityThrowable {
 			if(entityID == 64) entityID = 42;
 			if(entityID > 66) entityID += 24;
 			if(entityID > 100) entityID = 120;//TODO redo this by having array of possible ids and randomizing from that
-			Entity entity = EntityList.createEntityByID(entityID, worldObj);
+			Entity entity = EntityList.createEntityByID(entityID, world);
 			entity.setLocationAndAngles((double)result.entityHit.lastTickPosX, (double)result.entityHit.lastTickPosY, (double)result.entityHit.lastTickPosZ, result.entityHit.rotationYaw, result.entityHit.rotationPitch);
-			worldObj.spawnEntityInWorld(entity);
+			world.spawnEntity(entity);
 		}
 		if(result.entityHit instanceof EntityPlayerMP){
-			result.entityHit.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, this.getThrower()), 6F);
+			result.entityHit.attackEntityFrom(DamageSource.causeIndirectMagicDamage(this, getThrower()), 6F);
 			//TODO Nausea
 		}
 	}
@@ -150,11 +149,11 @@ public class EntityDisc extends EntityThrowable {
 			entityHit.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 500, 3));
 
 			if (entityHit instanceof EntityBlaze){
-				entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 10F);
+				entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), 10F);
 			}
 			for (int i = 0; i < 24; ++i){
-				worldObj.spawnParticle(EnumParticleTypes.SNOWBALL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
-				worldObj.spawnParticle(EnumParticleTypes.BLOCK_CRACK, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D, new int[]{Block.getStateId(Blocks.PACKED_ICE.getDefaultState())});
+				world.spawnParticle(EnumParticleTypes.SNOWBALL, posX, posY, posZ, 0.0D, 0.0D, 0.0D);
+				world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, posX, posY, posZ, 0.0D, 0.0D, 0.0D, new int[]{Block.getStateId(Blocks.PACKED_ICE.getDefaultState())});
 			}
 		}
 		if(entityHit instanceof EntityPlayerMP)
@@ -163,8 +162,8 @@ public class EntityDisc extends EntityThrowable {
 			entityHit.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 150, 1));
 			entityHit.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 150, 1));
 			for (int i = 0; i < 20; ++i){
-				worldObj.spawnParticle(EnumParticleTypes.SNOWBALL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
-				worldObj.spawnParticle(EnumParticleTypes.BLOCK_CRACK, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D, new int[]{Block.getStateId(Blocks.PACKED_ICE.getDefaultState())});
+				world.spawnParticle(EnumParticleTypes.SNOWBALL, posX, posY, posZ, 0.0D, 0.0D, 0.0D);
+				world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, posX, posY, posZ, 0.0D, 0.0D, 0.0D, new int[]{Block.getStateId(Blocks.PACKED_ICE.getDefaultState())});
 			}
 		}
 	}
@@ -205,12 +204,12 @@ public class EntityDisc extends EntityThrowable {
 				randY = entityHit.posY + (double)(this.rand.nextInt(16) - 9);
 				randZ = entityHit.posZ + (this.rand.nextDouble() - 0.5D) * 32.0D;
 				BlockPos blockpos = new BlockPos(randX, randY + entityHit.getEyeHeight(), randZ);
-				Block block = worldObj.getBlockState(blockpos).getBlock();
-				if(block.isPassable(worldObj, blockpos)){
+				Block block = world.getBlockState(blockpos).getBlock();
+				if(block.isPassable(world, blockpos)){
 					break;
 				}
 			}
-			worldObj.playSound((EntityPlayer)null, entityHit.posX, entityHit.posY, entityHit.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+			world.playSound((EntityPlayer)null, entityHit.posX, entityHit.posY, entityHit.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 			if(entityHit instanceof EntityLivingBase){
 				EnderTeleportEvent event = new EnderTeleportEvent((EntityLivingBase)entityHit, randX, randY, randZ, 0);
 				entityHit.posX = event.getTargetX();

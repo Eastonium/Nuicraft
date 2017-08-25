@@ -4,11 +4,13 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraftBlocks;
+import eastonium.nuicraft.NuiCraftItems;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -21,9 +23,9 @@ public class MFRecipeManager {
 	}
 
 	private MFRecipeManager(){
-		this.recipeList.add(new ColoredMetalMaskMFRecipe());
-		this.recipeList.add(new KanokaMFRecipe());
-		this.recipeList.add(new KanokaTimeMFRecipe());
+		recipeList.add(new ColoredMetalMaskMFRecipe());
+		recipeList.add(new KanokaMFRecipe());
+		recipeList.add(new KanokaTimeMFRecipe());
 		// 1 - Reconstitution at Random
 		// 2 - Freezing
 		// 3 - Weakening
@@ -32,45 +34,18 @@ public class MFRecipeManager {
 		// 6 - Shrinking
 		// 7 - Regeneration
 		// 8 - Teleportation
-		this.recipeList.add(new MaskMFRecipe(new ItemStack(Bionicle.maskMataKakama), new int[]{1, 8}));
-		this.recipeList.add(new MaskMFRecipe(new ItemStack(Bionicle.maskMataPakari), new int[]{4, 5, 7}));
-		this.recipeList.add(new MaskMFRecipe(new ItemStack(Bionicle.maskMataKaukau), new int[]{4, 6, 7}));
-		this.recipeList.add(new MaskMFRecipe(new ItemStack(Bionicle.maskMataMiru), new int[]{3, 8}));
-		this.recipeList.add(new MaskMFRecipe(new ItemStack(Bionicle.maskMataHau), new int[]{5, 8}));
-		this.recipeList.add(new MaskMFRecipe(new ItemStack(Bionicle.maskMataAkaku), new int[]{7, 8}));
-
-		/*
-		int[] kanokaloc = new int[6];
-		if (this.forgeItemstacks[0] != null && this.forgeItemstacks[1] != null && this.forgeItemstacks[2] != null 
-				&& this.forgeItemstacks[3] != null && this.forgeItemstacks[4] != null && this.forgeItemstacks[5] != null)
-		{
-			if(		this.forgeItemstacks[0].getItem() instanceof ItemKanoka && this.forgeItemstacks[1].getItem() instanceof ItemKanoka &&
-					this.forgeItemstacks[2].getItem() instanceof ItemKanoka && this.forgeItemstacks[3].getItem() instanceof ItemKanoka &&
-					this.forgeItemstacks[4].getItem() instanceof ItemKanoka && this.forgeItemstacks[5].getItem() instanceof ItemKanoka &&
-					this.forgeItemstacks[0].getItemDamage() == 9 && this.forgeItemstacks[1].getItemDamage() == 9 &&
-					this.forgeItemstacks[2].getItemDamage() == 9 && this.forgeItemstacks[3].getItemDamage() == 9 &&
-					this.forgeItemstacks[4].getItemDamage() == 9 && this.forgeItemstacks[5].getItemDamage() == 9){
-				kanokaloc[0] = (int)this.forgeItemstacks[0].getTagCompound().getByte("DiscLoc");
-				kanokaloc[1] = (int)this.forgeItemstacks[1].getTagCompound().getByte("DiscLoc");
-				kanokaloc[2] = (int)this.forgeItemstacks[2].getTagCompound().getByte("DiscLoc");
-				kanokaloc[3] = (int)this.forgeItemstacks[3].getTagCompound().getByte("DiscLoc");
-				kanokaloc[4] = (int)this.forgeItemstacks[4].getTagCompound().getByte("DiscLoc");
-				kanokaloc[5] = (int)this.forgeItemstacks[5].getTagCompound().getByte("DiscLoc");
-				if(!TileInventoryMaskForge.hasDuplicates(kanokaloc)){
-					return true;
-				}
-			}
-		}
-		*/
+		recipeList.add(new MaskMFRecipe(new ItemStack(NuiCraftItems.mask_mata_kakama), new int[]{1, 8}));
+		recipeList.add(new MaskMFRecipe(new ItemStack(NuiCraftItems.mask_mata_pakari), new int[]{4, 5, 7}));
+		recipeList.add(new MaskMFRecipe(new ItemStack(NuiCraftItems.mask_mata_kaukau), new int[]{4, 6, 7}));
+		recipeList.add(new MaskMFRecipe(new ItemStack(NuiCraftItems.mask_mata_miru), new int[]{3, 8}));
+		recipeList.add(new MaskMFRecipe(new ItemStack(NuiCraftItems.mask_mata_hau), new int[]{5, 8}));
+		recipeList.add(new MaskMFRecipe(new ItemStack(NuiCraftItems.mask_mata_akaku), new int[]{7, 8}));
 		
-		this.addRecipe(new ItemStack(Bionicle.maskVahi), new ItemStack(Bionicle.kanokaTime));
+		addRecipe(new ItemStack(NuiCraftItems.mask_vahi), new ItemStack(NuiCraftItems.kanoka_time));
 		
-		if(Loader.isModLoaded("tconstruct")){
-			this.addOreDictRecipe(new ItemStack(Bionicle.ingotProtosteel), new ItemStack(Bionicle.ingotProtodermis, 8), "04ingotSteel", "01ingotBedrockium");
-		}else{
-			this.addOreDictRecipe(new ItemStack(Bionicle.ingotProtosteel), new ItemStack(Bionicle.ingotProtodermis, 8), "08ingotIron", "08obsidian");
-		}
-		this.addRecipe(new ItemStack(Bionicle.Lightstone, 4), Items.GLOWSTONE_DUST, Bionicle.ingotProtodermis);
+		addOreDictRecipe(new ItemStack(NuiCraftItems.ingot_protosteel), new ItemStack(NuiCraftItems.ingot_protodermis, 8), "08ingotIron", "08coal");
+		
+		addRecipe(new ItemStack(NuiCraftBlocks.lightstone, 4), Items.GLOWSTONE_DUST, NuiCraftItems.ingot_protodermis);
 	}
 
 	public List<IMFRecipe> getRecipeList(){
@@ -98,7 +73,7 @@ public class MFRecipeManager {
 				i++;
 			}
 		}
-		this.recipeList.add(new GenericMFRecipe(output, input));
+		recipeList.add(new GenericMFRecipe(output, input));
 	}	
 
 	public void addOreDictRecipe(Object output, Object... inputs){
@@ -112,7 +87,7 @@ public class MFRecipeManager {
 			List<ItemStack> outputVariations = OreDictionary.getOres(((String)output).substring(2));
 			if(!outputVariations.isEmpty()){
 				ItemStack output1 = outputVariations.get(0);
-				output1.stackSize = Integer.parseInt(((String)output).substring(0, 2));
+				output1.setCount(Integer.parseInt(((String)output).substring(0, 2)));
 				System.out.println(output1);
 				addRecipe(output1, inputs);
 			}
@@ -121,13 +96,13 @@ public class MFRecipeManager {
 		}else return;
 	}
 
-	public IMFRecipe getMatchingRecipe(ItemStack[] inputItemstacks){
-		ItemStack[] input = new ItemStack[inputItemstacks.length];
-		for (IMFRecipe recipe : this.recipeList){
-			for(int i = 0; i < inputItemstacks.length; i++){
-				if(inputItemstacks[i] == null){
-					input[i] = null;
-				}else input[i] = inputItemstacks[i].copy();
+	public IMFRecipe getMatchingRecipe(NonNullList<ItemStack> inputItemStacks){
+		NonNullList<ItemStack> input = NonNullList.<ItemStack>withSize(inputItemStacks.size(), ItemStack.EMPTY);
+		for (IMFRecipe recipe : recipeList){
+			for(int i = 0; i < inputItemStacks.size(); i++){
+				if(!inputItemStacks.get(i).isEmpty()){
+					input.set(i, inputItemStacks.get(i).copy());
+				}
 			}
 			if (recipe.matches(input)){
 				return recipe;

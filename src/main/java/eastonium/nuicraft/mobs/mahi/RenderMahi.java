@@ -1,6 +1,6 @@
 package eastonium.nuicraft.mobs.mahi;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class RenderMahi extends RenderLiving {
-	private static final ResourceLocation texture = new ResourceLocation(Bionicle.MODID + ":textures/entity/Mahi.png");
+	private static final ResourceLocation texture = new ResourceLocation(NuiCraft.MODID + ":textures/entity/Mahi.png");
 	protected ModelMahi model = new ModelMahi();
 	
 	public RenderMahi(RenderManager rm, ModelBase mb, float f)

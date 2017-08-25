@@ -1,13 +1,15 @@
 package eastonium.nuicraft.machine.maskForge.recipe;
 
+import eastonium.nuicraft.machine.maskForge.TileInventoryMaskForge;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class GenericMFRecipe implements IMFRecipe {
 
 	private final ItemStack recipeOutput;
 	private final Object[] requiredInput;
-	private ItemStack[] returnStacks = null;
+	private NonNullList<ItemStack> returnStacks = NonNullList.<ItemStack>withSize(TileInventoryMaskForge.INPUT_SLOTS_COUNT, ItemStack.EMPTY);;
 
 
 	public GenericMFRecipe(ItemStack output, Object[] inputs){
@@ -16,7 +18,7 @@ public class GenericMFRecipe implements IMFRecipe {
 	}
 
 	@Override
-	public boolean matches(ItemStack[] inputStacks){
+	public boolean matches(NonNullList<ItemStack> inputStacks){
 		Object[] reqInputs = new Object[requiredInput.length];
 		for(int i = 0; i < requiredInput.length; i++){
 			if(requiredInput[i] instanceof ItemStack){
@@ -26,17 +28,17 @@ public class GenericMFRecipe implements IMFRecipe {
 			}
 		}
 		returnStacks = inputStacks;
-		for(int i = 0; i < returnStacks.length; i++){
-			if(returnStacks[i] != null){
+		for(int i = 0; i < returnStacks.size(); i++){
+			if(!returnStacks.get(i).isEmpty()){
 				inputLoop:
 				for(int j = 0; j < reqInputs.length; j++){
 					if(reqInputs[j] instanceof ItemStack){
-						if(returnStacks[i].isItemEqual((ItemStack)reqInputs[j])){
-							int commonSize = Math.min(returnStacks[i].stackSize, ((ItemStack)reqInputs[j]).stackSize);
-							returnStacks[i].stackSize -= commonSize;
-							((ItemStack)reqInputs[j]).stackSize -= commonSize;
-							if(returnStacks[i].stackSize <= 0){
-								returnStacks[i] = null;
+						if(returnStacks.get(i).isItemEqual((ItemStack)reqInputs[j])){
+							int commonSize = Math.min(returnStacks.get(i).getCount(), ((ItemStack)reqInputs[j]).getCount());
+							returnStacks.get(i).shrink(commonSize);
+							((ItemStack)reqInputs[j]).shrink(commonSize);
+							if(returnStacks.get(i).getCount() <= 0){
+								returnStacks.set(i, ItemStack.EMPTY);
 								break inputLoop;
 							}
 						}
@@ -44,15 +46,15 @@ public class GenericMFRecipe implements IMFRecipe {
 						int reqInputStackSize = Integer.parseInt(((String)reqInputs[j]).substring(0, 2));
 						if(reqInputStackSize > 0){
 							String reqInputODName = ((String)reqInputs[j]).substring(2);
-							int[] oreIDs = OreDictionary.getOreIDs(returnStacks[i]);
+							int[] oreIDs = OreDictionary.getOreIDs(returnStacks.get(i));
 							for(int oreID : oreIDs){
 								if(OreDictionary.getOreName(oreID).equals(reqInputODName)){
-									int commonSize = Math.min(returnStacks[i].stackSize, reqInputStackSize);
-									returnStacks[i].stackSize -= commonSize;
+									int commonSize = Math.min(returnStacks.get(i).getCount(), reqInputStackSize);
+									returnStacks.get(i).shrink(commonSize);
 									reqInputStackSize -= commonSize;
 									reqInputs[j] = String.format("%02d", reqInputStackSize) + reqInputODName;
-									if(returnStacks[i].stackSize <= 0){
-										returnStacks[i] = null;
+									if(returnStacks.get(i).getCount() <= 0){
+										returnStacks.set(i, ItemStack.EMPTY);
 										break inputLoop;
 									}
 								}
@@ -64,7 +66,7 @@ public class GenericMFRecipe implements IMFRecipe {
 		}
 		for(int i = 0; i < reqInputs.length; i++){
 			if(reqInputs[i] instanceof ItemStack){
-				if(((ItemStack)reqInputs[i]).stackSize > 0) return false;
+				if(((ItemStack)reqInputs[i]).getCount() > 0) return false;
 			}else if(!((String)reqInputs[i]).startsWith("00")){
 				return false;
 			}
@@ -78,7 +80,7 @@ public class GenericMFRecipe implements IMFRecipe {
 	}
 
 	@Override
-	public ItemStack[] getRemainingItems(){
+	public NonNullList<ItemStack> getRemainingItems(){
 		return returnStacks;
 	}
 }

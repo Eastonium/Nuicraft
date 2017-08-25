@@ -92,43 +92,43 @@ public class ContainerMaskForge extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer par1EntityPlayer){
-		return maskForgeInv.isUseableByPlayer(par1EntityPlayer);
+		return maskForgeInv.isUsableByPlayer(par1EntityPlayer);
 	}
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex)
 	{
 		Slot sourceSlot = (Slot)inventorySlots.get(sourceSlotIndex);
-		if (sourceSlot == null || !sourceSlot.getHasStack()) return null;
+		if (sourceSlot == null || !sourceSlot.getHasStack()) return ItemStack.EMPTY;
 		ItemStack sourceStack = sourceSlot.getStack();
 		ItemStack copyOfSourceStack = sourceStack.copy();
 
 		if(sourceSlotIndex >= VANILLA_FIRST_SLOT_INDEX && sourceSlotIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT){
 			if(TileInventoryMaskForge.isItemValidForFuelSlot(sourceStack)){
 				if(!mergeItemStack(sourceStack, FIRST_FUEL_SLOT_INDEX, FIRST_FUEL_SLOT_INDEX + FUEL_SLOTS_COUNT, false)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (TileInventoryMaskForge.isItemValidForInputSlot(sourceStack)){
 				if(!mergeItemStack(sourceStack, FIRST_INPUT_SLOT_INDEX, FIRST_INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT, false)){
-					return null;
+					return ItemStack.EMPTY;
 				}
-			}else return null;
+			}else return ItemStack.EMPTY;
 		}else if(sourceSlotIndex >= FIRST_FUEL_SLOT_INDEX && sourceSlotIndex < FIRST_FUEL_SLOT_INDEX + FURNACE_SLOTS_COUNT){
 			if(!mergeItemStack(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)){
-				return null;
+				return ItemStack.EMPTY;
 			}
 		}else{
 			System.err.print("Invalid slotIndex:" + sourceSlotIndex);
-			return null;
+			return ItemStack.EMPTY;
 		}
 
-		if(sourceStack.stackSize == 0){
-			sourceSlot.putStack(null);
+		if(sourceStack.getCount() == 0){
+			sourceSlot.putStack(ItemStack.EMPTY);
 		}else{
 			sourceSlot.onSlotChanged();
 		}
 
-		sourceSlot.onPickupFromSlot(player, sourceStack);
+		sourceSlot.onTake(player, sourceStack);
 		return copyOfSourceStack;
 	}
 
@@ -163,7 +163,7 @@ public class ContainerMaskForge extends Container {
 			IContainerListener icontainerlistener = (IContainerListener)this.listeners.get(i);
 			for (int fieldID = 0; fieldID < maskForgeInv.getFieldCount(); ++fieldID) {
 				if (fieldHasChanged[fieldID]) {
-					icontainerlistener.sendProgressBarUpdate(this, fieldID, cachedFields[fieldID]);
+					icontainerlistener.sendWindowProperty(this, fieldID, cachedFields[fieldID]);
 				}
 			}
 		}

@@ -91,47 +91,47 @@ public class ContainerPurifier extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer par1EntityPlayer){
-		return purifierInv.isUseableByPlayer(par1EntityPlayer);
+		return purifierInv.isUsableByPlayer(par1EntityPlayer);
 	}
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex)
 	{
 		Slot sourceSlot = (Slot)inventorySlots.get(sourceSlotIndex);
-		if (sourceSlot == null || !sourceSlot.getHasStack()) return null;
+		if (sourceSlot == null || !sourceSlot.getHasStack()) return ItemStack.EMPTY;
 		ItemStack sourceStack = sourceSlot.getStack();
 		ItemStack copyOfSourceStack = sourceStack.copy();
 
 		if(sourceSlotIndex >= VANILLA_FIRST_SLOT_INDEX && sourceSlotIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT){
 			if(TileInventoryPurifier.isItemValidForInputSlot(sourceStack)){
 				if(!mergeItemStack(sourceStack, INPUT_SLOT_INDEX, INPUT_SLOT_INDEX + 1, false)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (TileInventoryPurifier.isItemValidForOutputSlot(sourceStack)){
 				if(!mergeItemStack(sourceStack, OUTPUT_SLOT_INDEX, OUTPUT_SLOT_INDEX + 1, false)){
-					return null;
+					return ItemStack.EMPTY;
 				}
 			}else if (TileInventoryPurifier.isItemValidForFilterSlot(sourceStack)){
 				if(!mergeItemStack(sourceStack, FILTER_SLOT_INDEX, FILTER_SLOT_INDEX + 1, false)){
-					return null;
+					return ItemStack.EMPTY;
 				}
-			}else return null;
+			}else return ItemStack.EMPTY;
 		}else if(sourceSlotIndex >= INPUT_SLOT_INDEX && sourceSlotIndex < INPUT_SLOT_INDEX + FURNACE_SLOTS_COUNT){
 			if(!mergeItemStack(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)){
-				return null;
+				return ItemStack.EMPTY;
 			}
 		}else{
 			System.err.print("Invalid slotIndex:" + sourceSlotIndex);
-			return null;
+			return ItemStack.EMPTY;
 		}
 
-		if(sourceStack.stackSize == 0){
-			sourceSlot.putStack(null);
+		if(sourceStack.getCount() == 0){
+			sourceSlot.putStack(ItemStack.EMPTY);
 		}else{
 			sourceSlot.onSlotChanged();
 		}
 
-		sourceSlot.onPickupFromSlot(player, sourceStack);
+		sourceSlot.onTake(player, sourceStack);
 		return copyOfSourceStack;
 	}
 	
@@ -143,22 +143,22 @@ public class ContainerPurifier extends Container {
         if (reverseDirection) i = endIndex - 1;
         
         if (stack.isStackable()){
-            while (stack.stackSize > 0 && (!reverseDirection && i < endIndex || reverseDirection && i >= startIndex)){
-            	Slot slot = (Slot)this.inventorySlots.get(i);
+            while (stack.getCount() > 0 && (!reverseDirection && i < endIndex || reverseDirection && i >= startIndex)){
+            	Slot slot = (Slot)inventorySlots.get(i);
                 ItemStack itemstack = slot.getStack();
                 int maxLimit = Math.min(stack.getMaxStackSize(), slot.getSlotStackLimit());
                 
-                if (itemstack != null && areItemStacksEqual(stack, itemstack)){
-                    int j = itemstack.stackSize + stack.stackSize;
+                if (!itemstack.isEmpty() && areItemStacksEqual(stack, itemstack)){
+                    int j = itemstack.getCount() + stack.getCount();
                     if (j <= maxLimit){
-                        stack.stackSize = 0;
-                        itemstack.stackSize = j;
+                        stack.setCount(0);
+                        itemstack.setCount(j);
                         slot.onSlotChanged();
                         flag = true;
                         
-                    }else if (itemstack.stackSize < maxLimit){
-                        stack.stackSize -= maxLimit - itemstack.stackSize;
-                        itemstack.stackSize = maxLimit;
+                    }else if (itemstack.getCount() < maxLimit){
+                        stack.shrink(maxLimit - itemstack.getCount());
+                        itemstack.setCount(maxLimit);
                         slot.onSlotChanged();
                         flag = true;
                     }
@@ -168,26 +168,26 @@ public class ContainerPurifier extends Container {
                 }else ++i;
             }
         }
-        if (stack.stackSize > 0){
+        if (stack.getCount() > 0){
             if (reverseDirection){
                 i = endIndex - 1;
             }else i = startIndex;
 
             while (!reverseDirection && i < endIndex || reverseDirection && i >= startIndex){
-                Slot slot1 = (Slot)this.inventorySlots.get(i);
+                Slot slot1 = (Slot)inventorySlots.get(i);
                 ItemStack itemstack1 = slot1.getStack();
 
-                if (itemstack1 == null && slot1.isItemValid(stack)){ // Forge: Make sure to respect isItemValid in the slot.
-                	if(stack.stackSize <= slot1.getSlotStackLimit()){
+                if (itemstack1.isEmpty() && slot1.isItemValid(stack)){ // Forge: Make sure to respect isItemValid in the slot.
+                	if(stack.getCount() <= slot1.getSlotStackLimit()){
                 		slot1.putStack(stack.copy());
                         slot1.onSlotChanged();
-                        stack.stackSize = 0;
+                        stack.setCount(0);
                         flag = true;
                         break;
                 	}else{
                 		itemstack1 = stack.copy();
-                		stack.stackSize -= slot1.getSlotStackLimit();
-                        itemstack1.stackSize = slot1.getSlotStackLimit();
+                		stack.shrink(slot1.getSlotStackLimit());
+                        itemstack1.setCount(slot1.getSlotStackLimit());
                         slot1.putStack(itemstack1);
                         slot1.onSlotChanged();
                         flag = true;
@@ -226,7 +226,7 @@ public class ContainerPurifier extends Container {
 			IContainerListener icontainerlistener = (IContainerListener)this.listeners.get(i);
 			for (int fieldID = 0; fieldID < purifierInv.getFieldCount(); ++fieldID) {
 				if (fieldHasChanged[fieldID]) {
-					icontainerlistener.sendProgressBarUpdate(this, fieldID, cachedFields[fieldID]);
+					icontainerlistener.sendWindowProperty(this, fieldID, cachedFields[fieldID]);
 				}
 			}
 		}
@@ -264,7 +264,7 @@ public class ContainerPurifier extends Container {
 		}
 		@Override
 		public boolean isItemValid(ItemStack stack) {
-			return false;
+			return true;
 		}
 	}
 	public class SlotOutput extends Slot {

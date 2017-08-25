@@ -2,7 +2,10 @@ package eastonium.nuicraft.kanoka;
 
 import java.util.List;
 
-import eastonium.nuicraft.Bionicle;
+import javax.annotation.Nullable;
+
+import eastonium.nuicraft.NuiCraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -19,35 +22,31 @@ public class ItemKanokaDisc extends Item {
 	public static final String[] POWER_NAMES = new String[]{"Reconstitution at Random", "Freezing", "Weakening", "Remove Poison", "Enlarging", "Shrinking", "Regeneration", "Teleportation"};
 	
 	public ItemKanokaDisc(){
-		this.maxStackSize = 8;
-		this.setCreativeTab(Bionicle.bioToolTab);
+		maxStackSize = 8;
+		setCreativeTab(NuiCraft.bio_tool_tab);
+		setUnlocalizedName(NuiCraft.MODID + ".kanoka_disc");
+		setRegistryName("kanoka_disc");
 	}
-	
-	public Item setName(String name){
-        super.setUnlocalizedName(name);
-        this.setRegistryName(Bionicle.MODID, name);
-        return this;
-    }
 	
 	@Override
 	public String getItemStackDisplayName(ItemStack stack){
-        byte[] discNumbers = this.getKanokaNumber(stack);
+        byte[] discNumbers = getKanokaNumber(stack);
         if(discNumbers == null) return "Creative Kanoka : Right-Click to Create";
         return "Kanoka of " + POWER_NAMES[discNumbers[1]-1] + " : Power " + discNumbers[2];
     }
 
 	@Override
-	public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4){
-		if (itemStack.getTagCompound() != null){
-			byte[] discNumbers = this.getKanokaNumber(itemStack);
-			par3List.add("Metru Made: " + METRU_NAMES[discNumbers[0]-1]);
-			par3List.add("Power Type: " + POWER_NAMES[discNumbers[1]-1]);
-			par3List.add("Power Level: " + discNumbers[2]);
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		if (stack.getTagCompound() != null){
+			byte[] discNumbers = getKanokaNumber(stack);
+			tooltip.add("Metru Made: " + METRU_NAMES[discNumbers[0]-1]);
+			tooltip.add("Power Type: " + POWER_NAMES[discNumbers[1]-1]);
+			tooltip.add("Power Level: " + discNumbers[2]);
 		}
 	}
 
 	public static boolean setKanokaNumber(ItemStack stack, int metru, int powerType, int powerLevel){
-		if(stack == null || stack.getItem() == null || !(stack.getItem() instanceof ItemKanokaDisc)) return false;
+		if(stack.isEmpty() || !(stack.getItem() instanceof ItemKanokaDisc)) return false;
 		//if(metru == 0 && powerType == 0 && powerLevel == 0) return false;
 		if(stack.getTagCompound() == null) stack.setTagCompound(new NBTTagCompound());
 		NBTTagCompound stackTagCompound = stack.getTagCompound();
@@ -65,24 +64,25 @@ public class ItemKanokaDisc extends Item {
 	}
 
 	public static byte[] getKanokaNumber(ItemStack stack){
-		if(stack == null || stack.getItem() == null || !(stack.getItem() instanceof ItemKanokaDisc)) return null;
+		if(stack.isEmpty() || !(stack.getItem() instanceof ItemKanokaDisc)) return null;
 		NBTTagCompound stackTagCompound = stack.getTagCompound();
 		if(stackTagCompound == null) return null;
 		return new byte[]{stackTagCompound.getByte("metru"), stackTagCompound.getByte("powerType"), stackTagCompound.getByte("powerLevel")};
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer playerIn, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+		ItemStack itemStackIn = playerIn.getHeldItem(handIn);
 		if(itemStackIn.getTagCompound() == null){//TODO Disc Selector GUI?
 			setKanokaNumber(itemStackIn, 0, 0, 0);
 			return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
 		}		
-		if (!playerIn.capabilities.isCreativeMode) --itemStackIn.stackSize;		
-		world.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-		if (!world.isRemote){
-			EntityDisc disc = new EntityDisc(world, playerIn, itemStackIn.getTagCompound(), !playerIn.capabilities.isCreativeMode);
+		if (!playerIn.capabilities.isCreativeMode) itemStackIn.shrink(1);		
+		worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+		if (!worldIn.isRemote){
+			EntityDisc disc = new EntityDisc(worldIn, playerIn, itemStackIn.getTagCompound(), !playerIn.capabilities.isCreativeMode);
             disc.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 0.2F);
-			world.spawnEntityInWorld(disc);
+			worldIn.spawnEntity(disc);
 		}
 		return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
 	}

@@ -1,0 +1,70 @@
+{
+	"type": "dye_mask",
+	"ingredients": [
+        [
+            {
+                "type": "forge:ore_dict",
+                "ore": "dyeWhite"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyeOrange"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyeMagenta"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyeLightBlue"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyeYellow"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyeLime"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyePink"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyeLightGray"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyeCyan"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyePurple"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyeBlue"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyeBrown"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyeGreen"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyeRed"
+            },{
+                "type": "forge:ore_dict",
+                "ore": "dyeBlack"
+            }
+        ],[
+    		{
+    			"item": "nuicraft:mask_mata_kakama"
+    		},{
+                "item": "nuicraft:mask_mata_pakari"
+            },{
+                "item": "nuicraft:mask_mata_kaukau"
+            },{
+                "item": "nuicraft:mask_mata_miru"
+            },{
+                "item": "nuicraft:mask_mata_hau"
+            },{
+                "item": "nuicraft:mask_mata_akaku"
+            }
+    	]
+	],
+	"result": {
+		"item": "nuicraft:mask_mata_hau"
+	}
+}

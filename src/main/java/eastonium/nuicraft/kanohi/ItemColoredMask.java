@@ -2,7 +2,7 @@ package eastonium.nuicraft.kanohi;
 
 import java.util.List;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -17,20 +18,23 @@ public class ItemColoredMask extends ItemMask {
 	public static final int DEFAULT_COLOR = 11324652;
 	public static final int WHITE_COLOR = 16777215;
 
-	public ItemColoredMask(boolean isShiny){
-		super(isShiny);
+	public ItemColoredMask(String name, boolean isShiny){
+		super(name, isShiny);
+	}
+	
+	public ItemColoredMask(String name) {
+		super(name);
 	}
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String layer){
-		//TODO Golden/Silver/Copper masks with different texture
-		if(!this.hasColor(stack)){
-			return Bionicle.MODID + ":textures/models/masks/" + this.getUnlocalizedName().substring(9) + "_" + this.getMetal(stack) + ".png";
+		if(!hasColor(stack)){
+			return NuiCraft.MODID + ":textures/models/masks/" + getRegistryName().getResourcePath() + "_" + getMetal(stack) + ".png";
 		}
 		if(layer == null){
-			return Bionicle.MODID + ":textures/models/masks/" + this.getUnlocalizedName().substring(9) + ".png";
+			return NuiCraft.MODID + ":textures/models/masks/" + getRegistryName().getResourcePath() + ".png";
 		}
-		return Bionicle.MODID + ":textures/models/masks/blank.png";
+		return NuiCraft.MODID + ":textures/models/masks/blank.png";
 	}
 
 	@Override
@@ -123,22 +127,24 @@ public class ItemColoredMask extends ItemMask {
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void getSubItems(Item item, CreativeTabs par2CreativeTabs, List list){
-		ItemStack itemstack = new ItemStack(item);
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items){
+		if (tab != getCreativeTab()) return;
+
+		ItemStack itemstack = new ItemStack(this);
 		this.setMetal(itemstack, (byte)1);//Gold
-		list.add(itemstack);
+		items.add(itemstack);
 		
 		itemstack = itemstack.copy();//Silver
 		this.setMetal(itemstack, (byte)2);
-		list.add(itemstack);
+		items.add(itemstack);
 		
 		itemstack = itemstack.copy();//Bronze
 		this.setMetal(itemstack, (byte)3);
-		list.add(itemstack);
+		items.add(itemstack);
 		
 		itemstack = itemstack.copy();//Colorable
 		this.removeMetal(itemstack);
 		this.setColor(itemstack, DEFAULT_COLOR);
-		list.add(itemstack);
+		items.add(itemstack);
 	}
 }

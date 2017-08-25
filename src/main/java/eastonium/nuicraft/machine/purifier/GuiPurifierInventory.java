@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiPurifierInventory extends GuiContainer
 {
-	private static final ResourceLocation guiTexture = new ResourceLocation(Bionicle.MODID + ":textures/gui/purifier.png");
+	private static final ResourceLocation guiTexture = new ResourceLocation(NuiCraft.MODID + ":textures/gui/purifier_gui.png");
 	private TileInventoryPurifier tileEntity;
 	
 	private static final int TANK1_XPOS = 6;
@@ -40,7 +40,7 @@ public class GuiPurifierInventory extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		String name = this.tileEntity.getName();
-		this.fontRendererObj.drawString(name, this.xSize - this.fontRendererObj.getStringWidth(name) - 44, 12, 4346200);
+		this.fontRenderer.drawString(name, this.xSize - this.fontRenderer.getStringWidth(name) - 44, 12, 4346200);
 
 		List<String> hoveringText = new ArrayList<String>();
 
@@ -55,7 +55,7 @@ public class GuiPurifierInventory extends GuiContainer
 		}
 		
 		if (!hoveringText.isEmpty()){
-			drawHoveringText(hoveringText, mouseX - guiLeft, mouseY - guiTop, fontRendererObj);
+			drawHoveringText(hoveringText, mouseX - guiLeft, mouseY - guiTop, fontRenderer);
 		}
 	}
 

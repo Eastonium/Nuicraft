@@ -14,8 +14,8 @@ public class ModelAkakuMataMask extends ModelBiped {
 	ModelRenderer Eye3;
 
 	public ModelAkakuMataMask(){
-		this.textureWidth = 64;
-		this.textureHeight = 32;
+		textureWidth = 64;
+		textureHeight = 32;
 
 		Mask = new ModelRenderer(this, 0, 0);
 		Mask.addBox(-4F, -7.5F, -4F, 8, 13, 13);
@@ -56,26 +56,26 @@ public class ModelAkakuMataMask extends ModelBiped {
 		setRotation(Eye3, 0F, 0F, 0F);
 
 		//this.Mask.addChild(Mask);
-		this.Mask.addChild(EyeBase1);
-		this.Mask.addChild(EyeBase2);
-		this.Mask.addChild(Eye1);
-		this.Mask.addChild(Eye2);
-		this.Mask.addChild(Eye3);
+		Mask.addChild(EyeBase1);
+		Mask.addChild(EyeBase2);
+		Mask.addChild(Eye1);
+		Mask.addChild(Eye2);
+		Mask.addChild(Eye3);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float scale){
-		this.setRotationAngles(f, f1, f2, f3, f4, scale, entity);
+		setRotationAngles(f, f1, f2, f3, f4, scale, entity);
 		GlStateManager.pushMatrix();
 		if (entity.isSneaking()) GlStateManager.translate(0.0F, 0.25F, 0.0F);
-		this.Mask.render(scale * 1.2F);
+		Mask.render(scale * 1.2F);
 		GlStateManager.popMatrix();
 	}
 	
 	public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity entityIn){
-        this.Mask.rotateAngleY = p_78087_4_ / (180F / (float)Math.PI);
-        this.Mask.rotateAngleX = p_78087_5_ / (180F / (float)Math.PI);
+        Mask.rotateAngleY = p_78087_4_ / (180F / (float)Math.PI);
+        Mask.rotateAngleX = p_78087_5_ / (180F / (float)Math.PI);
 
-        if(this.isSneak){
+        if(isSneak){
             Mask.rotationPointY = 1.0F;
         }else{
             Mask.rotationPointY = 0.0F;

@@ -1,6 +1,7 @@
 package eastonium.nuicraft.kanohi;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
+import eastonium.nuicraft.NuiCraftItems;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,38 +16,38 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemMask extends ItemArmor {
-	public static ArmorMaterial KANOHI = EnumHelper.addArmorMaterial("Kanohi", Bionicle.MODID + ":textures/models/masks/blank.png", 1, new int[]{0, 0, 0, 3}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
+	public static ArmorMaterial KANOHI = EnumHelper.addArmorMaterial("Kanohi", NuiCraft.MODID + ":textures/models/masks/blank.png", 1, new int[]{0, 0, 0, 3}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
 	private boolean isShiny = false;
 
-	public ItemMask(boolean isShiny){
+	public ItemMask(String name, boolean isShiny){
 		super(KANOHI, 0, EntityEquipmentSlot.HEAD);
 		this.isShiny = isShiny;
-		this.setMaxDamage(0);
-		this.setCreativeTab(Bionicle.bioMaskTab);
+		setMaxDamage(0);
+		setCreativeTab(NuiCraft.bio_mask_tab);
+		setUnlocalizedName(NuiCraft.MODID + "." + name);
+		setRegistryName(name);
 	}
 	
-	public Item setName(String name){
-        super.setUnlocalizedName(name);
-        this.setRegistryName(Bionicle.MODID, name);
-        return this;
-    }
+	public ItemMask(String name) {
+		this(name, false);
+	}
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String layer){
-		return Bionicle.MODID + ":textures/models/masks/" + this.getUnlocalizedName().substring(9) + ".png";
+		return NuiCraft.MODID + ":textures/models/masks/" + getRegistryName().getResourcePath() + ".png";
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack stack, EntityEquipmentSlot slot, ModelBiped _default){
 		ModelBiped armorModel = null;
-		if(stack != null){
-			if(stack.getItem() == Bionicle.maskMataAkaku || 
-					(stack.getItem() == Bionicle.maskMataGold && stack.getItemDamage() == 5)){
-				armorModel = Bionicle.proxy.getArmorModel(0);//Akaku Model
-			}else if(stack.getItem() == Bionicle.maskIgnika && stack.getItemDamage() == 0){
-				armorModel = Bionicle.proxy.getArmorModel(1);//VNOG Ignika Model
-			}else armorModel = Bionicle.proxy.getArmorModel(-1);//Generic Model
+		if(!stack.isEmpty()){
+			if(stack.getItem() == NuiCraftItems.mask_mata_akaku || 
+					(stack.getItem() == NuiCraftItems.mask_mata_gold && stack.getItemDamage() == 5)){
+				armorModel = NuiCraft.proxy.getArmorModel(0);//Akaku Model
+			}else if(stack.getItem() == NuiCraftItems.mask_ignika && stack.getItemDamage() == 0){
+				armorModel = NuiCraft.proxy.getArmorModel(1);//VNOG Ignika Model
+			}else armorModel = NuiCraft.proxy.getArmorModel(-1);//Generic Model
 		}
 		if(armorModel != null){
 			armorModel.isSneak = entityLiving.isSneaking();

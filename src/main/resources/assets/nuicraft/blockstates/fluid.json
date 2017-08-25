@@ -7,10 +7,10 @@
 				"fluid": "protodermis"
 			}
 		},
-		"protodermisMolten": {
+		"protodermismolten": {
 			"model": "forge:fluid",
 			"custom": {
-				"fluid": "protodermisMolten"
+				"fluid": "protodermismolten"
 			}
 		}
 	}

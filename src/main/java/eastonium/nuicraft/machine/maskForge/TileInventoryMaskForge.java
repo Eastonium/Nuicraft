@@ -2,35 +2,33 @@ package eastonium.nuicraft.machine.maskForge;
 
 import java.util.Arrays;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraftItems;
 import eastonium.nuicraft.machine.maskForge.recipe.IMFRecipe;
 import eastonium.nuicraft.machine.maskForge.recipe.MFRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
-public class TileInventoryMaskForge extends TileEntity implements ITickable, IInventory, IFluidHandler{
+public class TileInventoryMaskForge extends TileEntity implements ITickable, ISidedInventory, IFluidHandler{
 	public static final int BUCKET_VOLUME = 1000;
 	
 	public static final int FUEL_SLOTS_COUNT = 1;
@@ -38,11 +36,11 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 	public static final int OUTPUT_SLOTS_COUNT = 1;
 	public static final int TOTAL_SLOTS_COUNT = FUEL_SLOTS_COUNT + INPUT_SLOTS_COUNT + OUTPUT_SLOTS_COUNT;
 
-	public static final int FIRST_FUEL_SLOT = 0;
-	public static final int FIRST_INPUT_SLOT = FIRST_FUEL_SLOT + FUEL_SLOTS_COUNT;
-	public static final int FIRST_OUTPUT_SLOT = FIRST_INPUT_SLOT + INPUT_SLOTS_COUNT;
+	public static final int FUEL_SLOT = 0;
+	public static final int FIRST_INPUT_SLOT = FUEL_SLOT + FUEL_SLOTS_COUNT;
+	public static final int OUTPUT_SLOT = FIRST_INPUT_SLOT + INPUT_SLOTS_COUNT;
 
-	private ItemStack[] forgeItemstacks = new ItemStack[TOTAL_SLOTS_COUNT];
+	private NonNullList<ItemStack> forgeItemstacks = NonNullList.<ItemStack>withSize(TOTAL_SLOTS_COUNT, ItemStack.EMPTY);
     protected FluidTank tank = new FluidTank(BUCKET_VOLUME * 4);
 
 	public int cookTime = 0;
@@ -51,29 +49,21 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 
 	public double fractionOfFuelRemaining(){
 		if(isTankEmpty()) return 0;
-		double fraction = this.tank.getFluidAmount() / (double)this.tank.getCapacity();
-		return MathHelper.clamp_double(fraction, 0.0, 1.0);
+		double fraction = tank.getFluidAmount() / (double)tank.getCapacity();
+		return MathHelper.clamp(fraction, 0.0, 1.0);
 	}
 
 	public double fractionLeftOfCompletion(){
-		double fraction = this.cookTime / (double)COOK_TIME_FOR_COMPLETION;
-		return MathHelper.clamp_double(fraction, 0.0, 1.0);
+		double fraction = cookTime / (double)COOK_TIME_FOR_COMPLETION;
+		return MathHelper.clamp(fraction, 0.0, 1.0);
 	}
 	
 	public boolean isTankFull(){
-		return this.tank.getFluidAmount() == this.tank.getCapacity();
+		return tank.getFluidAmount() == tank.getCapacity();
 	}
 	
 	public boolean isTankEmpty(){
-		return this.tank.getFluidAmount() == 0;
-	}
-	
-	public ItemStack[] getInputItemStacks(){
-		ItemStack[] itemstacks = new ItemStack[INPUT_SLOTS_COUNT];
-		for(int i = FIRST_INPUT_SLOT; i < FIRST_OUTPUT_SLOT; i++){
-			itemstacks[i-FUEL_SLOTS_COUNT] = forgeItemstacks[i];
-		}
-		return itemstacks;
+		return tank.getFluidAmount() == 0;
 	}
 
 	@Override
@@ -115,46 +105,46 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 	
 	@Override
 	public void update(){
-		boolean hasLava = !this.isTankEmpty();
+		boolean hasLava = !isTankEmpty();
 		boolean needsUpdate = false;
 
-		if(!this.worldObj.isRemote){
-			if(this.forgeItemstacks[FIRST_FUEL_SLOT] != null){
-				ItemStack item = this.forgeItemstacks[FIRST_FUEL_SLOT];
-				if(item.getItem() == Items.LAVA_BUCKET && this.tank.getCapacity() - this.tank.getFluidAmount() >= BUCKET_VOLUME){
-					this.fill(new FluidStack(FluidRegistry.LAVA, BUCKET_VOLUME), true);
-					this.forgeItemstacks[FIRST_FUEL_SLOT] = item.getItem().getContainerItem(forgeItemstacks[FIRST_FUEL_SLOT]);
+		if(!world.isRemote){
+			if(!forgeItemstacks.get(FUEL_SLOT).isEmpty()){
+				ItemStack item = forgeItemstacks.get(FUEL_SLOT);
+				if(item.getItem() == Items.LAVA_BUCKET && tank.getCapacity() - tank.getFluidAmount() >= BUCKET_VOLUME){
+					fill(new FluidStack(FluidRegistry.LAVA, BUCKET_VOLUME), true);
+					setInventorySlotContents(FUEL_SLOT, item.getItem().getContainerItem(forgeItemstacks.get(FUEL_SLOT)));
 					needsUpdate = true;
 				}/*else if(item.getItem() instanceof IFluidContainerItem){
-					this.fill(null, ((IFluidContainerItem)item.getItem()).drain(item, this.tank.getCapacity()-this.tank.getFluidAmount(), true), true);
+					fill(null, ((IFluidContainerItem)item.getItem()).drain(item, tank.getCapacity()-tank.getFluidAmount(), true), true);
 				}*///TODO make sure this system works
 			}
-			if(hasLava && this.canSmelt()){
-				this.drain(2, true);
-				++this.cookTime;
-				if(this.cookTime == COOK_TIME_FOR_COMPLETION){
-					this.cookTime = 0;
-					this.smeltItem();
+			if(hasLava && canSmelt()){
+				drain(2, true);
+				++cookTime;
+				if(cookTime == COOK_TIME_FOR_COMPLETION){
+					cookTime = 0;
+					smeltItem();
 					needsUpdate = true;
 				}
 			}
-			if(!this.canSmelt()){
-				this.cookTime = 0;
+			if(!canSmelt()){
+				cookTime = 0;
 			}
-			if (this.worldObj.getBlockState(pos).getValue(BlockMaskForge.LEVEL) != (int)Math.ceil(this.fractionOfFuelRemaining() * 4)){
+			if (world.getBlockState(pos).getValue(BlockMaskForge.LEVEL) != (int)Math.ceil(fractionOfFuelRemaining() * 4)){
 				needsUpdate = true;
-				BlockMaskForge.updateLavaLevel((int)Math.ceil(this.fractionOfFuelRemaining() * 4), this.worldObj, this.pos);
+				BlockMaskForge.updateLavaLevel((int)Math.ceil(fractionOfFuelRemaining() * 4), world, pos);
 			}
 		}		
 		if (needsUpdate){
-			this.markDirty();
+			markDirty();
 		}
 	}
 
 	private boolean canSmelt(){
 		byte emptySlots = 0;
-		for(int i = FIRST_INPUT_SLOT; i < FIRST_OUTPUT_SLOT; i++){
-			if(this.forgeItemstacks[i] == null){
+		for(int i = FIRST_INPUT_SLOT; i < OUTPUT_SLOT; i++){
+			if(forgeItemstacks.get(i).isEmpty()){
 				emptySlots++;
 			}
 		}
@@ -164,56 +154,63 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 		if (matchingRecipe == null) return false;
 		
 		ItemStack outputItemstack = matchingRecipe.getOutput();
-		if (this.forgeItemstacks[FIRST_OUTPUT_SLOT] == null) return true;
-		if (this.forgeItemstacks[FIRST_OUTPUT_SLOT].getItem() == Bionicle.kanokaDisc) return false;
-		if (!this.forgeItemstacks[FIRST_OUTPUT_SLOT].isItemEqual(outputItemstack)) return false;
-		int result = forgeItemstacks[FIRST_OUTPUT_SLOT].stackSize + outputItemstack.stackSize;
+		if (forgeItemstacks.get(OUTPUT_SLOT).isEmpty()) return true;
+		if (forgeItemstacks.get(OUTPUT_SLOT).getItem() == NuiCraftItems.kanoka_disc) return false;
+		if (!forgeItemstacks.get(OUTPUT_SLOT).isItemEqual(outputItemstack)) return false;
+		int result = forgeItemstacks.get(OUTPUT_SLOT).getCount() + outputItemstack.getCount();
 		return (result <= getInventoryStackLimit() && result <= outputItemstack.getMaxStackSize());
 	}
 
 	public boolean smeltItem(){
-		if(!this.canSmelt()) return false;		
+		if(!canSmelt()) return false;		
 		IMFRecipe matchingRecipe = MFRecipeManager.getInstance().getMatchingRecipe(getInputItemStacks());
 		if (matchingRecipe == null) return false;
 		
 		ItemStack outputItemstack = matchingRecipe.getOutput();
-		ItemStack[] newInputstacks = matchingRecipe.getRemainingItems();
+		NonNullList<ItemStack> newInputstacks = matchingRecipe.getRemainingItems();
 
-		if(this.forgeItemstacks[FIRST_OUTPUT_SLOT] == null){
-			this.forgeItemstacks[FIRST_OUTPUT_SLOT] = outputItemstack.copy();
-		}else if(this.forgeItemstacks[FIRST_OUTPUT_SLOT].isItemEqual(outputItemstack)){
-			forgeItemstacks[FIRST_OUTPUT_SLOT].stackSize += outputItemstack.stackSize;
+		if(forgeItemstacks.get(OUTPUT_SLOT).isEmpty()){
+			setInventorySlotContents(OUTPUT_SLOT, outputItemstack.copy());
+		}else if(forgeItemstacks.get(OUTPUT_SLOT).isItemEqual(outputItemstack)){
+			forgeItemstacks.get(OUTPUT_SLOT).grow(outputItemstack.getCount());
 		}
-		for(int i = FIRST_INPUT_SLOT; i < FIRST_OUTPUT_SLOT; i++){
-			forgeItemstacks[i] = newInputstacks[i-FUEL_SLOTS_COUNT];
+		for(int i = FIRST_INPUT_SLOT; i < OUTPUT_SLOT; i++){
+			setInventorySlotContents(i, newInputstacks.get(i-FUEL_SLOTS_COUNT));
 		}
 		return true;
 	}
-	
-
-	@Override
-	public int getSizeInventory(){
-		return this.forgeItemstacks.length;
+		
+	public NonNullList<ItemStack> getInputItemStacks(){
+		NonNullList<ItemStack> itemstacks = NonNullList.<ItemStack>withSize(INPUT_SLOTS_COUNT, ItemStack.EMPTY);
+		for(int i = FIRST_INPUT_SLOT; i < OUTPUT_SLOT; i++){
+			itemstacks.set(i-FUEL_SLOTS_COUNT, forgeItemstacks.get(i));
+		}
+		return itemstacks;
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int par1){
-		return this.forgeItemstacks[par1];
+	public int getSizeInventory(){
+		return forgeItemstacks.size();
+	}
+
+	@Override
+	public ItemStack getStackInSlot(int slot){
+		return forgeItemstacks.get(slot);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int slotIndex, int count){
 		ItemStack itemStackInSlot = getStackInSlot(slotIndex);
-		if(itemStackInSlot == null) return null;
+		if(itemStackInSlot.isEmpty()) return ItemStack.EMPTY;
 
 		ItemStack itemStackRemoved;
-		if(itemStackInSlot.stackSize <= count){
+		if(itemStackInSlot.getCount() <= count){
 			itemStackRemoved = itemStackInSlot;
-			setInventorySlotContents(slotIndex, null);
+			setInventorySlotContents(slotIndex, ItemStack.EMPTY);
 		}else{
 			itemStackRemoved = itemStackInSlot.splitStack(count);
-			if (itemStackInSlot.stackSize == 0){
-				setInventorySlotContents(slotIndex, null);
+			if (itemStackInSlot.getCount() == 0){
+				setInventorySlotContents(slotIndex, ItemStack.EMPTY);
 			}
 		}
 		markDirty();
@@ -223,15 +220,15 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 	@Override
 	public ItemStack removeStackFromSlot(int slotIndex) {
 		ItemStack itemStack = getStackInSlot(slotIndex);
-		if (itemStack != null) setInventorySlotContents(slotIndex, null);
+		if (!itemStack.isEmpty()) setInventorySlotContents(slotIndex, ItemStack.EMPTY);
 		return itemStack;
 	}
 
 	@Override
 	public void setInventorySlotContents(int slotIndex, ItemStack itemstack){
-		forgeItemstacks[slotIndex] = itemstack;
-		if (itemstack != null && itemstack.stackSize > getInventoryStackLimit()) {
-			itemstack.stackSize = getInventoryStackLimit();
+		forgeItemstacks.set(slotIndex, itemstack);
+		if (!itemstack.isEmpty() && itemstack.getCount() > getInventoryStackLimit()) {
+			itemstack.setCount(getInventoryStackLimit());
 		}
 		markDirty();
 	}
@@ -242,8 +239,8 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer player){
-		if (this.worldObj.getTileEntity(this.pos) != this) return false;
+	public boolean isUsableByPlayer(EntityPlayer player){
+		if (world.getTileEntity(pos) != this) return false;
 		final double X_CENTRE_OFFSET = 0.5;
 		final double Y_CENTRE_OFFSET = 0.5;
 		final double Z_CENTRE_OFFSET = 0.5;
@@ -253,15 +250,17 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 	
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack){
-		if(i == FIRST_OUTPUT_SLOT){
+		if (itemstack == null) {
 			return false;
-		}else if(i == FIRST_FUEL_SLOT){
+		}else if(i == OUTPUT_SLOT){
+			return false;
+		}else if(i == FUEL_SLOT){
 			return isItemValidForFuelSlot(itemstack);
-		}else return this.isItemValidForInputSlot(itemstack);
+		}else return isItemValidForInputSlot(itemstack);
 	}
 	
 	static public boolean isItemValidForFuelSlot(ItemStack itemStack){
-		return (itemStack.getItem() == Items.LAVA_BUCKET || itemStack.getItem() instanceof IFluidContainerItem);
+		return (itemStack != null && (itemStack.getItem() == Items.LAVA_BUCKET || itemStack.getItem() instanceof IFluidHandlerItem));
 	}
 	
 	static public boolean isItemValidForInputSlot(ItemStack itemstack){
@@ -270,7 +269,7 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 		if(item == Bionicle.ingotProtodermis) return true;
 		return false;
 		*/
-		return true;
+		return itemstack != null;
 	}	
 	
 	private static final byte COOK_FIELD_ID = 0;
@@ -280,7 +279,7 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 	@Override
 	public int getField(int id){
 		if(id == COOK_FIELD_ID) return cookTime;
-		if(id == FUEL_AMOUNT_FIELD_ID) return this.tank.getFluidAmount();
+		if(id == FUEL_AMOUNT_FIELD_ID) return tank.getFluidAmount();
 		System.err.println("Invalid field ID in TileInventoryMaskForge.getField:" + id);
 		return 0;
 	}
@@ -290,11 +289,11 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 		if(id == COOK_FIELD_ID){
 			cookTime = (short)value;
 		}else if(id == FUEL_AMOUNT_FIELD_ID){
-			FluidStack flStack = new FluidStack(FluidRegistry.LAVA, Math.abs(this.tank.getFluidAmount() - value));
-			if(value > this.tank.getFluidAmount()){
-				this.fill(flStack, true);
-			}else if(value < this.tank.getFluidAmount()){
-				this.drain(flStack, true);
+			FluidStack flStack = new FluidStack(FluidRegistry.LAVA, Math.abs(tank.getFluidAmount() - value));
+			if(value > tank.getFluidAmount()){
+				fill(flStack, true);
+			}else if(value < tank.getFluidAmount()){
+				drain(flStack, true);
 			}
 		}else{
 			System.err.println("Invalid field ID in TileInventoryMaskForge.setField:" + id);
@@ -311,18 +310,18 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 		super.writeToNBT(tagCompound);
 		
 		NBTTagList dataForAllSlots = new NBTTagList();
-		for (int i = 0; i < this.forgeItemstacks.length; ++i){
-			if (this.forgeItemstacks[i] != null){
+		for (int i = 0; i < forgeItemstacks.size(); ++i){
+			if (!forgeItemstacks.get(i).isEmpty()){
 				NBTTagCompound dataForThisSlot = new NBTTagCompound();
 				dataForThisSlot.setByte("Slot", (byte)i);
-				this.forgeItemstacks[i].writeToNBT(dataForThisSlot);
+				forgeItemstacks.get(i).writeToNBT(dataForThisSlot);
 				dataForAllSlots.appendTag(dataForThisSlot);
 			}
 		}
 		tagCompound.setTag("Items", dataForAllSlots);
 		
-		tagCompound.setShort("CookTime", (short)this.cookTime);
-		tagCompound.setShort("fuelAmount", (short)this.tank.getFluidAmount());
+		tagCompound.setShort("CookTime", (short)cookTime);
+		tagCompound.setShort("fuelAmount", (short)tank.getFluidAmount());
 		return tagCompound;
 	}
 
@@ -332,16 +331,16 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 		final byte NBT_TYPE_COMPOUND = 10;  // See NBTBase.createNewByType() for a listing
 		NBTTagList dataForAllSlots = nbtTagCompound.getTagList("Items", NBT_TYPE_COMPOUND);
 		
-		this.clear();
+		clear();
 		for(int i = 0; i < dataForAllSlots.tagCount(); ++i){
 			NBTTagCompound dataForOneSlot = dataForAllSlots.getCompoundTagAt(i);
 			byte slotNumber = dataForOneSlot.getByte("Slot");
-			if (slotNumber >= 0 && slotNumber < this.forgeItemstacks.length){
-				this.forgeItemstacks[slotNumber] = ItemStack.loadItemStackFromNBT(dataForOneSlot);
+			if (slotNumber >= 0 && slotNumber < forgeItemstacks.size()){
+				setInventorySlotContents(slotNumber, new ItemStack(dataForOneSlot));
 			}
 		}
-		this.cookTime = nbtTagCompound.getShort("CookTime");
-		this.fill(new FluidStack(FluidRegistry.LAVA, nbtTagCompound.getShort("fuelAmount")), true);
+		cookTime = nbtTagCompound.getShort("CookTime");
+		fill(new FluidStack(FluidRegistry.LAVA, nbtTagCompound.getShort("fuelAmount")), true);
 	}
 
 	@Override
@@ -349,7 +348,7 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 		NBTTagCompound nbtTagCompound = new NBTTagCompound();
 		writeToNBT(nbtTagCompound);
 		final int METADATA = 0;
-		return new SPacketUpdateTileEntity(this.pos, METADATA, nbtTagCompound);
+		return new SPacketUpdateTileEntity(pos, METADATA, nbtTagCompound);
 	}
 
 	@Override
@@ -360,7 +359,7 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 	
 	@Override
 	public void clear() {
-		Arrays.fill(forgeItemstacks, null);
+		forgeItemstacks = NonNullList.<ItemStack>withSize(TOTAL_SLOTS_COUNT, ItemStack.EMPTY);
 	}
 
 	@Override
@@ -375,7 +374,7 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 	
 	@Override
 	public ITextComponent getDisplayName() {
-		return new TextComponentString(this.getName());
+		return new TextComponentString(getName());
 	}
 	
 	@Override
@@ -384,4 +383,31 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, IIn
 	@Override
 	public void closeInventory(EntityPlayer player) {}
 
+	@Override
+	public boolean isEmpty() {
+		return isTankEmpty();
+	}
+
+	@Override
+	public int[] getSlotsForFace(EnumFacing side) {
+		int[] allSlots = new int[TOTAL_SLOTS_COUNT];
+		for (int i = 0; i < TOTAL_SLOTS_COUNT; i++) {
+			allSlots[i] = i;
+		}
+		return allSlots;
+	}
+
+	@Override
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+		if (index == FUEL_SLOT) {
+			return isItemValidForFuelSlot(itemStackIn);
+		} else if (index >= FIRST_INPUT_SLOT && index < FIRST_INPUT_SLOT + INPUT_SLOTS_COUNT) {
+			return isItemValidForInputSlot(itemStackIn);
+		} else return false;
+	}
+
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		return index == FUEL_SLOT || index == OUTPUT_SLOT;
+	}
 }

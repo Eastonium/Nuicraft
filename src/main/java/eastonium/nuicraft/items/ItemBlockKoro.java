@@ -7,14 +7,15 @@ import net.minecraft.item.ItemStack;
 
 public class ItemBlockKoro extends ItemBlock
 {
-	public static final String[] stoneBlockNames = new String[] {"Onu_1", "Onu_2", "Po_1", "Po_2", "Ta_1", "Ta_2", "Ta_3", "Trdx_1", "Trdx_2"};
-	public static final String[] litBlockNames = new String[] {"Onu_0", "Ta_0"};
-	public static final String[] iceBlockNames = new String[] {"Ko_1", "Ko_2"};
-	public static final String[] leafyBlockNames = new String[] {"Ga_1", "Ga_2", "Ga_3"};
+	public static final String[] stoneBlockNames = new String[] {"onu_1", "onu_2", "po_1", "po_2", "ta_1", "ta_2", "ta_3", "trdx_1", "trdx_2"};
+	public static final String[] litBlockNames = new String[] {"onu_0", "ta_0"};
+	public static final String[] iceBlockNames = new String[] {"ko_1", "ko_2"};
+	public static final String[] leafyBlockNames = new String[] {"ga_1", "ga_2", "ga_3"};
 
 	public ItemBlockKoro(Block block){
 		super(block);
-		this.setHasSubtypes(true);
+		setHasSubtypes(true);
+		setRegistryName(block.getRegistryName());
 	}
 
 	@Override

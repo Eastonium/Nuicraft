@@ -13,88 +13,57 @@ public class ClientTickHandler
 	//public static boolean maskActivated = false;
 
 	@SubscribeEvent
-	public void tickStart(TickEvent.ClientTickEvent event)
-	{
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+	public void tickStart(TickEvent.ClientTickEvent event) {
+		EntityPlayer player = Minecraft.getMinecraft().player;
 
-		if (player == null)
-		{
-			return;
-		}
+		if (player == null) return;
 		ItemStack mask = player.inventory.armorItemInSlot(3);
-		if (mask != null)
-		{
+		if (!mask.isEmpty()) {
 			Minecraft minecraft = Minecraft.getMinecraft();
 			//World world = minecraft.theWorld;
 			//if(maskActivated){
-				if(mask.getItem() == Bionicle.maskMataGold){
+				if (mask.getItem() == NuiCraftItems.mask_mata_gold) {
 					//KAKAMA
 					/*if(!minecraft.entityRenderer.isShaderActive()){
 						ShaderHelper.chooseShader("phosphor");
 					}*/
 					//MIRU
-					if ((minecraft.currentScreen == null) && (Keyboard.isKeyDown(minecraft.gameSettings.keyBindJump.getKeyCode())))
+					if ((minecraft.currentScreen == null) && (Keyboard.isKeyDown(minecraft.gameSettings.keyBindJump.getKeyCode()))) {
+						if (player.motionY < 0.15D) player.motionY += 0.05D;
+					} else// if ((minecraft.currentScreen == null) && !(Keyboard.isKeyDown(minecraft.gameSettings.keyBindSneak.getKeyCode())))
 					{
-						if (player.motionY < 0.15D)
-						{
-							player.motionY += 0.05D;
-						}
-					}else// if ((minecraft.currentScreen == null) && !(Keyboard.isKeyDown(minecraft.gameSettings.keyBindSneak.getKeyCode())))
-					{
-						if (player.motionY < 0.0D)
-						{
-							player.motionY /= 1.2D;
-						}
+						if (player.motionY < 0.0D) player.motionY /= 1.2D;
 					}
 					player.motionX = 0;
 					player.motionZ = 0;
 					
-				}else if(mask.getItem() == Bionicle.maskMataKakama || mask.getItem() == Bionicle.maskNuvaKakama)
-				{
+				} else if (mask.getItem() == NuiCraftItems.mask_mata_kakama || mask.getItem() == NuiCraftItems.mask_nuva_kakama) {
 					/*if(!minecraft.entityRenderer.isShaderActive()){
 						ShaderHelper.chooseShader("phosphor");
 					}*/
 					/*if(player.getFoodStats().getFoodLevel() < player.getFoodStats().getPrevFoodLevel()){
 						player.getFoodStats().setFoodLevel(player.getFoodStats().getPrevFoodLevel());
 					}*/
-				}else if(mask.getItem() == Bionicle.maskMataMiru)
-				{
-					if ((minecraft.currentScreen == null) && (Keyboard.isKeyDown(minecraft.gameSettings.keyBindJump.getKeyCode())))
+				} else if (mask.getItem() == NuiCraftItems.mask_mata_miru) {
+					if ((minecraft.currentScreen == null) && (Keyboard.isKeyDown(minecraft.gameSettings.keyBindJump.getKeyCode()))) {
+						if (player.motionY < 0.15D) player.motionY += 0.05D;
+					} else// if ((minecraft.currentScreen == null) && !(Keyboard.isKeyDown(minecraft.gameSettings.keyBindSneak.getKeyCode())))
 					{
-						if (player.motionY < 0.15D)
-						{
-							player.motionY += 0.05D;
-						}
-					}else// if ((minecraft.currentScreen == null) && !(Keyboard.isKeyDown(minecraft.gameSettings.keyBindSneak.getKeyCode())))
-					{
-						if (player.motionY < 0.0D)
-						{
-							player.motionY /= 1.2D;
-						}
+						if (player.motionY < 0.0D) player.motionY /= 1.2D;
 					}
 					player.motionX = 0;
 					player.motionZ = 0;
-				}else if(mask.getItem() == Bionicle.maskNuvaMiru)
-				{
-					if ((minecraft.currentScreen == null) && (Keyboard.isKeyDown(minecraft.gameSettings.keyBindJump.getKeyCode())))
-					{
-						if (player.motionY < 0.30D)
-						{
-							player.motionY += 0.05D;
-						}
+				} else if (mask.getItem() == NuiCraftItems.mask_nuva_miru) {
+					if ((minecraft.currentScreen == null) && (Keyboard.isKeyDown(minecraft.gameSettings.keyBindJump.getKeyCode()))) {
+						if (player.motionY < 0.30D) player.motionY += 0.05D;
 						player.motionX = 0;
 						player.motionZ = 0;
-					}else if ((minecraft.currentScreen == null) && !(Keyboard.isKeyDown(minecraft.gameSettings.keyBindSneak.getKeyCode())))
-					{
-						if (player.motionY < 0.0D)
-						{
-							player.motionY /= 1.2D;
-						}
+					} else if ((minecraft.currentScreen == null) && !(Keyboard.isKeyDown(minecraft.gameSettings.keyBindSneak.getKeyCode()))) {
+						if (player.motionY < 0.0D) player.motionY /= 1.2D;
 						player.motionX = 0;
 						player.motionZ = 0;
 					}
-				}
-				else if(mask.getItem() == Bionicle.maskVahi){
+				} else if (mask.getItem() == NuiCraftItems.mask_vahi){
 					/*if(!minecraft.entityRenderer.isShaderActive()){
 						ShaderHelper.chooseShader("desaturate");
 					}*/

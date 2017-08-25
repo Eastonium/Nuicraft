@@ -1,18 +1,14 @@
 package eastonium.nuicraft.items;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 
 public class ItemBionicleAxe extends ItemAxe {
-	public ItemBionicleAxe(ToolMaterial material, float damage, float speed){
+	public ItemBionicleAxe(String name, ToolMaterial material, float damage, float speed){
 		super(material, damage, speed);
-		this.setCreativeTab(Bionicle.bioToolTab);
+		setCreativeTab(NuiCraft.bio_tool_tab);
+		setUnlocalizedName(NuiCraft.MODID + "." + name);
+		setRegistryName(name);
 	}
-	
-	public Item setName(String name){
-        super.setUnlocalizedName(name);
-        this.setRegistryName(Bionicle.MODID, name);
-        return this;
-    }
 }

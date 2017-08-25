@@ -1,20 +1,22 @@
 package eastonium.nuicraft.machine.maskForge.recipe;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraftItems;
 import eastonium.nuicraft.kanoka.ItemKanokaDisc;
+import eastonium.nuicraft.machine.maskForge.TileInventoryMaskForge;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 public class KanokaTimeMFRecipe implements IMFRecipe {
 
-	private ItemStack[] returnStacks = null;
+	private NonNullList<ItemStack> returnStacks = NonNullList.<ItemStack>withSize(TileInventoryMaskForge.INPUT_SLOTS_COUNT, ItemStack.EMPTY);;
 
 	@Override
-	public boolean matches(ItemStack[] inputStacks) {
+	public boolean matches(NonNullList<ItemStack> inputStacks) {
 		int[] kanokaLoc = new int[6];
 		int i = 0;
 		for(ItemStack stack : inputStacks){
-			if(stack == null) return false;
-			if(stack.getItem() != Bionicle.kanokaDisc) return false;
+			if(stack.isEmpty()) return false;
+			if(stack.getItem() != NuiCraftItems.kanoka_disc) return false;
 			byte[] discNums = ItemKanokaDisc.getKanokaNumber(stack);
 			if(discNums[2] < 9) return false;
 			kanokaLoc[i] = discNums[0];
@@ -35,16 +37,16 @@ public class KanokaTimeMFRecipe implements IMFRecipe {
 
 	@Override
 	public ItemStack getOutput() {
-		return new ItemStack(Bionicle.kanokaTime, 1);
+		return new ItemStack(NuiCraftItems.kanoka_time, 1);
 	}
 
 	@Override
-	public ItemStack[] getRemainingItems() {
-		for(int i = 0; i < returnStacks.length; i++){
-			if(returnStacks[i] != null){
-				returnStacks[i].stackSize--;
-				if(returnStacks[i].stackSize <= 0){
-					returnStacks[i] = null;
+	public NonNullList<ItemStack> getRemainingItems() {
+		for(int i = 0; i < returnStacks.size(); i++){
+			if(!returnStacks.get(i).isEmpty()){
+				returnStacks.get(i).shrink(1);
+				if(returnStacks.get(i).getCount() <= 0){
+					returnStacks.set(i, ItemStack.EMPTY);
 				}
 			}
 		}

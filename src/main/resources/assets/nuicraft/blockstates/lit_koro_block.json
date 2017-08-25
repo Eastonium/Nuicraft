@@ -1,0 +1,21 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "cube_all"
+	},
+    "variants": {
+		"inventory": [{}],
+        "meta": {
+			0: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_onu_0"
+				}
+			},
+			1: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_ta_0"
+				}
+			}
+		}
+    }
+}

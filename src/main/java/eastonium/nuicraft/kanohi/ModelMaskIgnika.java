@@ -38,7 +38,7 @@ public class ModelMaskIgnika extends ModelBiped {
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float scale){
-		this.setRotationAngles(f, f1, f2, f3, f4, scale, entity);
+		setRotationAngles(f, f1, f2, f3, f4, scale, entity);
 		GlStateManager.pushMatrix();
 		if (entity.isSneaking()) GlStateManager.translate(0.0F, 0.25F, 0.0F);
 		Mask.render(scale * 1.2F);
@@ -46,8 +46,8 @@ public class ModelMaskIgnika extends ModelBiped {
 	}
 
 	public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity entityIn){
-		this.Mask.rotateAngleY = p_78087_4_ / (180F / (float)Math.PI);
-		this.Mask.rotateAngleX = p_78087_5_ / (180F / (float)Math.PI);
+		Mask.rotateAngleY = p_78087_4_ / (180F / (float)Math.PI);
+		Mask.rotateAngleX = p_78087_5_ / (180F / (float)Math.PI);
 
 		if(this.isSneak){
 			Mask.rotationPointY = 1.0F;

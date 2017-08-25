@@ -1,7 +1,7 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "model": "nuicraft:obj/Purifier.obj",
+        "model": "nuicraft:obj/purifier.obj",
 		"custom": { "flip-v": true }
     },
     "variants": {

@@ -2,11 +2,11 @@ package eastonium.nuicraft.kanoka;
 
 import javax.annotation.Nullable;
 
-import eastonium.nuicraft.Bionicle;
+import eastonium.nuicraft.NuiCraft;
+import eastonium.nuicraft.NuiCraftItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
@@ -20,57 +20,54 @@ public class ItemDiscLauncher extends Item {
 	public ItemDiscLauncher(){
 		this.maxStackSize = 1;
 		this.setMaxDamage(500);
-		this.setCreativeTab(Bionicle.bioToolTab);
+		this.setCreativeTab(NuiCraft.bio_tool_tab);
+		this.setUnlocalizedName(NuiCraft.MODID + ".disc_launcher");
+		this.setRegistryName("disc_launcher");
 	}
-	
-	public Item setName(String name){
-        super.setUnlocalizedName(name);
-        this.setRegistryName(Bionicle.MODID, name);
-        return this;
-    }
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack launcherItem, World world, EntityPlayer playerIn, EnumHand hand){
-		ItemStack disc = this.findAmmo(playerIn);
-		if (disc == null) return new ActionResult(EnumActionResult.FAIL, launcherItem);
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+		ItemStack launcherItem = playerIn.getHeldItem(handIn);
+		ItemStack disc = findAmmo(playerIn);
+		if (disc.isEmpty()) return new ActionResult(EnumActionResult.FAIL, launcherItem);
 		EntityDisc discEntity;
-		if (disc.getItem() == Bionicle.bambooDisc){
-			if (!world.isRemote){
-				discEntity = new EntityDisc(world, playerIn, null, false);
+		if (disc.getItem() == NuiCraftItems.kanoka_bamboo){
+			if (!worldIn.isRemote){
+				discEntity = new EntityDisc(worldIn, playerIn, null, false);
 	            discEntity.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 2.5F, 0F);
-				world.spawnEntityInWorld(discEntity);
+				worldIn.spawnEntity(discEntity);
 			}
 		}else{
 			NBTTagCompound discNBT = disc.getTagCompound();
 			if (discNBT == null) return new ActionResult(EnumActionResult.FAIL, launcherItem);
-			if (!world.isRemote){
-				discEntity = new EntityDisc(world, playerIn, discNBT, !playerIn.capabilities.isCreativeMode);
+			if (!worldIn.isRemote){
+				discEntity = new EntityDisc(worldIn, playerIn, discNBT, !playerIn.capabilities.isCreativeMode);
 	            discEntity.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 2.5F, 0F);
-				world.spawnEntityInWorld(discEntity);				
+				worldIn.spawnEntity(discEntity);				
 			}
 		}
-		world.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+		worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 		launcherItem.damageItem(1, playerIn);
-		disc.stackSize--;
-		if(disc.stackSize <= 0) disc = null;
+		disc.setCount(disc.getCount()-1);;
+		if(disc.getCount() <= 0) disc = ItemStack.EMPTY;
 		return new ActionResult(EnumActionResult.SUCCESS, launcherItem);
 	}
 	
 	private ItemStack findAmmo(EntityPlayer player){
-        if (this.isDisc(player.getHeldItem(EnumHand.OFF_HAND))){
+        if (isDisc(player.getHeldItem(EnumHand.OFF_HAND))){
             return player.getHeldItem(EnumHand.OFF_HAND);
-        }else if (this.isDisc(player.getHeldItem(EnumHand.MAIN_HAND))){
+        }else if (isDisc(player.getHeldItem(EnumHand.MAIN_HAND))){
             return player.getHeldItem(EnumHand.MAIN_HAND);
         }else{
             for (int i = 0; i < player.inventory.getSizeInventory(); ++i){
                 ItemStack itemstack = player.inventory.getStackInSlot(i);
-                if (this.isDisc(itemstack)) return itemstack;
+                if (isDisc(itemstack)) return itemstack;
             }
-            return null;
+            return ItemStack.EMPTY;
         }
     }
 
-    protected boolean isDisc(@Nullable ItemStack stack){
-        return stack != null && (stack.getItem() == Bionicle.bambooDisc || stack.getItem() == Bionicle.kanokaDisc);
+    protected boolean isDisc(ItemStack stack){
+        return !stack.isEmpty() && (stack.getItem() == NuiCraftItems.kanoka_bamboo || stack.getItem() == NuiCraftItems.kanoka_disc);
     }
 }

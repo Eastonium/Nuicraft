@@ -1,0 +1,45 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "nuicraft:mask_forge"
+	},
+    "variants": {
+		"inventory": [{}],
+		"level": {
+			0: {},
+			1: {
+				"submodel": { "normal": {
+					
+					"model": "nuicraft:mask_forge_lava",
+					"transform": {
+						"translation": [0, 0.0625, 0]
+					}
+				}}
+			},
+			2: {
+				"submodel": { "normal": {
+					"model": "nuicraft:mask_forge_lava",
+					"transform": {
+						"translation": [0, 0.125, 0]
+					}
+				}}
+			},
+			3: {
+				"submodel": { "normal": {
+					"model": "nuicraft:mask_forge_lava",
+					"transform": {
+						"translation": [0, 0.1875, 0]
+					}
+				}}
+			},
+			4: {
+				"submodel": { "normal": {
+					"model": "nuicraft:mask_forge_lava",
+					"transform": {
+						"translation": [0, 0.25, 0]
+					}
+				}}
+			}
+		}
+    }
+}
