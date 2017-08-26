@@ -70,11 +70,15 @@ public class CommonProxyBionicle
 		
 		GameRegistry.registerTileEntity(TileInventoryPurifier.class, "tileEntityPurifier");
 		GuiHandler.getInstance().registerGuiHandler(new GuiHandlerPurifier(), GuiHandlerPurifier.getGuiID());
-	    
+
+		//Technical entities ID 0-100
+
 	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "entityKanokaDisk"), EntityDisc.class, "Kanoka_Disc", 1, NuiCraft.modInstance, 64, 10, true);
 	    //TODO Bamboo disc here
-	    
-	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "entityMahi"), EntityMahi.class, "Mahi", 3, NuiCraft.modInstance, 64, 1, true, 0xE6C381, 0xD1322B);
+
+		//Mobs ID 101-200
+
+	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "entityMahi"), EntityMahi.class, "nuicraft.mahi", 101, NuiCraft.modInstance, 64, 1, true, 0xE6C381, 0xD1322B);
 		EntityRegistry.addSpawn(EntityMahi.class, 15, 2, 5, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.PLAINS, Biomes.MUTATED_PLAINS, Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU);
 		
 		registerFluidModels();

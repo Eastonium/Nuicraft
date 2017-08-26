@@ -68,82 +68,82 @@ public class ModelMahi extends ModelBase
     
     
       HeadBaseMain = new ModelRenderer(this, "HeadBaseMain");
-      HeadBaseMain.addBox("base",-2F, 0F, 0F, 4, 4, 4);
-      HeadBaseMain.setRotationPoint(0F, 7F, -9F);
+      HeadBaseMain.addBox("base",-2F, 0F, -3F, 4, 4, 4);
+      HeadBaseMain.setRotationPoint(0F, 7F, -6F);
       setRotation(HeadBaseMain, 0.4363323F, 0F, 0F);
     	
       EyeL = new ModelRenderer(this, "EyeL");
-      EyeL.addBox("eye", 2F, -2F, 0F, 2, 2, 2);
+      EyeL.addBox("eye", 2F, -2F, -3F, 2, 2, 2);
       HeadBaseMain.addChild(EyeL);
       
       EyeR = new ModelRenderer(this, "EyeR");
-      EyeR.addBox("eye", -4F, -2F, 0F, 2, 2, 2);
+      EyeR.addBox("eye", -4F, -2F, -3F, 2, 2, 2);
       HeadBaseMain.addChild(EyeR);
       
       HeadBase1 = new ModelRenderer(this, "HeadBase1");
-      HeadBase1.addBox("HeadBase1", -2F, -2F, -3F, 4, 3, 7);
+      HeadBase1.addBox("HeadBase1", -2F, -3.2F, -5.8F, 4, 3, 7);
       HeadBase1.setRotationPoint(0F, 2F, 0F);
       HeadBase1.mirror = true;
       setRotation(HeadBase1, 0.4363323F, 0F, 0F);
       HeadBaseMain.addChild(HeadBase1);
       
       HeadBase2 = new ModelRenderer(this, "HeadBase2");
-      HeadBase2.addBox("HeadBase2", -2.5F, -0.3F, -5.3F, 5, 3, 5);
+      HeadBase2.addBox("HeadBase2", -2.5F, -1.5F, -8.1F, 5, 3, 5);
       HeadBase2.mirror = true;
       setRotation(HeadBase2, 0.4363323F, 0F, 0F);
       HeadBaseMain.addChild(HeadBase2);
       
       HeadBase3 = new ModelRenderer(this, "HeadBase3");
-      HeadBase3.addBox("HeadBase3", -2.5F, 2F, -5F, 5, 3, 6);
+      HeadBase3.addBox("HeadBase3", -2.5F, 2F, -8F, 5, 3, 6);
       HeadBase3.mirror = true;
       setRotation(HeadBase3, 0F, 0F, 0F);
       HeadBaseMain.addChild(HeadBase3);
       
       HeadNose1 = new ModelRenderer(this, 54, 12);
-      HeadNose1.addBox(-1F, -0.9F, -5F, 2, 3, 3);
+      HeadNose1.addBox(-1F, -0.9F, -8F, 2, 3, 3);//MODEL: Needs an offset fix
       HeadNose1.mirror = true;
       setRotation(HeadNose1, 0.2617994F, 0F, 0F);
       HeadBaseMain.addChild(this.HeadNose1);
       
       HeadNose2 = new ModelRenderer(this, 35, 0);
-      HeadNose2.addBox(-1F, -2F, -0.5F, 2, 2, 5);
+      HeadNose2.addBox(-1F, -2F, -3.5F, 2, 2, 5);//MODEL: Needs an offset fix
       HeadNose2.mirror = true;
       setRotation(HeadNose2, -0.0698132F, 0F, 0F);
       HeadBaseMain.addChild(this.HeadNose2);
       
       HeadNose3 = new ModelRenderer(this, 35, 0);
-      HeadNose3.addBox(-1F, -2F, -4.5F, 2, 2, 5);
+      HeadNose3.addBox(-1F, -3.2F, -7.3F, 2, 2, 5);
       HeadNose3.mirror = true;
       setRotation(HeadNose3, 0.4886922F, 0F, 0F);
       HeadBaseMain.addChild(this.HeadNose3);
       
       HornL1 = new ModelRenderer(this, 30, 23);
-      HornL1.addBox(0.7F, -4.4F, 2F, 4, 2, 2);
+      HornL1.addBox(0.7F, -4.4F, -1F, 4, 2, 2);
       HornL1.mirror = false;
       setRotation(HornL1, 0F, 0F, 0.9599311F);
       
       HornL2 = new ModelRenderer(this, 34, 27);
-      HornL2.addBox(2.5F, 4F, 2F, 7, 1, 2);
+      HornL2.addBox(2.5F, 4F, -1F, 7, 1, 2);
       HornL2.mirror = false;
       setRotation(HornL2, 0F, 0F, -0.5235988F);
       
       HornL3 = new ModelRenderer(this, 40, 17);
-      HornL3.addBox(8.7F, -3.9F, 2F, 2, 5, 2);
+      HornL3.addBox(8.7F, -3.9F, -1F, 2, 5, 2);
       HornL3.mirror = false;
       setRotation(HornL3, 0F, 0F, 0.1047198F);
       
       HornL4 = new ModelRenderer(this, 30, 23);
-      HornL4.addBox(-0.2F, -10.7F, 2F, 4, 2, 2);
+      HornL4.addBox(-0.2F, -10.7F, -1F, 4, 2, 2);
       HornL4.mirror = false;
       setRotation(HornL4, 0F, 0F, 0.9948377F);
       
       HornL5 = new ModelRenderer(this, 34, 30);
-      HornL5.addBox(2.4F, -1.6F, 2.5F, 8, 1, 1);
+      HornL5.addBox(2.4F, -1.6F, -0.5F, 8, 1, 1);
       HornL5.mirror = false;
       setRotation(HornL5, 0F, 0F, 0.2617994F);
       
       HornL6 = new ModelRenderer(this, 30, 19);
-      HornL6.addBox(1F, -2F, 2F, 3, 2, 2);
+      HornL6.addBox(1F, -2F, -1F, 3, 2, 2);
       HornL6.mirror = false;
       setRotation(HornL6, 0F, 0F, 0F);
       
@@ -155,32 +155,32 @@ public class ModelMahi extends ModelBase
       HeadBaseMain.addChild(this.HornL6);
       
       HornR1 = new ModelRenderer(this, 30, 23);
-      HornR1.addBox(-4.7F, -4.4F, 2F, 4, 2, 2);
+      HornR1.addBox(-4.7F, -4.4F, -1F, 4, 2, 2);
       setRotation(HornR1, 0F, 0F, -0.9599311F);
       HornR1.mirror = true;
       
       HornR2 = new ModelRenderer(this, 34, 27);
-      HornR2.addBox(-9.5F, 4F, 2F, 7, 1, 2);
+      HornR2.addBox(-9.5F, 4F, -1F, 7, 1, 2);
       setRotation(HornR2, 0F, 0F, 0.5235988F);
       HornR2.mirror = true;
       
       HornR3 = new ModelRenderer(this, 40, 17);
-      HornR3.addBox(-10.7F, -3.9F, 2F, 2, 5, 2);
+      HornR3.addBox(-10.7F, -3.9F, -1F, 2, 5, 2);
       setRotation(HornR3, 0F, 0F, -0.1047198F);
       HornR3.mirror = true;
       
       HornR4 = new ModelRenderer(this, 30, 23);
-      HornR4.addBox(-3.7F, -10.7F, 2F, 4, 2, 2);
+      HornR4.addBox(-3.7F, -10.7F, -1F, 4, 2, 2);
       setRotation(HornR4, 0F, 0F, -0.9948377F);
       HornR4.mirror = true;
       
       HornR5 = new ModelRenderer(this, 34, 30);
-      HornR5.addBox(-10.5F, -1.6F, 2.5F, 8, 1, 1);
+      HornR5.addBox(-10.5F, -1.6F, -0.5F, 8, 1, 1);
       setRotation(HornR5, 0F, 0F, -0.2617994F);
       HornR5.mirror = true;
       
       HornR6 = new ModelRenderer(this, 30, 19);
-      HornR6.addBox(-4F, -2F, 2F, 3, 2, 2);
+      HornR6.addBox(-4F, -2F, -1F, 3, 2, 2);
       setRotation(HornR6, 0F, 0F, 0F);
       HornR6.mirror = true;
       
