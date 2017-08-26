@@ -1,5 +1,6 @@
 package eastonium.nuicraft;
 
+import eastonium.nuicraft.items.ItemGenericMeta;
 import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanohi.ItemGoldMataMask;
 import eastonium.nuicraft.kanohi.ItemMaskMeta;
@@ -16,22 +17,31 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @GameRegistry.ObjectHolder(NuiCraft.MODID)
 public class NuiCraftItems {
+	/* 
+	 * Get Generic Item ItemStack	
+	 */
+	public static ItemStack getGIIS(String name, int count) {
+		return new ItemStack(generic_item, count, ItemGenericMeta.getMetaFromName(name));
+	}
+	
 	public static final Item purifier_item = null;
 	
-	public static final Item ingot_protodermis = null;
-	public static final Item ingot_protosteel = null;
-	public static final Item nugget_protodermis = null;
-	public static final Item nugget_protosteel = null;
-	public static final Item raw_protodermis = null;
-	public static final Item raw_heatstone = null;
-	public static final Item bamboo_stick = null;
+	public static final Item generic_item = null;	
+//	public static final Item ingot_protodermis = null;
+//	public static final Item ingot_protosteel = null;
+//	public static final Item nugget_protodermis = null;
+//	public static final Item nugget_protosteel = null;
+//	public static final Item raw_protodermis = null;
+//	public static final Item raw_heatstone = null;
+//	public static final Item bamboo_stick = null;
+//	public static final Item kanoka_flying = null;
+//	public static final Item kanoka_time = null;
+
 	
 	//public static final Item kolhii_ball = null;	
 //Kanoka
-	public static final Item kanoka_flying = null;
 	public static final Item kanoka_bamboo = null;
 	public static final Item kanoka_disc = null;
-	public static final Item kanoka_time = null;
 	
 //Weapons
 	public static final Item disc_launcher = null;	
@@ -87,22 +97,11 @@ public class NuiCraftItems {
 			ModelLoader.setCustomModelResourceLocation(item, i, modReLoc);
 		}
 		
-		setTextureLocation(ingot_protodermis);
-		setTextureLocation(ingot_protosteel);
-		setTextureLocation(nugget_protodermis);
-		setTextureLocation(nugget_protosteel);
-		//setTextureLocation(rod_protodermis);
-		//setTextureLocation(rod_protosteel);
+		ItemGenericMeta.setTextureLocations();
 		
-		setTextureLocation(raw_protodermis);
-		setTextureLocation(raw_heatstone);
-		setTextureLocation(bamboo_stick);		
-		
-		setTextureLocation(kanoka_flying);
 		setTextureLocation(kanoka_bamboo);
 		ModelLoader.setCustomMeshDefinition(kanoka_disc, NuiCraft.itemMeshDef);
 		ModelBakery.registerItemVariants(kanoka_disc, NuiCraftItemMeshDef.kanokaModLocs);		
-		setTextureLocation(kanoka_time);
 		
 		setTextureLocation(disc_launcher);
 	    setTextureLocation(protodermis_sword);

@@ -14,7 +14,7 @@ public class KanokaMFRecipe implements IMFRecipe {
 		int totalProtoIngots = 0;
 		for(ItemStack stack : inputStacks){
 			if(!stack.isEmpty()){
-				if(stack.getItem() == NuiCraftItems.ingot_protodermis){
+				if(ItemStack.areItemsEqual(stack, NuiCraftItems.getGIIS("ingot_protodermis", 1))){
 					totalProtoIngots += stack.getCount();
 				}else return false;
 			}

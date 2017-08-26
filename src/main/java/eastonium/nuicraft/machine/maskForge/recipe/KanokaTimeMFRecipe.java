@@ -37,7 +37,7 @@ public class KanokaTimeMFRecipe implements IMFRecipe {
 
 	@Override
 	public ItemStack getOutput() {
-		return new ItemStack(NuiCraftItems.kanoka_time, 1);
+		return NuiCraftItems.getGIIS("kanoka_time", 1);
 	}
 
 	@Override

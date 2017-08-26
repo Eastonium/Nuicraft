@@ -44,7 +44,8 @@ public class ClientProxyBionicle extends CommonProxyBionicle
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDisc.class, new IRenderFactory<EntityDisc>(){
 			public Render<? super EntityDisc> createRenderFor(RenderManager manager) {
-			return new RenderSnowball(manager, NuiCraftItems.kanoka_flying, Minecraft.getMinecraft().getRenderItem());
+				//TODO make own renderer for Kanoka disc
+			return new RenderSnowball(manager, NuiCraftItems.generic_item, Minecraft.getMinecraft().getRenderItem());
 		}});
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityMahi.class, new IRenderFactory<EntityMahi>(){

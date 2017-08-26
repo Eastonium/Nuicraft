@@ -5,6 +5,7 @@ import java.util.Random;
 import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.NuiCraftBlocks;
 import eastonium.nuicraft.NuiCraftItems;
+import eastonium.nuicraft.items.ItemGenericMeta;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -29,11 +30,18 @@ public class BlockOre extends Block {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		if(this == NuiCraftBlocks.lightstone_ore) return Item.getItemFromBlock(NuiCraftBlocks.lightstone);
-		if(this == NuiCraftBlocks.heatstone_ore) return NuiCraftItems.raw_heatstone;
-		if(this == NuiCraftBlocks.protodermis_ore) return NuiCraftItems.raw_protodermis;
+		if(state.getBlock() == NuiCraftBlocks.lightstone_ore) return Item.getItemFromBlock(NuiCraftBlocks.lightstone);
+		if(state.getBlock() == NuiCraftBlocks.heatstone_ore) return NuiCraftItems.generic_item;// return NuiCraftItems.raw_heatstone;
+		//if(state.getBlock() == NuiCraftBlocks.protodermis_ore) return NuiCraftItems.generic_item;// return NuiCraftItems.raw_protodermis;
 		return null;
 	}
+	
+	@Override
+	public int damageDropped(IBlockState state){
+		if (state.getBlock() == NuiCraftBlocks.heatstone_ore) return ItemGenericMeta.getMetaFromName("raw_heatstone");
+		//if (state.getBlock() == NuiCraftBlocks.protodermis_ore) return ItemGenericMeta.getMetaFromName("raw_protodermis");
+		return 0;
+    }
 	
 	@Override
 	public int quantityDroppedWithBonus(int fortune, Random random) {

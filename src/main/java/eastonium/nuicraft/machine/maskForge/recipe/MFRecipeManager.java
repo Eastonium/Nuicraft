@@ -41,11 +41,11 @@ public class MFRecipeManager {
 		recipeList.add(new MaskMFRecipe(new ItemStack(NuiCraftItems.mask_mata_hau), new int[]{5, 8}));
 		recipeList.add(new MaskMFRecipe(new ItemStack(NuiCraftItems.mask_mata_akaku), new int[]{7, 8}));
 		
-		addRecipe(new ItemStack(NuiCraftItems.mask_vahi), new ItemStack(NuiCraftItems.kanoka_time));
+		addRecipe(new ItemStack(NuiCraftItems.mask_vahi), NuiCraftItems.getGIIS("kanoka_time", 1));
 		
-		addOreDictRecipe(new ItemStack(NuiCraftItems.ingot_protosteel), new ItemStack(NuiCraftItems.ingot_protodermis, 8), "08ingotIron", "08coal");
+		addOreDictRecipe("01ingotProtosteel", "08ingotProtodermis", "08ingotIron", "08coal");
 		
-		addRecipe(new ItemStack(NuiCraftBlocks.lightstone, 4), Items.GLOWSTONE_DUST, NuiCraftItems.ingot_protodermis);
+		addOreDictRecipe(new ItemStack(NuiCraftBlocks.lightstone, 4), Items.GLOWSTONE_DUST, "01ingotProtodermis");
 	}
 
 	public List<IMFRecipe> getRecipeList(){

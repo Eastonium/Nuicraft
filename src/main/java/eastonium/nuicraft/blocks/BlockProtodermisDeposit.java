@@ -5,6 +5,7 @@ import java.util.Random;
 import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.NuiCraftBlocks;
 import eastonium.nuicraft.NuiCraftItems;
+import eastonium.nuicraft.items.ItemGenericMeta;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -32,7 +33,11 @@ public class BlockProtodermisDeposit extends BlockOre {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune){
-		return NuiCraftItems.raw_protodermis;
+		return NuiCraftItems.generic_item;
+	}
+	@Override
+	public int damageDropped(IBlockState state){
+		return ItemGenericMeta.getMetaFromName("raw_protodermis");
 	}
 
 	@Override
@@ -55,7 +60,9 @@ public class BlockProtodermisDeposit extends BlockOre {
 							((double)worldIn.rand.nextFloat() - 0.5D) * 0.2D, 
 	    					((double)worldIn.rand.nextFloat()) * 0.2D, 
 	    					((double)worldIn.rand.nextFloat() - 0.5D) * 0.2D,
-							new int[] {Item.getIdFromItem(NuiCraftItems.raw_protodermis)});
+							new int[] {Item.getIdFromItem(NuiCraftItems.generic_item)});
+							//TODO: How to make metadata sensitive???? new int[] {Item.getIdFromItem(NuiCraftItems.raw_protodermis)});
+
 				}
 			}else{
 				int drops = state.getValue(DROPS);
@@ -64,7 +71,7 @@ public class BlockProtodermisDeposit extends BlockOre {
 				double posX = (hitX < 1.0F && hitX > 0F) ? hitX : ((hitX - 0.5) * f) + 0.5;
 				double posY = (hitY < 1.0F && hitY > 0F) ? hitY : ((hitY - 0.5) * f) + 0.5;
 				double posZ = (hitZ < 1.0F && hitZ > 0F) ? hitZ : ((hitZ - 0.5) * f) + 0.5;
-				EntityItem entityitem = new EntityItem(worldIn, posX + pos.getX(), posY + pos.getY(), posZ + pos.getZ(), new ItemStack(NuiCraftItems.raw_protodermis));
+				EntityItem entityitem = new EntityItem(worldIn, posX + pos.getX(), posY + pos.getY(), posZ + pos.getZ(), NuiCraftItems.getGIIS("raw_protodermis", 1));
 				float f3 = 0.06F;
 				entityitem.motionX = worldIn.rand.nextGaussian() * (double)f3;
 				entityitem.motionY = worldIn.rand.nextGaussian() * (double)f3 + 0.20000000298023224D;

@@ -63,10 +63,8 @@ public class NuiCraft
 		bio_material_tab = new CreativeTabs("bioMaterialTab"){public ItemStack getTabIconItem(){return new ItemStack(NuiCraftBlocks.lightstone);}};
 		bio_tool_tab = new CreativeTabs("bioWeaponTab"){public ItemStack getTabIconItem(){return new ItemStack(NuiCraftItems.disc_launcher);}};
 		bio_mask_tab = new CreativeTabs("bioMaskTab"){public ItemStack getTabIconItem(){ return getRedHau(); }};
- 
-		PROTODERMIS = PROTODERMIS.setRepairItem(new ItemStack(NuiCraftItems.ingot_protodermis));
-		PROTOSTEEL = PROTOSTEEL.setRepairItem(new ItemStack(NuiCraftItems.ingot_protosteel));
-//Fluids
+		
+	//Fluids
 //		protodermis = BionicleFluidUtil.createFluid("protodermis", MODID + ":blocks/protodermis", true,
 //				fluid -> fluid.setRarity(EnumRarity.UNCOMMON),
 //				fluid -> new BlockFluidClassic(fluid, Material.WATER));
@@ -86,6 +84,9 @@ public class NuiCraft
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event){
+		PROTODERMIS = PROTODERMIS.setRepairItem(NuiCraftItems.getGIIS("ingot_protodermis", 1));
+		PROTOSTEEL = PROTOSTEEL.setRepairItem(NuiCraftItems.getGIIS("ingot_protosteel", 1));
+
 		proxy.init();
 		//packetPipeline.initialise();
 	}

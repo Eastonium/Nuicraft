@@ -1,0 +1,96 @@
+itemGroup.bioBlockTab=NuiCraft Blocks
+itemGroup.bioMaterialTab=NuiCraft Materials
+itemGroup.bioWeaponTab=NuiCraft Tools
+itemGroup.bioMaskTab=NuiCraft Masks
+
+tile.nuicraft.fluid.protodermis_energized.name=Energized Protodermis
+tile.nuicraft.fluid.protodermis.name=Liquid Protodermis
+tile.nuicraft.fluid.protodermis_molten.name=Molten Protodermis
+tile.nuicraft.fluid.protosteel_molten.name=Molten Protosteel
+tile.nuicraft.fluid.antidermis.name=Antidermis
+
+fluid.nuicraft.protodermis_energized=Energized Protodermis
+fluid.nuicraft.protodermis=Liquid Protodermis
+fluid.nuicraft.protodermis_molten=Molten Protodermis
+fluid.nuicraft.protosteel_molten=Molten Protosteel
+fluid.nuicraft.antidermis=Antidermis
+
+tile.nuicraft.mask_forge.name=Mask Forge
+tile.nuicraft.purifier.name=Purifier
+item.nuicraft.purifier_item.name=Purifier
+
+entity.nuicraft.mahi.name=Mahi
+
+tile.nuicraft.koro_block_onu_0.name=Onu-Koro Lightstone Lamp
+tile.nuicraft.koro_block_onu_1.name=Smooth Onu-Koro Stone
+tile.nuicraft.koro_block_onu_2.name=Onu-Koro Stone
+tile.nuicraft.koro_block_po_1.name=Smooth Po-Koro Stone
+tile.nuicraft.koro_block_po_2.name=Po-Koro Stone
+tile.nuicraft.koro_block_ta_0.name=Ta-Koro Lava Light
+tile.nuicraft.koro_block_ta_1.name=Smooth Ta-Koro Stone
+tile.nuicraft.koro_block_ta_2.name=Ta-Koro Stone
+tile.nuicraft.koro_block_ta_3.name=Ta-Koro Bricks
+tile.nuicraft.koro_block_trdx_1.name=Large Infected Bricks
+tile.nuicraft.koro_block_trdx_2.name=Infected Bricks
+tile.nuicraft.koro_block_ko_1.name=Ko-Koro Ice Block
+tile.nuicraft.koro_block_ko_2.name=Ko-Koro Ice Bricks
+tile.nuicraft.koro_block_ga_1.name=Ga-Koro Smooth Seaweed
+tile.nuicraft.koro_block_ga_2.name=Ga-Koro Smooth Seaweed
+tile.nuicraft.koro_block_ga_3.name=Ga-Koro Rough Seaweed
+
+tile.nuicraft.nuva_cube.name=Nuva Cube
+tile.nuicraft.crystalized_protodermis.name=Crystalized Protodermis
+tile.nuicraft.matanui_stone.name=Mata Nui Stone
+tile.nuicraft.makuta_stone.name=Makuta Stone
+tile.nuicraft.lightstone.name=Lightstone
+tile.nuicraft.lightstone_ore.name=Lightstone Ore
+tile.nuicraft.heatstone_ore.name=Heatstone Ore
+tile.nuicraft.protodermis_ore.name=Protodermis Ore
+tile.nuicraft.bamboo.name=Bamboo
+
+tile.nuicraft.block_protodermis.name=Protodermis Block
+tile.nuicraft.block_protosteel.name=Protosteel Block
+
+item.nuicraft.ingot_protodermis.name=Protodermis Ingot
+item.nuicraft.ingot_protosteel.name=Protosteel Ingot
+item.nuicraft.nugget_protodermis.name=Protodermis Nugget
+item.nuicraft.nugget_protosteel.name=Protosteel Nugget
+item.nuicraft.raw_protodermis.name=Raw Liquid Protodermis Blob
+item.nuicraft.lightstone.name=Lightstone
+item.nuicraft.raw_heatstone.name=Heatstone
+item.nuicraft.heatstone_lighter.name=Heatstone Lighter
+item.nuicraft.sluice.name=Sluice
+item.nuicraft.bamboo_stick.name=Bamboo Stick
+item.nuicraft.bamboo_item.name=Bamboo
+item.nuicraft.kolhii_ball.name=Kolhii Ball
+
+item.nuicraft.kanoka_flying.name=Flying Disc (You shouldn't have this)
+item.nuicraft.kanoka_bamboo.name=Bamboo Disc
+item.nuicraft.kanoka_time.name=The Disc of Time
+
+item.nuicraft.disc_launcher.name=Disc Launcher
+
+item.nuicraft.protodermis_sword.name=Protodermis Sword
+item.nuicraft.protodermis_pick.name=Protodermis Pickaxe
+item.nuicraft.protodermis_axe.name=Protodermis Hatchet
+item.nuicraft.protodermis_shovel.name=Protodermis Shovel
+item.nuicraft.protodermis_sythe.name=Protodermis Sythe
+
+item.nuicraft.mask_mata_gold.name=Golden Kanohi Mata
+
+item.nuicraft.mask_mata_kakama.name=Kanohi Kakama - Mask of Speed
+item.nuicraft.mask_mata_pakari.name=Kanohi Pakari - Mask of Strength
+item.nuicraft.mask_mata_kaukau.name=Kanohi Kaukau - Mask of Water Breathing
+item.nuicraft.mask_mata_miru.name=Kanohi Miru - Mask of Levitation
+item.nuicraft.mask_mata_hau.name=Kanohi Hau - Mask of Shielding (WIP)
+item.nuicraft.mask_mata_akaku.name=Kanohi Akaku - Mask of X-Ray Vision (WIP)
+
+item.nuicraft.mask_nuva_kakama.name=Kanohi Nuva Kakama - Mask of Speed
+item.nuicraft.mask_nuva_pakari.name=Kanohi Nuva Pakari - Mask of Strength
+item.nuicraft.mask_nuva_kaukau.name=Kanohi Nuva Kaukau - Mask of Water Breathing
+item.nuicraft.mask_nuva_miru.name=Kanohi Nuva Miru - Mask of Levitation
+item.nuicraft.mask_nuva_hau.name=Kanohi Nuva Hau - Mask of Shielding (WIP)
+item.nuicraft.mask_nuva_akaku.name=Kanohi Nuva Akaku - Mask of X-Ray Vision (WIP)
+
+item.nuicraft.mask_ignika.name=Kanohi Ignika - Legendary Mask of Life
+item.nuicraft.mask_vahi.name=Kanohi Vahi - Legendary Mask of Time

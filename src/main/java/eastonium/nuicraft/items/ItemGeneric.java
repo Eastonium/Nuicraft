@@ -6,18 +6,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemNormal extends Item
+public class ItemGeneric extends Item
 {
-	public boolean effect = false;
+	private boolean effect = false;
 		
-	public ItemNormal(String name, boolean effect){
+	public ItemGeneric(String name, boolean effect){
 		setCreativeTab(NuiCraft.bio_material_tab);
 		setUnlocalizedName(NuiCraft.MODID + "." + name);
 		setRegistryName(name);
 		this.effect = effect;
 	}
 	
-	public ItemNormal(String name) {
+	public ItemGeneric(String name) {
 		this(name, false);
 	}
 	

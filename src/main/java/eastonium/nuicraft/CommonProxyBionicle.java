@@ -16,7 +16,8 @@ import eastonium.nuicraft.items.ItemBionicleShovel;
 import eastonium.nuicraft.items.ItemBionicleSword;
 import eastonium.nuicraft.items.ItemBlockKoro;
 import eastonium.nuicraft.items.ItemHeatstoneLighter;
-import eastonium.nuicraft.items.ItemNormal;
+import eastonium.nuicraft.items.ItemGeneric;
+import eastonium.nuicraft.items.ItemGenericMeta;
 import eastonium.nuicraft.items.ItemSluice;
 import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanohi.ItemGoldMataMask;
@@ -102,12 +103,9 @@ public class CommonProxyBionicle
 	}
 	
 	public void init(){
-	    //TODO CraftingManager.addRecipe(new RecipeColoredMaskDyes());
-
 		//Smelting Recipes
-	    GameRegistry.addSmelting(NuiCraftBlocks.protodermis_ore, new ItemStack(NuiCraftItems.raw_protodermis, 2), 0.7F);
-	    GameRegistry.addSmelting(NuiCraftItems.raw_protodermis, new ItemStack(NuiCraftItems.ingot_protodermis, 1), 0.7F);
-	    //GameRegistry.addSmelting(Bionicle.heatstoneLighter, new ItemStack(Bionicle.heatstoneLighter), 0.3F);
+	    GameRegistry.addSmelting(NuiCraftBlocks.protodermis_ore, NuiCraftItems.getGIIS("raw_protodermis", 2), 0.7F);
+	    GameRegistry.addSmelting(NuiCraftItems.getGIIS("raw_protodermis", 1), NuiCraftItems.getGIIS("ingot_protodermis", 1), 0.7F);
 	    
 	    GameRegistry.addSmelting(new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 1), new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 0), 0.2F);
 	    GameRegistry.addSmelting(Blocks.SANDSTONE, new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 3), 0.2F);
@@ -177,15 +175,13 @@ public class CommonProxyBionicle
 		
 		OreDictionary.registerOre("blockProtodermis", NuiCraftBlocks.block_protodermis);
 		OreDictionary.registerOre("blockProtosteel", NuiCraftBlocks.block_protosteel);		
-		OreDictionary.registerOre("ingotProtodermis", NuiCraftItems.ingot_protodermis);
-	    OreDictionary.registerOre("ingotProtosteel", NuiCraftItems.ingot_protosteel);
-	    OreDictionary.registerOre("nuggetProtodermis", NuiCraftItems.nugget_protodermis);
-	    OreDictionary.registerOre("nuggetProtosteel", NuiCraftItems.nugget_protosteel);
-	    //OreDictionary.registerOre("stickProtodermis", Bionicle.rodProtodermis);
-	    //OreDictionary.registerOre("stickProtosteel", Bionicle.rodProtosteel);
+		OreDictionary.registerOre("ingotProtodermis", NuiCraftItems.getGIIS("ingot_protodermis", 1));
+	    OreDictionary.registerOre("ingotProtosteel", NuiCraftItems.getGIIS("ingot_protosteel", 1));
+	    OreDictionary.registerOre("nuggetProtodermis", NuiCraftItems.getGIIS("nugget_protodermis", 1));
+	    OreDictionary.registerOre("nuggetProtosteel", NuiCraftItems.getGIIS("nugget_protosteel", 1));
 	    
-		OreDictionary.registerOre("gemHeatstone", NuiCraftItems.raw_heatstone);
-	    OreDictionary.registerOre("stickBamboo", NuiCraftItems.bamboo_stick);
+		OreDictionary.registerOre("gemHeatstone", NuiCraftItems.getGIIS("raw_heatstone", 1));
+	    OreDictionary.registerOre("stickBamboo", NuiCraftItems.getGIIS("bamboo_stick", 1));
 	}
 	
 	@SubscribeEvent
@@ -220,6 +216,16 @@ public class CommonProxyBionicle
 	
 	@SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
+		ItemGenericMeta.addGenericItem("ingot_protodermis");
+		ItemGenericMeta.addGenericItem("ingot_protosteel");
+		ItemGenericMeta.addGenericItem("nugget_protodermis");
+		ItemGenericMeta.addGenericItem("nugget_protosteel");
+		ItemGenericMeta.addGenericItem("raw_protodermis");
+		ItemGenericMeta.addGenericItem("raw_heatstone");    
+		ItemGenericMeta.addGenericItem("bamboo_stick");
+		ItemGenericMeta.addGenericItem("kanoka_flying", null);
+		ItemGenericMeta.addGenericItem("kanoka_time", NuiCraft.bio_tool_tab, true);
+		
 		event.getRegistry().registerAll(
 			new ItemBlock(NuiCraftBlocks.mask_forge).setRegistryName(NuiCraftBlocks.mask_forge.getRegistryName()),
 			//new ItemBlock(NuiCraftBlocks.purifier).setRegistryName(NuiCraftBlocks.purifier.getRegistryName()),
@@ -242,27 +248,20 @@ public class CommonProxyBionicle
 			new ItemBlock(NuiCraftBlocks.bamboo).setRegistryName(NuiCraftBlocks.bamboo.getRegistryName()),
 			new ItemBlock(NuiCraftBlocks.block_protodermis).setRegistryName(NuiCraftBlocks.block_protodermis.getRegistryName()),
 			new ItemBlock(NuiCraftBlocks.block_protosteel).setRegistryName(NuiCraftBlocks.block_protosteel.getRegistryName()),
-				
-			new ItemPurifier(),
-
-			new ItemNormal("ingot_protodermis"),		
-			new ItemNormal("ingot_protosteel"),
-			new ItemNormal("nugget_protodermis"),
-			new ItemNormal("nugget_protosteel"),
-			new ItemNormal("raw_protodermis"),
-			new ItemNormal("raw_heatstone"),	    
-			new ItemNormal("bamboo_stick"),
+							
+			new ItemPurifier(),			
 		    	    
 		    /*EntityRegistry.registerModEntity(EntityKolhiiBall.class, "Kolhii_Ball", 10, this, 64, 10, true),
 		    new ItemKolhiiBall().setName("KolhiiBall"),
 		    GameRegistry.registerItem(kolhiiBall, "kolhii_ball"),
 		    */
+			
+			//Generic Items
+			new ItemGenericMeta(),
 
 			//Kanoka
-			new ItemNormal("kanoka_flying").setCreativeTab(null),
 			new ItemBambooDisc(),
 			new ItemKanokaDisc(),
-			new ItemNormal("kanoka_time", true).setCreativeTab(NuiCraft.bio_tool_tab),
 			
 			//Weapons	    
 			new ItemDiscLauncher(),	    
