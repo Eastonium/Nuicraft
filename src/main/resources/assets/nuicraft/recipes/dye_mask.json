@@ -65,6 +65,7 @@
     	]
 	],
 	"result": {
-		"item": "nuicraft:mask_mata_hau"
+		"item": "nuicraft:generic_item",
+		"data": 9
 	}
 }

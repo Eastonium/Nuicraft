@@ -225,6 +225,7 @@ public class CommonProxyBionicle
 		ItemGenericMeta.addGenericItem("bamboo_stick");
 		ItemGenericMeta.addGenericItem("kanoka_flying", null);
 		ItemGenericMeta.addGenericItem("kanoka_time", NuiCraft.bio_tool_tab, true);
+		ItemGenericMeta.addGenericItem("dye_mask", null);
 		
 		event.getRegistry().registerAll(
 			new ItemBlock(NuiCraftBlocks.mask_forge).setRegistryName(NuiCraftBlocks.mask_forge.getRegistryName()),
