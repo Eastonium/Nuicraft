@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "trdx_brick_small",
+  "result": {
+    "item": "nuicraft:stone_koro_block",
+	"data": 8,
+	"count": 8
+  },
+  "pattern": [
+    "sss",
+    "sds",
+    "sss"
+  ],
+  "key": {
+    "s": [
+	  {
+	    "item": "minecraft:brick_block"
+      },{
+	    "item": "minecraft:nether_brick"
+      }
+	],      
+    "d": {
+      "item": "minecraft:rotten_flesh"
+    }
+  }
+}

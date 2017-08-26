@@ -1,0 +1,22 @@
+{
+  "type": "forge:ore_shaped",
+  "result": {
+    "item": "nuicraft:protodermis_axe",
+	"count": 1
+  },
+  "pattern": [
+    "ii",
+    "is",
+    " s"
+  ],
+  "key": {
+    "i": {
+      "type": "forge:ore_dict",
+	  "ore": "ingotProtodermis"
+    },
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "stickBamboo"
+    }
+  }
+}

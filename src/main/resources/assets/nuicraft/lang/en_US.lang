@@ -51,6 +51,8 @@ tile.nuicraft.bamboo.name=Bamboo
 tile.nuicraft.block_protodermis.name=Protodermis Block
 tile.nuicraft.block_protosteel.name=Protosteel Block
 
+item.nuicraft.dye_mask.name=Color Masks using one or more dyes!
+
 item.nuicraft.ingot_protodermis.name=Protodermis Ingot
 item.nuicraft.ingot_protosteel.name=Protosteel Ingot
 item.nuicraft.nugget_protodermis.name=Protodermis Nugget

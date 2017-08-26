@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "nuicraft:leafy_koro_block",
+	"data": 1,
+	"count": 1
+  },
+  "pattern": [
+    "s"
+  ],
+  "key": {
+    "s": {
+	  "item": "nuicraft:leafy_koro_block",
+	  "data": 0
+    }
+  }
+}

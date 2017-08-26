@@ -1,0 +1,22 @@
+{
+  "type": "forge:ore_shaped",
+  "result": {
+    "item": "nuicraft:protodermis_shovel",
+	"count": 1
+  },
+  "pattern": [
+    "i",
+    "s",
+    "s"
+  ],
+  "key": {
+    "i": {
+      "type": "forge:ore_dict",
+	  "ore": "ingotProtodermis"
+    },
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "stickBamboo"
+    }
+  }
+}

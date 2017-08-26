@@ -1,0 +1,20 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "ingot_protosteel",
+  "result": {
+    "item": "nuicraft:generic_item",
+	"data": 1,
+	"count": 1
+  },
+  "pattern": [
+    "sss",
+	"sss",
+	"sss"
+  ],
+  "key": {
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "nuggetProtosteel"
+    }
+  }
+}
