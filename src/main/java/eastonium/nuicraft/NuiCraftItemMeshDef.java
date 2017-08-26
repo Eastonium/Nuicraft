@@ -38,9 +38,13 @@ public class NuiCraftItemMeshDef implements ItemMeshDefinition{
 			
 		} else if(stack.getItem() instanceof ItemColoredMask){
 			ItemColoredMask maskItem = (ItemColoredMask)stack.getItem();
-			if(!maskItem.hasColor(stack)) {
+			if (maskItem.hasColor(stack)) {
+				return new ModelResourceLocation(maskItem.getRegistryName(), "inventory");
+			} else if (maskItem.getMetal(stack) != 0) {
 				return new ModelResourceLocation(maskItem.getRegistryName() + "_" + maskItem.getMetal(stack), "inventory");
-			} else return new ModelResourceLocation(maskItem.getRegistryName(), "inventory");
+			} else {
+				return new ModelResourceLocation(maskItem.getRegistryName(), "inventory");
+			}
 			
 		} else if (stack.getItem() == NuiCraftItems.kanoka_disc) {			
 			byte[] discNumbers = ItemKanokaDisc.getKanokaNumber(stack);

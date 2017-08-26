@@ -3,6 +3,7 @@ package eastonium.nuicraft.kanohi;
 import com.google.gson.JsonObject;
 
 import eastonium.nuicraft.NuiCraft;
+import eastonium.nuicraft.NuiCraftItems;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -27,7 +28,7 @@ public class DyeMaskRecipeFactory implements IRecipeFactory {
     
 	public static class DyeMaskRecipe extends ShapelessOreRecipe {
 		public DyeMaskRecipe(ResourceLocation group, NonNullList<Ingredient> input) {
-			super(group, input, NuiCraft.getRedHau());
+			super(group, input, NuiCraftItems.getGIIS("dye_mask", 1));
 	    }
 	
 		@Override
