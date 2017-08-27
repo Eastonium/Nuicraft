@@ -23,7 +23,7 @@ public class ItemKanokaDisc extends Item {
 	
 	public ItemKanokaDisc(){
 		maxStackSize = 8;
-		setCreativeTab(NuiCraft.bio_tool_tab);
+		setCreativeTab(NuiCraft.nuicraftTab);
 		setUnlocalizedName(NuiCraft.MODID + ".kanoka_disc");
 		setRegistryName("kanoka_disc");
 	}

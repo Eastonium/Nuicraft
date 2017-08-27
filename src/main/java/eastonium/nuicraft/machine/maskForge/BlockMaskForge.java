@@ -47,7 +47,7 @@ public class BlockMaskForge extends BlockContainer {
 	public BlockMaskForge(){
 		super(Material.IRON);
         setDefaultState(blockState.getBaseState().withProperty(LEVEL, Integer.valueOf(0)));
-		setCreativeTab(NuiCraft.bio_block_tab);
+		setCreativeTab(NuiCraft.nuicraftTab);
 		setUnlocalizedName(NuiCraft.MODID + ".mask_forge");
 		setRegistryName("mask_forge");
 	}

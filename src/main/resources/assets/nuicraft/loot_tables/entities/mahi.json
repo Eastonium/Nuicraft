@@ -7,7 +7,6 @@
                 {
                     "type": "item",
                     "name": "nuicraft:generic_item",
-					"data": 4
                     "weight": 1,
                     "functions": [
                         {
@@ -23,7 +22,10 @@
                                 "min": 0,
                                 "max": 1
                             }
-                        }
+                        },{
+							"function": "set_data",
+							"data": 4
+						}
                     ]
                 }
             ]

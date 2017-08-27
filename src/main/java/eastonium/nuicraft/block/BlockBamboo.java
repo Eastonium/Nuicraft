@@ -1,4 +1,4 @@
-package eastonium.nuicraft.blocks;
+package eastonium.nuicraft.block;
 
 import java.util.Random;
 
@@ -22,13 +22,13 @@ public class BlockBamboo extends BlockReed implements IPlantable
 {
 	public BlockBamboo(){
 		super();
-		setSoundType(SoundType.PLANT);
+		setSoundType(SoundType.WOOD);
         setDefaultState(blockState.getBaseState().withProperty(AGE, Integer.valueOf(0)));
 		//float var3 = 0.375F;
 		//this.setBlockBounds(0.5F - var3, 0.0F, 0.5F - var3, 0.5F + var3, 1.0F, 0.5F + var3);
 		setTickRandomly(true);
 		setHarvestLevel("axe", 0);
-		setCreativeTab(NuiCraft.bio_material_tab);
+		setCreativeTab(NuiCraft.nuicraftTab);
 		setUnlocalizedName(NuiCraft.MODID + ".bamboo");
 		setRegistryName("bamboo");
 	}
@@ -50,7 +50,7 @@ public class BlockBamboo extends BlockReed implements IPlantable
                 }
             }
         }
-        if (rand.nextInt(10) == 0){
+        if (rand.nextInt(8) == 0){
             /*int i = 5;
             for (BlockPos blockpos : BlockPos.getAllInBoxMutable(pos.add(-2, -1, -2), pos.add(2, 1, 2))){
                 if (worldIn.getBlockState(blockpos).getBlock() == this){

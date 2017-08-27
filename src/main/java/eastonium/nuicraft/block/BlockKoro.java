@@ -1,4 +1,4 @@
-package eastonium.nuicraft.blocks;
+package eastonium.nuicraft.block;
 
 import java.util.List;
 
@@ -19,10 +19,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockKoro extends Block
 {    
-	public BlockKoro(String name, Material material, MapColor mapColor/*, int metadataAmount*/) {
+	public BlockKoro(String name, Material material, MapColor mapColor) {
 		super(material, mapColor);
         setDefaultState(blockState.getBaseState().withProperty(getMETA(), Integer.valueOf(0)));
-		setCreativeTab(NuiCraft.bio_block_tab);
+        setHarvestLevel(material == Material.LEAVES ? "axe" : "pickaxe", 0);
+		setCreativeTab(NuiCraft.nuicraftTab);
 		setUnlocalizedName(NuiCraft.MODID + ".koro_block");
 		setRegistryName(name);
 	}
@@ -37,7 +38,7 @@ public class BlockKoro extends Block
 	
 	@Override
 	public int damageDropped(IBlockState state) {
-        return state.getValue(this.getMETA());
+        return state.getValue(getMETA());
     }
 	
 	@SideOnly(Side.CLIENT)

@@ -1,8 +1,9 @@
 package eastonium.nuicraft;
 
-import java.util.logging.Logger;
+import org.apache.logging.log4j.Logger;
 
 import eastonium.nuicraft.kanohi.ItemColoredMask;
+import eastonium.nuicraft.util.NuiCraftItemMeshDef;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item.ToolMaterial;
@@ -33,10 +34,8 @@ public class NuiCraft
 	public static ItemMeshDefinition itemMeshDef = new NuiCraftItemMeshDef();
 	//public static final PacketPipeline packetPipeline = new PacketPipeline();
 	
-	public static CreativeTabs bio_block_tab;
-	public static CreativeTabs bio_material_tab;
-	public static CreativeTabs bio_tool_tab;
-	public static CreativeTabs bio_mask_tab;
+	public static CreativeTabs nuicraftTab;
+	public static CreativeTabs nuicraftMaskTab;
 
 	public static ToolMaterial PROTODERMIS = EnumHelper.addToolMaterial("Protodermis", 2, 500, 5.0F, 2.0F, 7);
 	public static ToolMaterial PROTOSTEEL = EnumHelper.addToolMaterial("Protosteel", 7, 4620, 11.0F, 5.0F, 15);
@@ -59,21 +58,11 @@ public class NuiCraft
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
-		bio_block_tab = new CreativeTabs("bioBlockTab"){public ItemStack getTabIconItem(){return new ItemStack(NuiCraftBlocks.nuva_cube);}};
-		bio_material_tab = new CreativeTabs("bioMaterialTab"){public ItemStack getTabIconItem(){return new ItemStack(NuiCraftBlocks.lightstone);}};
-		bio_tool_tab = new CreativeTabs("bioWeaponTab"){public ItemStack getTabIconItem(){return new ItemStack(NuiCraftItems.disc_launcher);}};
-		bio_mask_tab = new CreativeTabs("bioMaskTab"){public ItemStack getTabIconItem(){ return getRedHau(); }};
+		logger = event.getModLog();
 		
-	//Fluids
-//		protodermis = BionicleFluidUtil.createFluid("protodermis", MODID + ":blocks/protodermis", true,
-//				fluid -> fluid.setRarity(EnumRarity.UNCOMMON),
-//				fluid -> new BlockFluidClassic(fluid, Material.WATER));
-//		
-//		protodermis = BionicleFluidUtil.createFluid("protodermismolten", MODID + ":blocks/protodermisMolten", true,
-//				fluid -> fluid.setRarity(EnumRarity.UNCOMMON).setLuminosity(15).setDensity(3500).setViscosity(4000).setTemperature(2800),
-//				fluid -> new BlockFluidClassic(fluid, Material.LAVA));
+		nuicraftTab = new CreativeTabs("nuicraftTab"){public ItemStack getTabIconItem(){return new ItemStack(NuiCraftBlocks.nuva_cube);}};
+		nuicraftMaskTab = new CreativeTabs("nuicraftMaskTab"){public ItemStack getTabIconItem(){ return getRedHau(); }};
 
-//Loadings
 		proxy.preInit();
 		MinecraftForge.EVENT_BUS.register(new ServerTickHandler());
 		//MinecraftForge.EVENT_BUS.register(new JoinWorld());

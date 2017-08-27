@@ -1,5 +1,7 @@
-package eastonium.nuicraft;
+package eastonium.nuicraft.util;
 
+import eastonium.nuicraft.NuiCraft;
+import eastonium.nuicraft.NuiCraftItems;
 import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanoka.ItemKanokaDisc;
 import net.minecraft.client.renderer.ItemMeshDefinition;

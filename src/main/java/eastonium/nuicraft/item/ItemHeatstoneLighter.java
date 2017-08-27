@@ -1,4 +1,4 @@
-package eastonium.nuicraft.items;
+package eastonium.nuicraft.item;
 
 import eastonium.nuicraft.NuiCraft;
 import net.minecraft.entity.Entity;
@@ -21,7 +21,7 @@ public class ItemHeatstoneLighter extends ItemFlintAndSteel {
 	public ItemHeatstoneLighter(){
 		maxStackSize = 1;
 		setMaxDamage(128);
-		setCreativeTab(NuiCraft.bio_tool_tab);
+		setCreativeTab(NuiCraft.nuicraftTab);
 		setUnlocalizedName(NuiCraft.MODID + ".heatstone_lighter");
 		setRegistryName("heatstone_lighter");
 	}

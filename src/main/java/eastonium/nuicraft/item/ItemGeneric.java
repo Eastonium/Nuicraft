@@ -1,4 +1,4 @@
-package eastonium.nuicraft.items;
+package eastonium.nuicraft.item;
 
 import eastonium.nuicraft.NuiCraft;
 import net.minecraft.item.Item;
@@ -11,7 +11,7 @@ public class ItemGeneric extends Item
 	private boolean effect = false;
 		
 	public ItemGeneric(String name, boolean effect){
-		setCreativeTab(NuiCraft.bio_material_tab);
+		setCreativeTab(NuiCraft.nuicraftTab);
 		setUnlocalizedName(NuiCraft.MODID + "." + name);
 		setRegistryName(name);
 		this.effect = effect;

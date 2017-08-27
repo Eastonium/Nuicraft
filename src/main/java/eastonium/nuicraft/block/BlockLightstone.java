@@ -1,4 +1,4 @@
-package eastonium.nuicraft.blocks;
+package eastonium.nuicraft.block;
 
 import java.util.Random;
 
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockLightstone extends BlockTorch {
 	public BlockLightstone() {
 		super();
-        setCreativeTab(NuiCraft.bio_material_tab);
+        setCreativeTab(NuiCraft.nuicraftTab);
         setUnlocalizedName(NuiCraft.MODID + ".lightstone");
         setRegistryName("lightstone");
 	}

@@ -1,4 +1,4 @@
-package eastonium.nuicraft.items;
+package eastonium.nuicraft.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlockSpecial;

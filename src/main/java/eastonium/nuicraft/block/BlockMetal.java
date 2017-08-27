@@ -1,4 +1,4 @@
-package eastonium.nuicraft.blocks;
+package eastonium.nuicraft.block;
 
 import eastonium.nuicraft.NuiCraft;
 import net.minecraft.block.Block;
@@ -11,7 +11,7 @@ public class BlockMetal extends Block {
 	public BlockMetal(String name, Material materialIn) {
 		super(materialIn);
 		setSoundType(SoundType.METAL);
-		setCreativeTab(NuiCraft.bio_block_tab);
+		setCreativeTab(NuiCraft.nuicraftTab);
 		setUnlocalizedName(NuiCraft.MODID + "." + name);
 		setRegistryName(name);
 	}
