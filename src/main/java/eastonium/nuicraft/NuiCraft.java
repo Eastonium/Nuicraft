@@ -3,6 +3,7 @@ package eastonium.nuicraft;
 import org.apache.logging.log4j.Logger;
 
 import eastonium.nuicraft.kanohi.ItemColoredMask;
+import eastonium.nuicraft.proxy.CommonProxyBionicle;
 import eastonium.nuicraft.util.NuiCraftItemMeshDef;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.creativetab.CreativeTabs;
@@ -20,7 +21,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = NuiCraft.MODID, name = "NuiCraft", version = "V0.8.1.2 MC1.12")
+@Mod(modid = NuiCraft.MODID, name = "NuiCraft", version = "1.12.1-0.8.1.2")
 public class NuiCraft 
 {
 	public static final String MODID = "nuicraft";
@@ -42,7 +43,7 @@ public class NuiCraft
 //Fluids
 	public static Fluid protodermis;
 
-	@SidedProxy(clientSide = "eastonium.nuicraft.ClientProxyBionicle", serverSide = "eastonium.nuicraft.CommonProxyBionicle")
+	@SidedProxy(clientSide = "eastonium.nuicraft.proxy.ClientProxyBionicle", serverSide = "eastonium.nuicraft.proxy.CommonProxyBionicle")
 	public static CommonProxyBionicle proxy;
 	
 	public NuiCraft(){

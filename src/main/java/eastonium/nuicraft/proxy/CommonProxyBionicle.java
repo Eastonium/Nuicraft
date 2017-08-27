@@ -1,5 +1,10 @@
-package eastonium.nuicraft;
+package eastonium.nuicraft.proxy;
 
+import eastonium.nuicraft.GuiHandler;
+import eastonium.nuicraft.NuiCraft;
+import eastonium.nuicraft.NuiCraftBlocks;
+import eastonium.nuicraft.NuiCraftFluids;
+import eastonium.nuicraft.NuiCraftItems;
 import eastonium.nuicraft.block.BlockBamboo;
 import eastonium.nuicraft.block.BlockBionicleStone;
 import eastonium.nuicraft.block.BlockKoro;
