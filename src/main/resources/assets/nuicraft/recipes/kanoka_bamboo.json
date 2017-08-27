@@ -1,0 +1,17 @@
+{
+  "type": "forge:ore_shaped",
+  "result": {
+    "item": "nuicraft:kanoka_bamboo",
+	"count": 1
+  },
+  "pattern": [
+    "ss",
+    "ss"
+  ],
+  "key": {
+    "s": {
+      "type": "forge:ore_dict",
+	  "ore": "cropBamboo"
+    }
+  }
+}

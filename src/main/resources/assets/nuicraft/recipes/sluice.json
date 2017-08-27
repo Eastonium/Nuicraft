@@ -1,0 +1,22 @@
+{
+  "type": "forge:ore_shaped",
+  "result": {
+    "item": "nuicraft:sluice",
+	"count": 1
+  },
+  "pattern": [
+    "  i",
+	" n ",
+	"n  "
+  ],
+  "key": {
+    "i": {
+      "type": "forge:ore_dict",
+      "ore": "ingotProtodermis"
+    },
+	"n": {
+	  "type": "forge:ore_dict",
+	  "ore": "nuggetProtodermis"	
+	}
+  }
+}

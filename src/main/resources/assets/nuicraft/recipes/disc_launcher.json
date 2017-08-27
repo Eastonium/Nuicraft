@@ -1,0 +1,18 @@
+{
+  "type": "forge:ore_shaped",
+  "result": {
+    "item": "nuicraft:disc_launcher",
+	"count": 1
+  },
+  "pattern": [
+    "s s",
+	" s ",
+	" s "
+  ],
+  "key": {
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "ingotProtodermis"
+    }
+  }
+}

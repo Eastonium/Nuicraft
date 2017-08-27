@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class ItemPurifier extends Item {
 	
     public ItemPurifier(){
-		this.setCreativeTab(NuiCraft.bio_block_tab);
+		this.setCreativeTab(NuiCraft.nuicraftTab);
 		this.setUnlocalizedName(NuiCraft.MODID + ".purifier_item");
 		this.setRegistryName("purifier_item");
     }

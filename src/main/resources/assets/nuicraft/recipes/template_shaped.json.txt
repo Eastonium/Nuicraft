@@ -1,0 +1,27 @@
+{
+  "type": "forge:ore_shaped",
+  "result": {
+    "item": "nuicraft:mask_forge"
+  },
+  "pattern": [
+    "did",
+    "ere",
+    "did"
+  ],
+  "key": {
+    "i": {
+      "type": "forge:ore_dict",
+      "ore": "dyeBlack"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "d": {
+      "item": "minecraft:dirt",
+      "data": 0
+    },
+    "e": {
+      "item": "minecraft:emerald"
+    }
+  }
+}

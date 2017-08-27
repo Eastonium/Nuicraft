@@ -6,7 +6,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "nuicraft:raw_protodermis",
+                    "name": "nuicraft:generic_item",
                     "weight": 1,
                     "functions": [
                         {
@@ -22,7 +22,10 @@
                                 "min": 0,
                                 "max": 1
                             }
-                        }
+                        },{
+							"function": "set_data",
+							"data": 4
+						}
                     ]
                 }
             ]

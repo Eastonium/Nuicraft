@@ -79,6 +79,7 @@ public class ClientProxyBionicle extends CommonProxyBionicle
 	@SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
         NuiCraftBlocks.initModels();
+        NuiCraftFluids.initModels();
 		NuiCraftItems.initModels();
     }
 }

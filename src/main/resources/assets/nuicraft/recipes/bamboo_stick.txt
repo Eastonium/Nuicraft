@@ -1,0 +1,17 @@
+{
+  "type": "forge:ore_shapeless",
+  "result": {
+    "item": "nuicraft:generic_item",
+    "data": 6,
+	"count": 1
+  },
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+	  "ore": "cropBamboo"
+    },{
+      "type": "forge:ore_dict",
+	  "ore": "cropBamboo"
+    }
+  ]
+}

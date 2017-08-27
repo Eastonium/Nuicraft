@@ -1,0 +1,17 @@
+{
+  "type": "forge:ore_shaped",
+  "result": {
+    "item": "nuicraft:generic_item",
+	"data": 2,
+	"count": 9
+  },
+  "pattern": [
+    "s"
+  ],
+  "key": {
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "ingotProtodermis"
+    }
+  }
+}

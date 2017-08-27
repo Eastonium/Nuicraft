@@ -23,7 +23,7 @@ public class ItemMask extends ItemArmor {
 		super(KANOHI, 0, EntityEquipmentSlot.HEAD);
 		this.isShiny = isShiny;
 		setMaxDamage(0);
-		setCreativeTab(NuiCraft.bio_mask_tab);
+		setCreativeTab(NuiCraft.nuicraftMaskTab);
 		setUnlocalizedName(NuiCraft.MODID + "." + name);
 		setRegistryName(name);
 	}

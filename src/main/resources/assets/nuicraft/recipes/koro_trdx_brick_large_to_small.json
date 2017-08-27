@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "trdx_brick_small",
+  "result": {
+    "item": "nuicraft:stone_koro_block",
+	"data": 8,
+	"count": 1
+  },
+  "pattern": [
+    "s"
+  ],
+  "key": {
+    "s": {
+	  "item": "nuicraft:stone_koro_block",
+	  "data": 7
+    }
+  }
+}

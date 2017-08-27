@@ -1,0 +1,23 @@
+{
+  "type": "forge:ore_shaped",
+  "result": {
+    "item": "nuicraft:heatstone_lighter",
+	"damage": 128,
+	"count": 1
+  },
+  "pattern": [
+    " i ",
+    "ihi",
+    " i "
+  ],
+  "key": {
+    "i": {
+      "type": "forge:ore_dict",
+	  "ore": "ingotProtodermis"
+    },
+    "h": {
+      "type": "forge:ore_dict",
+      "ore": "gemHeatstone"
+    }
+  }
+}
