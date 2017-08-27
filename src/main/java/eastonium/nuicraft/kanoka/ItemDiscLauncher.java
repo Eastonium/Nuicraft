@@ -20,7 +20,7 @@ public class ItemDiscLauncher extends Item {
 	public ItemDiscLauncher(){
 		this.maxStackSize = 1;
 		this.setMaxDamage(500);
-		this.setCreativeTab(NuiCraft.bio_tool_tab);
+		this.setCreativeTab(NuiCraft.nuicraftTab);
 		this.setUnlocalizedName(NuiCraft.MODID + ".disc_launcher");
 		this.setRegistryName("disc_launcher");
 	}

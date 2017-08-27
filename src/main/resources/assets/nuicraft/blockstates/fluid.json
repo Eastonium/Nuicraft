@@ -1,17 +1,23 @@
 {
 	"forge_marker": 1,
+	"defaults": {
+		"model": "forge:fluid"
+	},
 	"variants": {
-		"protodermis": {
-			"model": "forge:fluid",
+		"protodermis": [{
 			"custom": {
 				"fluid": "protodermis"
 			}
-		},
-		"protodermismolten": {
-			"model": "forge:fluid",
+		}],
+		"protodermis_pure": [{
 			"custom": {
-				"fluid": "protodermismolten"
+				"fluid": "protodermis_pure"
 			}
-		}
+		}],
+		"protodermis_molten": [{
+			"custom": {
+				"fluid": "protodermis_molten"
+			}
+		}]
 	}
 }

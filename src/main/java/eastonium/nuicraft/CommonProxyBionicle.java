@@ -1,23 +1,24 @@
 package eastonium.nuicraft;
 
-import eastonium.nuicraft.blocks.BlockBamboo;
-import eastonium.nuicraft.blocks.BlockBionicleStone;
-import eastonium.nuicraft.blocks.BlockKoro;
-import eastonium.nuicraft.blocks.BlockLightstone;
-import eastonium.nuicraft.blocks.BlockMetal;
-import eastonium.nuicraft.blocks.BlockNuvaCube;
-import eastonium.nuicraft.blocks.BlockOre;
-import eastonium.nuicraft.blocks.BlockProtodermisDeposit;
-import eastonium.nuicraft.fluid.BionicleFluidUtil;
-import eastonium.nuicraft.items.ItemBionicleAxe;
-import eastonium.nuicraft.items.ItemBionicleHoe;
-import eastonium.nuicraft.items.ItemBioniclePick;
-import eastonium.nuicraft.items.ItemBionicleShovel;
-import eastonium.nuicraft.items.ItemBionicleSword;
-import eastonium.nuicraft.items.ItemBlockKoro;
-import eastonium.nuicraft.items.ItemGenericMeta;
-import eastonium.nuicraft.items.ItemHeatstoneLighter;
-import eastonium.nuicraft.items.ItemSluice;
+import eastonium.nuicraft.block.BlockBamboo;
+import eastonium.nuicraft.block.BlockBionicleStone;
+import eastonium.nuicraft.block.BlockKoro;
+import eastonium.nuicraft.block.BlockLightstone;
+import eastonium.nuicraft.block.BlockMetal;
+import eastonium.nuicraft.block.BlockNuvaCube;
+import eastonium.nuicraft.block.BlockOre;
+import eastonium.nuicraft.block.BlockProtodermisDeposit;
+import eastonium.nuicraft.fluid.BlockNuiCraftFluid;
+import eastonium.nuicraft.item.ItemBionicleAxe;
+import eastonium.nuicraft.item.ItemBionicleHoe;
+import eastonium.nuicraft.item.ItemBioniclePick;
+import eastonium.nuicraft.item.ItemBionicleShovel;
+import eastonium.nuicraft.item.ItemBionicleSword;
+import eastonium.nuicraft.item.ItemBlockGeneric;
+import eastonium.nuicraft.item.ItemBlockKoro;
+import eastonium.nuicraft.item.ItemGenericMeta;
+import eastonium.nuicraft.item.ItemHeatstoneLighter;
+import eastonium.nuicraft.item.ItemSluice;
 import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanohi.ItemGoldMataMask;
 import eastonium.nuicraft.kanohi.ItemMask;
@@ -34,6 +35,7 @@ import eastonium.nuicraft.machine.purifier.GuiHandlerPurifier;
 import eastonium.nuicraft.machine.purifier.ItemPurifier;
 import eastonium.nuicraft.machine.purifier.TileInventoryPurifier;
 import eastonium.nuicraft.mobs.mahi.EntityMahi;
+import eastonium.nuicraft.util.MeshDefinitionFix;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -46,11 +48,12 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -73,36 +76,19 @@ public class CommonProxyBionicle
 
 		//Technical entities ID 0-100
 
-	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "entityKanokaDisk"), EntityDisc.class, "Kanoka_Disc", 1, NuiCraft.modInstance, 64, 10, true);
-	    //TODO Bamboo disc here
-
+	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "entityKanokaDisk"), EntityDisc.class, "nuicraft.disc", 1, NuiCraft.modInstance, 64, 10, true);
+	    
+	    /*EntityRegistry.registerModEntity(EntityKolhiiBall.class, "Kolhii_Ball", 10, this, 64, 10, true),
+	    new ItemKolhiiBall().setName("KolhiiBall"),
+	    GameRegistry.registerItem(kolhiiBall, "kolhii_ball"),
+	    */
+	    
 		//Mobs ID 101-200
 
 	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "entityMahi"), EntityMahi.class, "nuicraft.mahi", 101, NuiCraft.modInstance, 64, 1, true, 0xE6C381, 0xD1322B);
 		EntityRegistry.addSpawn(EntityMahi.class, 15, 2, 5, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.PLAINS, Biomes.MUTATED_PLAINS, Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU);
 		
-		registerFluidModels();
-	}
-	
-	private void registerFluidModels() {
-		BionicleFluidUtil.modFluidBlocks.forEach(this::registerFluidModel);
-	}
-
-	private void registerFluidModel(IFluidBlock fluidBlock) {
-		Item item = Item.REGISTRY.getObject(((Block)fluidBlock).getRegistryName());
-		ModelBakery.registerItemVariants(item);
-		ModelResourceLocation modelResourceLocation = new ModelResourceLocation(NuiCraft.MODID + ":fluid", fluidBlock.getFluid().getName());
-		ModelLoader.setCustomMeshDefinition(item, MeshDefinitionFix.create(stack -> modelResourceLocation));
-		ModelLoader.setCustomStateMapper((Block) fluidBlock, new StateMapperBase() {
-			@Override
-			protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-				return modelResourceLocation;
-			}
-		});
-	}
-
-	public ModelBiped getArmorModel(int id){
-		return null;
+		registerFluids();
 	}
 	
 	public void init(){
@@ -136,29 +122,34 @@ public class CommonProxyBionicle
 	}
 	
 	@SubscribeEvent
+	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {}
+	
+	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		event.getRegistry().registerAll(
+			new BlockNuiCraftFluid(NuiCraftFluids.protodermis, Material.WATER),
+			new BlockNuiCraftFluid(NuiCraftFluids.protodermis_pure, Material.WATER),
+			new BlockNuiCraftFluid(NuiCraftFluids.protodermis_molten, Material.LAVA),
+			
 			new BlockMaskForge().setHardness(3.5F),
 			new BlockPurifier().setHardness(3.5F),
 
-			new BlockKoro("stone_koro_block", Material.ROCK, MapColor.OBSIDIAN).setHardness(1.5F).setResistance(5F),//.setHarvestLevel("pickaxe", 0),		
-			new BlockKoro("lit_koro_block", Material.REDSTONE_LIGHT, MapColor.OBSIDIAN).setLightLevel(1.0F).setHardness(1.5F).setResistance(5F),//.setHarvestLevel("pickaxe", 0),
-			new BlockKoro("icy_koro_block", Material.PACKED_ICE, MapColor.ICE).setHardness(1.5F).setResistance(3F),//.setHarvestLevel("pickaxe", 0),		
-			new BlockKoro("leafy_koro_block", Material.LEAVES, MapColor.FOLIAGE).setHardness(1.5F).setResistance(3F),//.setHarvestLevel("axe", 0),
+			new BlockKoro("stone_koro_block", Material.ROCK, MapColor.OBSIDIAN).setHardness(1.5F).setResistance(5F),
+			new BlockKoro("lit_koro_block", Material.REDSTONE_LIGHT, MapColor.OBSIDIAN).setLightLevel(1.0F).setHardness(1.5F).setResistance(5F),
+			new BlockKoro("icy_koro_block", Material.PACKED_ICE, MapColor.ICE).setHardness(1.5F).setResistance(3F),
+			new BlockKoro("leafy_koro_block", Material.LEAVES, MapColor.FOLIAGE).setHardness(1.5F).setResistance(3F),
 			
 			new BlockNuvaCube().setLightLevel(0.625F).setHardness(-1.0F).setResistance(6000000.0F),
-			
-			//new BlockCrystalizedProtodermis().setBlockUnbreakable().setLightOpacity(3).setResistance(6000000.0F).setStepSound(Block.soundTypeGlass).setCreativeTab(bioBlockTab),
-			
+			//new BlockCrystalizedProtodermis().setBlockUnbreakable().setLightOpacity(3).setResistance(6000000.0F),
 			new BlockBionicleStone("matanui_stone").setHardness(1.5F).setResistance(10.0F),
 			new BlockBionicleStone("makuta_stone").setHardness(1.5F).setResistance(10.0F),
 			new BlockLightstone().setHardness(0.0F).setLightLevel(1.0F),
 			
-			new BlockOre("lightstone_ore").setLightLevel(0.625F).setHardness(3.0F).setResistance(5.0F).setTickRandomly(true),//.setHarvestLevel("pickaxe", 2),
-			new BlockOre("heatstone_ore").setHardness(3.0F).setResistance(5.0F),//.setHarvestLevel("pickaxe", 2),
-			new BlockProtodermisDeposit().setHardness(3.0F).setResistance(5.0F),//.setHarvestLevel("pickaxe", 1),
+			new BlockOre("lightstone_ore", 2).setLightLevel(0.625F).setHardness(3.0F).setResistance(5.0F).setTickRandomly(true),
+			new BlockOre("heatstone_ore", 2).setHardness(3.0F).setResistance(5.0F),
+			new BlockProtodermisDeposit().setHardness(3.0F).setResistance(5.0F),
 			
-			new BlockBamboo().setHardness(0.2F),
+			new BlockBamboo().setHardness(1.0F).setResistance(9001.0F), //bleggaman - "bamboo is freaking tough!"
 			
 			new BlockMetal("block_protodermis", Material.IRON).setHardness(5.0F).setResistance(10.0F),
 			new BlockMetal("block_protosteel", Material.IRON).setHardness(5.0F).setResistance(10.0F)
@@ -174,39 +165,37 @@ public class CommonProxyBionicle
 		ItemGenericMeta.addGenericItem("raw_protodermis");
 		ItemGenericMeta.addGenericItem("raw_heatstone");    
 		ItemGenericMeta.addGenericItem("bamboo_stick");
-		ItemGenericMeta.addGenericItem("kanoka_flying", null);
-		ItemGenericMeta.addGenericItem("kanoka_time", NuiCraft.bio_tool_tab, true);
-		ItemGenericMeta.addGenericItem("dye_mask", null);
+		ItemGenericMeta.addGenericItem("kanoka_flying", false, true);
+		ItemGenericMeta.addGenericItem("kanoka_time", true);
+		ItemGenericMeta.addGenericItem("dye_mask", false, true);
 		
 		event.getRegistry().registerAll(
-			new ItemBlock(NuiCraftBlocks.mask_forge).setRegistryName(NuiCraftBlocks.mask_forge.getRegistryName()),
-			//new ItemBlock(NuiCraftBlocks.purifier).setRegistryName(NuiCraftBlocks.purifier.getRegistryName()),
+			new ItemBlockGeneric(NuiCraftBlocks.fluid_protodermis),
+			new ItemBlockGeneric(NuiCraftBlocks.fluid_protodermis_pure),
+			new ItemBlockGeneric(NuiCraftBlocks.fluid_protodermis_molten),				
+				
+			new ItemBlockGeneric(NuiCraftBlocks.mask_forge),
+			new ItemPurifier(),
+			//new ItemBlockGeneric(NuiCraftBlocks.purifier),
 			
 			new ItemBlockKoro(NuiCraftBlocks.stone_koro_block),
 			new ItemBlockKoro(NuiCraftBlocks.lit_koro_block),
 			new ItemBlockKoro(NuiCraftBlocks.icy_koro_block),
 			new ItemBlockKoro(NuiCraftBlocks.leafy_koro_block),
 
-			new ItemBlock(NuiCraftBlocks.nuva_cube).setRegistryName(NuiCraftBlocks.nuva_cube.getRegistryName()),
+			new ItemBlockGeneric(NuiCraftBlocks.nuva_cube),
 			
-			new ItemBlock(NuiCraftBlocks.matanui_stone).setRegistryName(NuiCraftBlocks.matanui_stone.getRegistryName()),
-			new ItemBlock(NuiCraftBlocks.makuta_stone).setRegistryName(NuiCraftBlocks.makuta_stone.getRegistryName()),
-			new ItemBlock(NuiCraftBlocks.lightstone).setRegistryName(NuiCraftBlocks.lightstone.getRegistryName()),
+			new ItemBlockGeneric(NuiCraftBlocks.matanui_stone),
+			new ItemBlockGeneric(NuiCraftBlocks.makuta_stone),
+			new ItemBlockGeneric(NuiCraftBlocks.lightstone),
 
-			new ItemBlock(NuiCraftBlocks.lightstone_ore).setRegistryName(NuiCraftBlocks.lightstone_ore.getRegistryName()),
-			new ItemBlock(NuiCraftBlocks.heatstone_ore).setRegistryName(NuiCraftBlocks.heatstone_ore.getRegistryName()),
-			new ItemBlock(NuiCraftBlocks.protodermis_ore).setRegistryName(NuiCraftBlocks.protodermis_ore.getRegistryName()),
+			new ItemBlockGeneric(NuiCraftBlocks.lightstone_ore),
+			new ItemBlockGeneric(NuiCraftBlocks.heatstone_ore),
+			new ItemBlockGeneric(NuiCraftBlocks.protodermis_ore),
 			
-			new ItemBlock(NuiCraftBlocks.bamboo).setRegistryName(NuiCraftBlocks.bamboo.getRegistryName()),
-			new ItemBlock(NuiCraftBlocks.block_protodermis).setRegistryName(NuiCraftBlocks.block_protodermis.getRegistryName()),
-			new ItemBlock(NuiCraftBlocks.block_protosteel).setRegistryName(NuiCraftBlocks.block_protosteel.getRegistryName()),
-							
-			new ItemPurifier(),			
-		    	    
-		    /*EntityRegistry.registerModEntity(EntityKolhiiBall.class, "Kolhii_Ball", 10, this, 64, 10, true),
-		    new ItemKolhiiBall().setName("KolhiiBall"),
-		    GameRegistry.registerItem(kolhiiBall, "kolhii_ball"),
-		    */
+			new ItemBlockGeneric(NuiCraftBlocks.bamboo),
+			new ItemBlockGeneric(NuiCraftBlocks.block_protodermis),
+			new ItemBlockGeneric(NuiCraftBlocks.block_protosteel),
 			
 			//Generic Items
 			new ItemGenericMeta(),
@@ -249,6 +238,30 @@ public class CommonProxyBionicle
 			new ItemMaskMeta("mask_ignika", 3, true),
 			new ItemMaskMeta("mask_vahi", 2, true)
 		);
+	}
+	
+	public static void registerFluids() {
+		FluidRegistry.addBucketForFluid(NuiCraftFluids.protodermis);
+		FluidRegistry.addBucketForFluid(NuiCraftFluids.protodermis_pure);
+		FluidRegistry.addBucketForFluid(NuiCraftFluids.protodermis_molten);
+	}
+
+
+	private void registerFluidModel(IFluidBlock fluidBlock) {
+		Item item = Item.REGISTRY.getObject(((Block)fluidBlock).getRegistryName());
+		ModelBakery.registerItemVariants(item);
+		ModelResourceLocation modelResourceLocation = new ModelResourceLocation(NuiCraft.MODID + ":fluid", fluidBlock.getFluid().getName());
+		ModelLoader.setCustomMeshDefinition(item, MeshDefinitionFix.create(stack -> modelResourceLocation));
+		ModelLoader.setCustomStateMapper((Block) fluidBlock, new StateMapperBase() {
+			@Override
+			protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+				return modelResourceLocation;
+			}
+		});
+	}
+
+	public ModelBiped getArmorModel(int id){
+		return null;
 	}
 
 	/*public void sendRequestEventPacket(byte eventType, int originX, int originY, int originZ, byte sideHit, byte rangeX, byte rangeY, byte rangeZ, String data) {

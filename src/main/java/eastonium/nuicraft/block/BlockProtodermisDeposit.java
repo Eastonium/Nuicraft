@@ -1,11 +1,11 @@
-package eastonium.nuicraft.blocks;
+package eastonium.nuicraft.block;
 
 import java.util.Random;
 
 import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.NuiCraftBlocks;
 import eastonium.nuicraft.NuiCraftItems;
-import eastonium.nuicraft.items.ItemGenericMeta;
+import eastonium.nuicraft.item.ItemGenericMeta;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -27,7 +27,7 @@ public class BlockProtodermisDeposit extends BlockOre {
 	public static final PropertyInteger DROPS = PropertyInteger.create("drops", 0, 4);
 
 	public BlockProtodermisDeposit(){
-		super("protodermis_ore");
+		super("protodermis_ore", 1);
 		setDefaultState(blockState.getBaseState().withProperty(DROPS, 0));
 	}
 

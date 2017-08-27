@@ -1,9 +1,10 @@
 package eastonium.nuicraft;
 
-import eastonium.nuicraft.items.ItemGenericMeta;
+import eastonium.nuicraft.item.ItemGenericMeta;
 import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanohi.ItemGoldMataMask;
 import eastonium.nuicraft.kanohi.ItemMaskMeta;
+import eastonium.nuicraft.util.NuiCraftItemMeshDef;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -17,9 +18,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @GameRegistry.ObjectHolder(NuiCraft.MODID)
 public class NuiCraftItems {
-	/* 
-	 * Get Generic Item ItemStack	
-	 */
+	//Get Generic Item ItemStack	
 	public static ItemStack getGIIS(String name, int count) {
 		return new ItemStack(generic_item, count, ItemGenericMeta.getMetaFromName(name));
 	}

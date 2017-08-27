@@ -1,4 +1,4 @@
-package eastonium.nuicraft.blocks;
+package eastonium.nuicraft.block;
 
 import eastonium.nuicraft.NuiCraft;
 import net.minecraft.block.Block;
@@ -19,7 +19,7 @@ public class BlockBionicleStone extends BlockHorizontal
 		super(Material.ROCK);
 		setSoundType(SoundType.STONE);
         setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-		setCreativeTab(NuiCraft.bio_block_tab);
+		setCreativeTab(NuiCraft.nuicraftTab);
 		setHarvestLevel("pickaxe", 0);
 		setUnlocalizedName(NuiCraft.MODID + "." + name);
 		setRegistryName(name);

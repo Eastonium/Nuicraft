@@ -1,11 +1,11 @@
-package eastonium.nuicraft.blocks;
+package eastonium.nuicraft.block;
 
 import java.util.Random;
 
 import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.NuiCraftBlocks;
 import eastonium.nuicraft.NuiCraftItems;
-import eastonium.nuicraft.items.ItemGenericMeta;
+import eastonium.nuicraft.item.ItemGenericMeta;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -15,10 +15,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockOre extends Block {	
-	public BlockOre(String name) {
+	public BlockOre(String name, int harvestLevel) {
 		super(Material.ROCK);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(NuiCraft.bio_block_tab);
+		setCreativeTab(NuiCraft.nuicraftTab);
+		setHarvestLevel("pickaxe", harvestLevel);
 		setUnlocalizedName(NuiCraft.MODID + "." + name);
         setRegistryName(name);
 	}

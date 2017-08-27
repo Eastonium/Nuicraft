@@ -1,7 +1,7 @@
 package eastonium.nuicraft;
 
-import eastonium.nuicraft.blocks.BlockBamboo;
-import eastonium.nuicraft.blocks.BlockProtodermisDeposit;
+import eastonium.nuicraft.block.BlockBamboo;
+import eastonium.nuicraft.block.BlockProtodermisDeposit;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -14,6 +14,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @ObjectHolder(NuiCraft.MODID)
 public class NuiCraftBlocks {
+	public static final Block fluid_protodermis = null;
+	public static final Block fluid_protodermis_pure = null;
+	public static final Block fluid_protodermis_molten = null;
+	
 	public static final Block mask_forge = null;
 	public static final Block purifier = null;
 	
@@ -39,8 +43,7 @@ public class NuiCraftBlocks {
 	
 	@SideOnly(Side.CLIENT)
     public static void initModels() {
-		setTextureLocation(mask_forge);
-		
+		setTextureLocation(mask_forge);		
 		//ModelLoader.setCustomModelResourceLocation(Item.REGISTRY.getObject(purifier.getRegistryName()), 0, new ModelResourceLocation(purifier.getRegistryName(), "normal"));
 
 		setTextureLocation(nuva_cube);

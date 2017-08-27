@@ -15,7 +15,7 @@ public class ItemBambooDisc extends Item
 {
 	public ItemBambooDisc(){
 		super();
-		setCreativeTab(NuiCraft.bio_tool_tab);
+		setCreativeTab(NuiCraft.nuicraftTab);
 		setUnlocalizedName(NuiCraft.MODID + ".kanoka_bamboo");
 		setRegistryName("kanoka_bamboo");
 	}

@@ -1,4 +1,4 @@
-package eastonium.nuicraft.items;
+package eastonium.nuicraft.item;
 
 import eastonium.nuicraft.NuiCraft;
 import net.minecraft.block.Block;
@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class ItemBionicleHoe extends ItemHoe {
 	public ItemBionicleHoe(String name, ToolMaterial par1){
 		super(par1);
-		setCreativeTab(NuiCraft.bio_tool_tab);
+		setCreativeTab(NuiCraft.nuicraftTab);
 		setUnlocalizedName(NuiCraft.MODID + "." + name);
 		setRegistryName(name);
 	}

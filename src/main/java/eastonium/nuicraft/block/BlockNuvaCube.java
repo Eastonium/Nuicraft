@@ -1,4 +1,4 @@
-package eastonium.nuicraft.blocks;
+package eastonium.nuicraft.block;
 
 import eastonium.nuicraft.NuiCraft;
 import net.minecraft.block.Block;
@@ -12,7 +12,7 @@ public class BlockNuvaCube extends Block {
     public BlockNuvaCube() {
         super(Material.ROCK);
         setSoundType(SoundType.STONE);
-        setCreativeTab(NuiCraft.bio_block_tab);
+        setCreativeTab(NuiCraft.nuicraftTab);
         setUnlocalizedName(NuiCraft.MODID + ".nuva_cube");
         setRegistryName("nuva_cube");
     }
