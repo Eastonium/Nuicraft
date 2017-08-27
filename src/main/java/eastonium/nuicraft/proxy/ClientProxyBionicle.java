@@ -1,5 +1,10 @@
-package eastonium.nuicraft;
+package eastonium.nuicraft.proxy;
 
+import eastonium.nuicraft.ClientTickHandler;
+import eastonium.nuicraft.NuiCraft;
+import eastonium.nuicraft.NuiCraftBlocks;
+import eastonium.nuicraft.NuiCraftFluids;
+import eastonium.nuicraft.NuiCraftItems;
 import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanohi.ModelAkakuMataMask;
 import eastonium.nuicraft.kanohi.ModelLongMask;
