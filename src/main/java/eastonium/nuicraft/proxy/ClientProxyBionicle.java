@@ -9,7 +9,8 @@ import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanohi.ModelAkakuMataMask;
 import eastonium.nuicraft.kanohi.ModelLongMask;
 import eastonium.nuicraft.kanohi.ModelMaskIgnika;
-import eastonium.nuicraft.kanoka.EntityDisc;
+import eastonium.nuicraft.kanoka.EntityKanoka;
+import eastonium.nuicraft.kanoka.RenderKanoka;
 import eastonium.nuicraft.mobs.mahi.EntityMahi;
 import eastonium.nuicraft.mobs.mahi.ModelMahi;
 import eastonium.nuicraft.mobs.mahi.RenderMahi;
@@ -19,7 +20,6 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -44,10 +44,9 @@ public class ClientProxyBionicle extends CommonProxyBionicle
 		MinecraftForge.EVENT_BUS.register(new TextureStitcherLightstoneFX());
 		MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityDisc.class, new IRenderFactory<EntityDisc>(){
-			public Render<? super EntityDisc> createRenderFor(RenderManager manager) {
-				//TODO make own renderer for Kanoka disc
-			return new RenderSnowball(manager, NuiCraftItems.generic_item, Minecraft.getMinecraft().getRenderItem());
+		RenderingRegistry.registerEntityRenderingHandler(EntityKanoka.class, new IRenderFactory<EntityKanoka>(){
+			public Render<? super EntityKanoka> createRenderFor(RenderManager manager) {
+			return new RenderKanoka(manager, Minecraft.getMinecraft().getRenderItem());
 		}});
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityMahi.class, new IRenderFactory<EntityMahi>(){

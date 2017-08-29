@@ -28,7 +28,7 @@ import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanohi.ItemGoldMataMask;
 import eastonium.nuicraft.kanohi.ItemMask;
 import eastonium.nuicraft.kanohi.ItemMaskMeta;
-import eastonium.nuicraft.kanoka.EntityDisc;
+import eastonium.nuicraft.kanoka.EntityKanoka;
 import eastonium.nuicraft.kanoka.ItemBambooDisc;
 import eastonium.nuicraft.kanoka.ItemDiscLauncher;
 import eastonium.nuicraft.kanoka.ItemKanokaDisc;
@@ -81,7 +81,7 @@ public class CommonProxyBionicle
 
 		//Technical entities ID 0-100
 
-	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "entityKanokaDisk"), EntityDisc.class, "nuicraft.disc", 1, NuiCraft.modInstance, 64, 10, true);
+	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "kanoka_disk"), EntityKanoka.class, "nuicraft.disc", 1, NuiCraft.modInstance, 64, 10, true);
 	    
 	    /*EntityRegistry.registerModEntity(EntityKolhiiBall.class, "Kolhii_Ball", 10, this, 64, 10, true),
 	    new ItemKolhiiBall().setName("KolhiiBall"),
