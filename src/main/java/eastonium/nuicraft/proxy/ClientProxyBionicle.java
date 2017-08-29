@@ -43,9 +43,6 @@ public class ClientProxyBionicle extends CommonProxyBionicle
 		OBJLoader.INSTANCE.addDomain(NuiCraft.MODID);
 		MinecraftForge.EVENT_BUS.register(new TextureStitcherLightstoneFX());
 		MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
-		
-		//MinecraftForge.EVENT_BUS.register(new BionicleKeyHandler());		
-		//RenderingRegistry.registerEntityRenderingHandler(EntityKolhiiBall.class, new RenderKolhiiBall());
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityDisc.class, new IRenderFactory<EntityDisc>(){
 			public Render<? super EntityDisc> createRenderFor(RenderManager manager) {
@@ -57,14 +54,6 @@ public class ClientProxyBionicle extends CommonProxyBionicle
 			public Render<? super EntityMahi> createRenderFor(RenderManager manager) {
 			return new RenderMahi(manager, new ModelMahi(), 0.2F);
 		}});
-	}
-
-	public ModelBiped getArmorModel(int id){
-		switch (id){
-		case 0:	return maskMataAkaku;
-		case 1:	return maskIgnika;
-		default: return maskLong;
-		}		
 	}
 	
 	@Override
@@ -79,6 +68,18 @@ public class ClientProxyBionicle extends CommonProxyBionicle
             }
         }, NuiCraftItems.mask_mata_kakama, NuiCraftItems.mask_mata_pakari, NuiCraftItems.mask_mata_kaukau, 
         		NuiCraftItems.mask_mata_miru, NuiCraftItems.mask_mata_hau, NuiCraftItems.mask_mata_akaku);
+	}
+	
+	public void postInit(){
+		
+	}
+
+	public ModelBiped getArmorModel(int id){
+		switch (id){
+		case 0:	return maskMataAkaku;
+		case 1:	return maskIgnika;
+		default: return maskLong;
+		}		
 	}
 	
 	@SubscribeEvent
