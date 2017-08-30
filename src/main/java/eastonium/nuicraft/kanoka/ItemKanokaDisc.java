@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.Level;
+
 import eastonium.nuicraft.NuiCraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +24,7 @@ public class ItemKanokaDisc extends Item {
 	public static final String[] POWER_NAMES = new String[]{"Reconstitution at Random", "Freezing", "Weakening", "Remove Poison", "Enlarging", "Shrinking", "Regeneration", "Teleportation"};
 	
 	public ItemKanokaDisc(){
+		super();
 		maxStackSize = 8;
 		setCreativeTab(NuiCraft.nuicraftTab);
 		setUnlocalizedName(NuiCraft.MODID + ".kanoka_disc");
@@ -80,8 +83,8 @@ public class ItemKanokaDisc extends Item {
 		if (!playerIn.capabilities.isCreativeMode) itemStackIn.shrink(1);		
 		worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 		if (!worldIn.isRemote){
-			EntityDisc disc = new EntityDisc(worldIn, playerIn, itemStackIn.getTagCompound(), !playerIn.capabilities.isCreativeMode);
-            disc.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 0.2F);
+			EntityKanoka disc = new EntityKanoka(worldIn, playerIn, itemStackIn.getTagCompound(), !playerIn.capabilities.isCreativeMode);
+			disc.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 0.2F);
 			worldIn.spawnEntity(disc);
 		}
 		return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);

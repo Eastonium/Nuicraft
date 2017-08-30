@@ -28,7 +28,7 @@ import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanohi.ItemGoldMataMask;
 import eastonium.nuicraft.kanohi.ItemMask;
 import eastonium.nuicraft.kanohi.ItemMaskMeta;
-import eastonium.nuicraft.kanoka.EntityDisc;
+import eastonium.nuicraft.kanoka.EntityKanoka;
 import eastonium.nuicraft.kanoka.ItemBambooDisc;
 import eastonium.nuicraft.kanoka.ItemDiscLauncher;
 import eastonium.nuicraft.kanoka.ItemKanokaDisc;
@@ -81,7 +81,7 @@ public class CommonProxyBionicle
 
 		//Technical entities ID 0-100
 
-	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "entityKanokaDisk"), EntityDisc.class, "nuicraft.disc", 1, NuiCraft.modInstance, 64, 10, true);
+	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "kanoka_disk"), EntityKanoka.class, "nuicraft.disc", 1, NuiCraft.modInstance, 64, 10, true);
 	    
 	    /*EntityRegistry.registerModEntity(EntityKolhiiBall.class, "Kolhii_Ball", 10, this, 64, 10, true),
 	    new ItemKolhiiBall().setName("KolhiiBall"),
@@ -90,7 +90,7 @@ public class CommonProxyBionicle
 	    
 		//Mobs ID 101-200
 
-	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "entityMahi"), EntityMahi.class, "nuicraft.mahi", 101, NuiCraft.modInstance, 64, 1, true, 0xE6C381, 0xD1322B);
+	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "mahi"), EntityMahi.class, "nuicraft.mahi", 101, NuiCraft.modInstance, 64, 1, true, 0xE6C381, 0xD1322B);
 		EntityRegistry.addSpawn(EntityMahi.class, 15, 2, 5, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.PLAINS, Biomes.MUTATED_PLAINS, Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU);
 		
 		registerFluids();
@@ -124,6 +124,10 @@ public class CommonProxyBionicle
 	    
 		OreDictionary.registerOre("gemHeatstone", NuiCraftItems.getGIIS("raw_heatstone", 1));
 	    OreDictionary.registerOre("stickBamboo", NuiCraftItems.getGIIS("bamboo_stick", 1));
+	}
+	
+	public void postInit(){
+		
 	}
 	
 	@SubscribeEvent
@@ -163,16 +167,17 @@ public class CommonProxyBionicle
 	
 	@SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-		ItemGenericMeta.addGenericItem("ingot_protodermis");
-		ItemGenericMeta.addGenericItem("ingot_protosteel");
-		ItemGenericMeta.addGenericItem("nugget_protodermis");
-		ItemGenericMeta.addGenericItem("nugget_protosteel");
-		ItemGenericMeta.addGenericItem("raw_protodermis");
-		ItemGenericMeta.addGenericItem("raw_heatstone");    
-		ItemGenericMeta.addGenericItem("bamboo_stick");
-		ItemGenericMeta.addGenericItem("kanoka_flying", false, true);
-		ItemGenericMeta.addGenericItem("kanoka_time", true);
-		ItemGenericMeta.addGenericItem("dye_mask", false, true);
+		ItemGenericMeta.addGenericItem("ingot_protodermis");//0
+		ItemGenericMeta.addGenericItem("ingot_protosteel");//1
+		ItemGenericMeta.addGenericItem("nugget_protodermis");//2
+		ItemGenericMeta.addGenericItem("nugget_protosteel");//3
+		ItemGenericMeta.addGenericItem("raw_protodermis");//4
+		ItemGenericMeta.addGenericItem("raw_heatstone");//5
+		ItemGenericMeta.addGenericItem("bamboo_stick");//6
+		ItemGenericMeta.addGenericItem("kanoka_time", true);//7
+		ItemGenericMeta.addGenericItem("dye_mask", false, true);//8
+		ItemGenericMeta.addGenericItem("kanoka_flying_black", false, true);//9
+		ItemGenericMeta.addGenericItem("kanoka_flying_white", false, true);//10
 		
 		event.getRegistry().registerAll(
 			new ItemBlockGeneric(NuiCraftBlocks.fluid_protodermis),

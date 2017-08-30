@@ -30,10 +30,10 @@ public class ItemDiscLauncher extends Item {
 		ItemStack launcherItem = playerIn.getHeldItem(handIn);
 		ItemStack disc = findAmmo(playerIn);
 		if (disc.isEmpty()) return new ActionResult(EnumActionResult.FAIL, launcherItem);
-		EntityDisc discEntity;
+		EntityKanoka discEntity;
 		if (disc.getItem() == NuiCraftItems.kanoka_bamboo){
 			if (!worldIn.isRemote){
-				discEntity = new EntityDisc(worldIn, playerIn, null, false);
+				discEntity = new EntityKanoka(worldIn, playerIn, null, false);
 	            discEntity.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 2.5F, 0F);
 				worldIn.spawnEntity(discEntity);
 			}
@@ -41,7 +41,7 @@ public class ItemDiscLauncher extends Item {
 			NBTTagCompound discNBT = disc.getTagCompound();
 			if (discNBT == null) return new ActionResult(EnumActionResult.FAIL, launcherItem);
 			if (!worldIn.isRemote){
-				discEntity = new EntityDisc(worldIn, playerIn, discNBT, !playerIn.capabilities.isCreativeMode);
+				discEntity = new EntityKanoka(worldIn, playerIn, discNBT, !playerIn.capabilities.isCreativeMode);
 	            discEntity.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 2.5F, 0F);
 				worldIn.spawnEntity(discEntity);				
 			}

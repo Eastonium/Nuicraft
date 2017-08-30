@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -25,7 +26,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class NuiCraft 
 {
 	public static final String MODID = "nuicraft";
-	//public static final String CHANNEL = "Masks";
 	
 	@Instance(NuiCraft.MODID)
 	public static NuiCraft modInstance = new NuiCraft();
@@ -33,7 +33,6 @@ public class NuiCraft
 	public static Logger logger;
 	
 	public static ItemMeshDefinition itemMeshDef = new NuiCraftItemMeshDef();
-	//public static final PacketPipeline packetPipeline = new PacketPipeline();
 	
 	public static CreativeTabs nuicraftTab;
 	public static CreativeTabs nuicraftMaskTab;
@@ -66,9 +65,6 @@ public class NuiCraft
 
 		proxy.preInit();
 		MinecraftForge.EVENT_BUS.register(new ServerTickHandler());
-		//MinecraftForge.EVENT_BUS.register(new JoinWorld());
-		//MinecraftForge.EVENT_BUS.register(new EntityConstructingEvent());
-		//MinecraftForge.EVENT_BUS.register(new BionicleEventHooks());
 		GameRegistry.registerWorldGenerator(new NuiCraftWorldGenerator(), 2);
 	}
 	
@@ -78,11 +74,10 @@ public class NuiCraft
 		PROTOSTEEL = PROTOSTEEL.setRepairItem(NuiCraftItems.getGIIS("ingot_protosteel", 1));
 
 		proxy.init();
-		//packetPipeline.initialise();
 	}
-	/*
+	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event){
-		packetPipeline.postInitialise();
-	}*/
+		proxy.postInit();
+	}
 }

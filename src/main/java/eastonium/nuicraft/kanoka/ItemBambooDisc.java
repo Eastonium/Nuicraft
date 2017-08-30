@@ -26,7 +26,7 @@ public class ItemBambooDisc extends Item
 		if (!playerIn.capabilities.isCreativeMode) stack.shrink(1);	
 		worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 		if (!worldIn.isRemote){
-			EntityDisc disc = new EntityDisc(worldIn, playerIn, null, false);
+			EntityKanoka disc = new EntityKanoka(worldIn, playerIn);
             disc.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 0.2F);
 			worldIn.spawnEntity(disc);
         }

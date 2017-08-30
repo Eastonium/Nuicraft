@@ -9,7 +9,8 @@ import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanohi.ModelAkakuMataMask;
 import eastonium.nuicraft.kanohi.ModelLongMask;
 import eastonium.nuicraft.kanohi.ModelMaskIgnika;
-import eastonium.nuicraft.kanoka.EntityDisc;
+import eastonium.nuicraft.kanoka.EntityKanoka;
+import eastonium.nuicraft.kanoka.RenderKanoka;
 import eastonium.nuicraft.mobs.mahi.EntityMahi;
 import eastonium.nuicraft.mobs.mahi.ModelMahi;
 import eastonium.nuicraft.mobs.mahi.RenderMahi;
@@ -19,7 +20,6 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -43,28 +43,16 @@ public class ClientProxyBionicle extends CommonProxyBionicle
 		OBJLoader.INSTANCE.addDomain(NuiCraft.MODID);
 		MinecraftForge.EVENT_BUS.register(new TextureStitcherLightstoneFX());
 		MinecraftForge.EVENT_BUS.register(new ClientTickHandler());
-		
-		//MinecraftForge.EVENT_BUS.register(new BionicleKeyHandler());		
-		//RenderingRegistry.registerEntityRenderingHandler(EntityKolhiiBall.class, new RenderKolhiiBall());
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityDisc.class, new IRenderFactory<EntityDisc>(){
-			public Render<? super EntityDisc> createRenderFor(RenderManager manager) {
-				//TODO make own renderer for Kanoka disc
-			return new RenderSnowball(manager, NuiCraftItems.generic_item, Minecraft.getMinecraft().getRenderItem());
+		RenderingRegistry.registerEntityRenderingHandler(EntityKanoka.class, new IRenderFactory<EntityKanoka>(){
+			public Render<? super EntityKanoka> createRenderFor(RenderManager manager) {
+			return new RenderKanoka(manager, Minecraft.getMinecraft().getRenderItem());
 		}});
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityMahi.class, new IRenderFactory<EntityMahi>(){
 			public Render<? super EntityMahi> createRenderFor(RenderManager manager) {
 			return new RenderMahi(manager, new ModelMahi(), 0.2F);
 		}});
-	}
-
-	public ModelBiped getArmorModel(int id){
-		switch (id){
-		case 0:	return maskMataAkaku;
-		case 1:	return maskIgnika;
-		default: return maskLong;
-		}		
 	}
 	
 	@Override
@@ -79,6 +67,18 @@ public class ClientProxyBionicle extends CommonProxyBionicle
             }
         }, NuiCraftItems.mask_mata_kakama, NuiCraftItems.mask_mata_pakari, NuiCraftItems.mask_mata_kaukau, 
         		NuiCraftItems.mask_mata_miru, NuiCraftItems.mask_mata_hau, NuiCraftItems.mask_mata_akaku);
+	}
+	
+	public void postInit(){
+		
+	}
+
+	public ModelBiped getArmorModel(int id){
+		switch (id){
+		case 0:	return maskMataAkaku;
+		case 1:	return maskIgnika;
+		default: return maskLong;
+		}		
 	}
 	
 	@SubscribeEvent

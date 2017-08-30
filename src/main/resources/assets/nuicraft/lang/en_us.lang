@@ -67,7 +67,9 @@ item.nuicraft.bamboo_stick.name=Bamboo Stick
 item.nuicraft.bamboo_item.name=Bamboo
 item.nuicraft.kolhii_ball.name=Kolhii Ball
 
-item.nuicraft.kanoka_flying.name=Flying Disc (You shouldn't have this)
+item.nuicraft.kanoka_flying_black.name=Flying Bamboo Disc (You shouldn't have this)
+item.nuicraft.kanoka_flying_white.name=Flying Kanoka Disc (You shouldn't have this)
+
 item.nuicraft.kanoka_bamboo.name=Bamboo Disc
 item.nuicraft.kanoka_time.name=The Disc of Time
 
