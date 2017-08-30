@@ -3,6 +3,7 @@ package eastonium.nuicraft;
 import org.apache.logging.log4j.Logger;
 
 import eastonium.nuicraft.kanohi.ItemColoredMask;
+import eastonium.nuicraft.proxy.CommonProxyBionicle;
 import eastonium.nuicraft.util.NuiCraftItemMeshDef;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.creativetab.CreativeTabs;
@@ -17,14 +18,14 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = NuiCraft.MODID, name = "NuiCraft", version = "V0.8.1.2 MC1.12")
+@Mod(modid = NuiCraft.MODID, name = "NuiCraft", version = "1.12.1-0.8.1.2")
 public class NuiCraft 
 {
 	public static final String MODID = "nuicraft";
-	//public static final String CHANNEL = "Masks";
 	
 	@Instance(NuiCraft.MODID)
 	public static NuiCraft modInstance = new NuiCraft();
@@ -32,7 +33,6 @@ public class NuiCraft
 	public static Logger logger;
 	
 	public static ItemMeshDefinition itemMeshDef = new NuiCraftItemMeshDef();
-	//public static final PacketPipeline packetPipeline = new PacketPipeline();
 	
 	public static CreativeTabs nuicraftTab;
 	public static CreativeTabs nuicraftMaskTab;
@@ -42,7 +42,7 @@ public class NuiCraft
 //Fluids
 	public static Fluid protodermis;
 
-	@SidedProxy(clientSide = "eastonium.nuicraft.ClientProxyBionicle", serverSide = "eastonium.nuicraft.CommonProxyBionicle")
+	@SidedProxy(clientSide = "eastonium.nuicraft.proxy.ClientProxyBionicle", serverSide = "eastonium.nuicraft.proxy.CommonProxyBionicle")
 	public static CommonProxyBionicle proxy;
 	
 	public NuiCraft(){
@@ -65,9 +65,6 @@ public class NuiCraft
 
 		proxy.preInit();
 		MinecraftForge.EVENT_BUS.register(new ServerTickHandler());
-		//MinecraftForge.EVENT_BUS.register(new JoinWorld());
-		//MinecraftForge.EVENT_BUS.register(new EntityConstructingEvent());
-		//MinecraftForge.EVENT_BUS.register(new BionicleEventHooks());
 		GameRegistry.registerWorldGenerator(new NuiCraftWorldGenerator(), 2);
 	}
 	
@@ -77,11 +74,10 @@ public class NuiCraft
 		PROTOSTEEL = PROTOSTEEL.setRepairItem(NuiCraftItems.getGIIS("ingot_protosteel", 1));
 
 		proxy.init();
-		//packetPipeline.initialise();
 	}
-	/*
+	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event){
-		packetPipeline.postInitialise();
-	}*/
+		proxy.postInit();
+	}
 }
