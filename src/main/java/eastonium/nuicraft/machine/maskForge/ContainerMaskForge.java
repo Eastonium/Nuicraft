@@ -193,6 +193,11 @@ public class ContainerMaskForge extends Container {
 		public boolean isItemValid(ItemStack stack) {
 			return TileInventoryMaskForge.isItemValidForInputSlot(stack);
 		}
+		@Override
+		public void onSlotChanged() {
+			super.onSlotChanged();
+			((TileInventoryMaskForge)this.inventory).updateCurrentRecipe();
+		}
 	}
 	public class SlotOutput extends Slot {
 		public SlotOutput(IInventory inventoryIn, int index, int xPosition, int yPosition) {
