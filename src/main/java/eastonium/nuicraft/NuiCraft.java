@@ -3,6 +3,7 @@ package eastonium.nuicraft;
 import org.apache.logging.log4j.Logger;
 
 import eastonium.nuicraft.kanohi.ItemColoredMask;
+import eastonium.nuicraft.machine.maskForge.recipe.MaskForgeRecipeManager;
 import eastonium.nuicraft.proxy.CommonProxyBionicle;
 import eastonium.nuicraft.util.NuiCraftItemMeshDef;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -72,7 +73,6 @@ public class NuiCraft
 	public void init(FMLInitializationEvent event){
 		PROTODERMIS = PROTODERMIS.setRepairItem(NuiCraftItems.getGIIS("ingot_protodermis", 1));
 		PROTOSTEEL = PROTOSTEEL.setRepairItem(NuiCraftItems.getGIIS("ingot_protosteel", 1));
-
 		proxy.init();
 	}
 	

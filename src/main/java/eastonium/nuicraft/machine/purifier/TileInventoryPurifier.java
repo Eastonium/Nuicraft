@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.machine.maskForge.recipe.IMFRecipe;
-import eastonium.nuicraft.machine.maskForge.recipe.MFRecipeManager;
+import eastonium.nuicraft.machine.maskForge.recipe.MaskForgeRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;

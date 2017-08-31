@@ -5,7 +5,7 @@ import eastonium.nuicraft.kanoka.ItemKanokaDisc;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
-public class KanokaMFRecipe implements IMFRecipe {
+public class RandomKanokaRecipe implements IMFRecipe {
 
 	NonNullList<ItemStack> inputStacks;
 
@@ -38,7 +38,7 @@ public class KanokaMFRecipe implements IMFRecipe {
 				int min = Math.min(inputStacks.get(i).getCount(), remaining);
 				inputStacks.get(i).shrink(min);
 				remaining -= min;
-				if(inputStacks.get(i).getCount() <= 0) inputStacks.set(i, ItemStack.EMPTY);
+				if(inputStacks.get(i).isEmpty()) inputStacks.remove(i);
 			}
 			if(remaining <= 0) break;
 		}

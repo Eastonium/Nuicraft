@@ -1,13 +1,15 @@
 package eastonium.nuicraft.machine.maskForge;
 
-import java.util.Arrays;
+import java.util.Iterator;
 
+import org.apache.logging.log4j.Level;
+
+import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.NuiCraftItems;
 import eastonium.nuicraft.machine.maskForge.recipe.IMFRecipe;
-import eastonium.nuicraft.machine.maskForge.recipe.MFRecipeManager;
+import eastonium.nuicraft.machine.maskForge.recipe.MaskForgeRecipeManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,8 +29,11 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileInventoryMaskForge extends TileEntity implements ITickable, ISidedInventory, IFluidHandler{
+public class TileInventoryMaskForge extends TileEntity implements ITickable, ISidedInventory, IFluidHandler {
 	public static final int BUCKET_VOLUME = 1000;
 	
 	public static final int FUEL_SLOTS_COUNT = 1;
@@ -42,7 +47,7 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 
 	private NonNullList<ItemStack> forgeItemstacks = NonNullList.<ItemStack>withSize(TOTAL_SLOTS_COUNT, ItemStack.EMPTY);
     protected FluidTank tank = new FluidTank(BUCKET_VOLUME * 4);
-
+    private IMFRecipe currentRecipe = null;
 	public int cookTime = 0;
 
 	private static final short COOK_TIME_FOR_COMPLETION = 200;
@@ -87,17 +92,6 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 		return tank.drain(maxDrain, doDrain);
 	}
 
-	/*
-	@Override
-	public boolean canFill(Fluid fluid){
-		return fluid == FluidRegistry.LAVA;
-	}
-
-	@Override
-	public boolean canDrain(Fluid fluid){
-		return fluid == FluidRegistry.LAVA;
-	}*/
-
 	@Override
 	public IFluidTankProperties[] getTankProperties(){
 		return tank.getTankProperties();
@@ -105,7 +99,6 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 	
 	@Override
 	public void update(){
-		boolean hasLava = !isTankEmpty();
 		boolean needsUpdate = false;
 
 		if(!world.isRemote){
@@ -115,20 +108,20 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 					fill(new FluidStack(FluidRegistry.LAVA, BUCKET_VOLUME), true);
 					setInventorySlotContents(FUEL_SLOT, item.getItem().getContainerItem(forgeItemstacks.get(FUEL_SLOT)));
 					needsUpdate = true;
-				}/*else if(item.getItem() instanceof IFluidContainerItem){
-					fill(null, ((IFluidContainerItem)item.getItem()).drain(item, tank.getCapacity()-tank.getFluidAmount(), true), true);
-				}*///TODO make sure this system works
-			}
-			if(hasLava && canSmelt()){
-				drain(2, true);
-				++cookTime;
-				if(cookTime == COOK_TIME_FOR_COMPLETION){
-					cookTime = 0;
-					smeltItem();
-					needsUpdate = true;
 				}
 			}
-			if(!canSmelt()){
+			if(!isTankEmpty() && currentRecipe != null){
+				drain(2, true);
+				++cookTime;
+				if(cookTime >= COOK_TIME_FOR_COMPLETION){
+					if (smeltItem()) {
+						updateCurrentRecipe();
+						cookTime = 0;
+					}
+				}
+				needsUpdate = true;
+			}
+			if(currentRecipe == null){
 				cookTime = 0;
 			}
 			if (world.getBlockState(pos).getValue(BlockMaskForge.LEVEL) != (int)Math.ceil(fractionOfFuelRemaining() * 4)){
@@ -140,50 +133,58 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 			markDirty();
 		}
 	}
-
-	private boolean canSmelt(){
-		byte emptySlots = 0;
-		for(int i = FIRST_INPUT_SLOT; i < OUTPUT_SLOT; i++){
-			if(forgeItemstacks.get(i).isEmpty()){
-				emptySlots++;
-			}
-		}
-		if(emptySlots >= 6) return false;
-		
-		IMFRecipe matchingRecipe = MFRecipeManager.getInstance().getMatchingRecipe(getInputItemStacks());
-		if (matchingRecipe == null) return false;
-		
-		ItemStack outputItemstack = matchingRecipe.getOutput();
-		if (forgeItemstacks.get(OUTPUT_SLOT).isEmpty()) return true;
-		if (forgeItemstacks.get(OUTPUT_SLOT).getItem() == NuiCraftItems.kanoka_disc) return false;
-		if (!forgeItemstacks.get(OUTPUT_SLOT).isItemEqual(outputItemstack)) return false;
-		int result = forgeItemstacks.get(OUTPUT_SLOT).getCount() + outputItemstack.getCount();
-		return (result <= getInventoryStackLimit() && result <= outputItemstack.getMaxStackSize());
+	
+	public void updateCurrentRecipe() {
+		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) return;
+		currentRecipe = MaskForgeRecipeManager.getInstance().getMatchingRecipe(getInputItemStacks());
 	}
 
-	public boolean smeltItem(){
-		if(!canSmelt()) return false;		
-		IMFRecipe matchingRecipe = MFRecipeManager.getInstance().getMatchingRecipe(getInputItemStacks());
-		if (matchingRecipe == null) return false;
-		
-		ItemStack outputItemstack = matchingRecipe.getOutput();
-		NonNullList<ItemStack> newInputstacks = matchingRecipe.getRemainingItems();
+	private boolean hasOutputRoom(){		
+		ItemStack outputStack = currentRecipe.getOutput();
+		if (forgeItemstacks.get(OUTPUT_SLOT).isEmpty()) return true;
+		if (forgeItemstacks.get(OUTPUT_SLOT).getItem() == NuiCraftItems.kanoka_disc) return false;
+		if (!forgeItemstacks.get(OUTPUT_SLOT).isItemEqual(outputStack)) return false;
+		int result = forgeItemstacks.get(OUTPUT_SLOT).getCount() + outputStack.getCount();
+		return (result <= getInventoryStackLimit() && result <= outputStack.getMaxStackSize());
+	}
 
-		if(forgeItemstacks.get(OUTPUT_SLOT).isEmpty()){
-			setInventorySlotContents(OUTPUT_SLOT, outputItemstack.copy());
-		}else if(forgeItemstacks.get(OUTPUT_SLOT).isItemEqual(outputItemstack)){
-			forgeItemstacks.get(OUTPUT_SLOT).grow(outputItemstack.getCount());
+	public boolean smeltItem() {
+		// this function does not use setInventorySlotContents to not update recipe
+		if (!currentRecipe.matches(getInputItemStacks())) { // sanity check, and updates output/returnstacks since it is shared across all mask forges
+			NuiCraft.logger.log(Level.ERROR, "The maskforge has somehow managed to not update its recipe. Please contact the author of NuiCraft.");
+			return false;
 		}
-		for(int i = FIRST_INPUT_SLOT; i < OUTPUT_SLOT; i++){
-			setInventorySlotContents(i, newInputstacks.get(i-FUEL_SLOTS_COUNT));
+		if(!hasOutputRoom()) return false;
+		
+		ItemStack outputStack = currentRecipe.getOutput();
+
+		if (forgeItemstacks.get(OUTPUT_SLOT).isEmpty()) {
+			forgeItemstacks.set(OUTPUT_SLOT, outputStack.copy());
+		} else /*if (forgeItemstacks.get(OUTPUT_SLOT).isItemEqual(outputStack)) */{
+			forgeItemstacks.get(OUTPUT_SLOT).grow(outputStack.getCount());
+		}
+		
+		Iterator<ItemStack> stacks = currentRecipe.getRemainingItems().iterator();
+		int i = FIRST_INPUT_SLOT;
+		while (stacks.hasNext()) { // will shift all items to the top, which is fine
+//			ItemStack stack = stacks.next();
+//			if (stack.isEmpty()) continue;
+			forgeItemstacks.set(i, stacks.next());
+			i++;
+		}
+		while (i < OUTPUT_SLOT) {
+			forgeItemstacks.set(i, ItemStack.EMPTY);
+			i++;
 		}
 		return true;
 	}
 		
-	public NonNullList<ItemStack> getInputItemStacks(){
-		NonNullList<ItemStack> itemstacks = NonNullList.<ItemStack>withSize(INPUT_SLOTS_COUNT, ItemStack.EMPTY);
-		for(int i = FIRST_INPUT_SLOT; i < OUTPUT_SLOT; i++){
-			itemstacks.set(i-FUEL_SLOTS_COUNT, forgeItemstacks.get(i));
+	private NonNullList<ItemStack> getInputItemStacks() {
+		NonNullList<ItemStack> itemstacks = NonNullList.create();
+		for(int i = FIRST_INPUT_SLOT; i < OUTPUT_SLOT; i++) {
+			if (!forgeItemstacks.get(i).isEmpty()) {
+				itemstacks.add(forgeItemstacks.get(i));
+			}
 		}
 		return itemstacks;
 	}
@@ -199,18 +200,18 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 	}
 
 	@Override
-	public ItemStack decrStackSize(int slotIndex, int count){
+	public ItemStack decrStackSize(int slotIndex, int count) {
 		ItemStack itemStackInSlot = getStackInSlot(slotIndex);
-		if(itemStackInSlot.isEmpty()) return ItemStack.EMPTY;
+		if (itemStackInSlot.isEmpty()) return ItemStack.EMPTY;
 
 		ItemStack itemStackRemoved;
-		if(itemStackInSlot.getCount() <= count){
+		if (itemStackInSlot.getCount() <= count) {
 			itemStackRemoved = itemStackInSlot;
-			setInventorySlotContents(slotIndex, ItemStack.EMPTY);
-		}else{
+			forgeItemstacks.set(slotIndex, ItemStack.EMPTY);
+		} else {
 			itemStackRemoved = itemStackInSlot.splitStack(count);
-			if (itemStackInSlot.getCount() == 0){
-				setInventorySlotContents(slotIndex, ItemStack.EMPTY);
+			if (itemStackInSlot.getCount() == 0) {
+				forgeItemstacks.set(slotIndex, ItemStack.EMPTY);
 			}
 		}
 		markDirty();
@@ -220,7 +221,8 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 	@Override
 	public ItemStack removeStackFromSlot(int slotIndex) {
 		ItemStack itemStack = getStackInSlot(slotIndex);
-		if (!itemStack.isEmpty()) setInventorySlotContents(slotIndex, ItemStack.EMPTY);
+		if (!itemStack.isEmpty()) forgeItemstacks.set(slotIndex, ItemStack.EMPTY);
+		markDirty();
 		return itemStack;
 	}
 
@@ -250,26 +252,21 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 	
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack){
-		if (itemstack == null) {
+		if (itemstack.isEmpty() || i == OUTPUT_SLOT) {
 			return false;
-		}else if(i == OUTPUT_SLOT){
-			return false;
-		}else if(i == FUEL_SLOT){
+		} else if(i == FUEL_SLOT) {
 			return isItemValidForFuelSlot(itemstack);
-		}else return isItemValidForInputSlot(itemstack);
+		} else {
+			return isItemValidForInputSlot(itemstack);
+		}
 	}
 	
 	static public boolean isItemValidForFuelSlot(ItemStack itemStack){
-		return (itemStack != null && (itemStack.getItem() == Items.LAVA_BUCKET || itemStack.getItem() instanceof IFluidHandlerItem));
+		return !itemStack.isEmpty() && itemStack.getItem() == Items.LAVA_BUCKET;
 	}
 	
 	static public boolean isItemValidForInputSlot(ItemStack itemstack){
-		/*Item item = itemstack.getItem();
-		if(item instanceof ItemMask || item instanceof ItemKanoka || item instanceof ItemMataMask || item instanceof ItemModeledMask || item instanceof ItemMaskIgnika) return true;
-		if(item == Bionicle.ingotProtodermis) return true;
-		return false;
-		*/
-		return itemstack != null;
+		return true;
 	}	
 	
 	private static final byte COOK_FIELD_ID = 0;
@@ -336,11 +333,13 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 			NBTTagCompound dataForOneSlot = dataForAllSlots.getCompoundTagAt(i);
 			byte slotNumber = dataForOneSlot.getByte("Slot");
 			if (slotNumber >= 0 && slotNumber < forgeItemstacks.size()){
-				setInventorySlotContents(slotNumber, new ItemStack(dataForOneSlot));
+				forgeItemstacks.set(slotNumber, new ItemStack(dataForOneSlot));
 			}
 		}
 		cookTime = nbtTagCompound.getShort("CookTime");
 		fill(new FluidStack(FluidRegistry.LAVA, nbtTagCompound.getShort("fuelAmount")), true);
+		
+		updateCurrentRecipe();
 	}
 
 	@Override
