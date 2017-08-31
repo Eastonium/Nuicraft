@@ -40,6 +40,7 @@ import eastonium.nuicraft.machine.purifier.GuiHandlerPurifier;
 import eastonium.nuicraft.machine.purifier.ItemPurifier;
 import eastonium.nuicraft.machine.purifier.TileInventoryPurifier;
 import eastonium.nuicraft.mobs.fikou.EntityFikou;
+import eastonium.nuicraft.mobs.hoi.EntityHoi;
 import eastonium.nuicraft.mobs.mahi.EntityMahi;
 import eastonium.nuicraft.util.MeshDefinitionFix;
 import net.minecraft.block.Block;
@@ -95,8 +96,11 @@ public class CommonProxyBionicle
 	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "mahi"), EntityMahi.class, "nuicraft.mahi", 101, NuiCraft.modInstance, 64, 1, true, 0xE6C381, 0xD1322B);
 		EntityRegistry.addSpawn(EntityMahi.class, 15, 2, 5, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.PLAINS, Biomes.MUTATED_PLAINS, Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU);
 		//Fikou 102
-		EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "fikou"), EntityFikou.class, "nuicraft.fikou", 102, NuiCraft.modInstance, 64, 1, true, 0xB55918, 0x2B2B2B);
+		EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "fikou"), EntityFikou.class, "nuicraft.fikou", 102, NuiCraft.modInstance, 64, 1, true, 0xE8660C, 0x2B2B2B);
 		EntityRegistry.addSpawn(EntityFikou.class, 15, 3, 8, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.MESA, Biomes.MESA_CLEAR_ROCK, Biomes.MESA_ROCK);
+		//Hoi 103
+		EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "hoi"), EntityHoi.class, "nuicraft.hoi", 103, NuiCraft.modInstance, 64, 1, true, 0x2B2B2B,  0xE8660C);
+		EntityRegistry.addSpawn(EntityHoi.class, 15, 1, 4, EnumCreatureType.CREATURE, Biomes.BEACH, Biomes.SWAMPLAND, Biomes.JUNGLE, Biomes.JUNGLE_HILLS, Biomes.MUTATED_JUNGLE, Biomes.STONE_BEACH);
 		
 		registerFluids();
 	}
