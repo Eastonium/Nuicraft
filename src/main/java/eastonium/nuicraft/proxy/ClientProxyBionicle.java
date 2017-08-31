@@ -11,6 +11,9 @@ import eastonium.nuicraft.kanohi.ModelLongMask;
 import eastonium.nuicraft.kanohi.ModelMaskIgnika;
 import eastonium.nuicraft.kanoka.EntityKanoka;
 import eastonium.nuicraft.kanoka.RenderKanoka;
+import eastonium.nuicraft.mobs.fikou.EntityFikou;
+import eastonium.nuicraft.mobs.fikou.ModelFikou;
+import eastonium.nuicraft.mobs.fikou.RenderFikou;
 import eastonium.nuicraft.mobs.mahi.EntityMahi;
 import eastonium.nuicraft.mobs.mahi.ModelMahi;
 import eastonium.nuicraft.mobs.mahi.RenderMahi;
@@ -51,8 +54,13 @@ public class ClientProxyBionicle extends CommonProxyBionicle
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityMahi.class, new IRenderFactory<EntityMahi>(){
 			public Render<? super EntityMahi> createRenderFor(RenderManager manager) {
-			return new RenderMahi(manager, new ModelMahi(), 0.2F);
+			return new RenderMahi(manager, new ModelMahi(), 0.8F);
 		}});
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityFikou.class, new IRenderFactory<EntityFikou>(){
+			public Render<? super EntityFikou> createRenderFor(RenderManager manager) {
+				return new RenderFikou(manager, new ModelFikou(), 0.2F);
+			}});
 	}
 	
 	@Override
