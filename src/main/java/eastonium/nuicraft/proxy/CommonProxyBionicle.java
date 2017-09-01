@@ -41,7 +41,9 @@ import eastonium.nuicraft.machine.purifier.ItemPurifier;
 import eastonium.nuicraft.machine.purifier.TileInventoryPurifier;
 import eastonium.nuicraft.mobs.fikou.EntityFikou;
 import eastonium.nuicraft.mobs.hoi.EntityHoi;
+import eastonium.nuicraft.mobs.kofo_jaga.EntityKofoJaga;
 import eastonium.nuicraft.mobs.mahi.EntityMahi;
+import eastonium.nuicraft.mobs.nui_jaga.EntityNuiJaga;
 import eastonium.nuicraft.util.MeshDefinitionFix;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
@@ -101,8 +103,16 @@ public class CommonProxyBionicle
 		//Hoi 103
 		EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "hoi"), EntityHoi.class, "nuicraft.hoi", 103, NuiCraft.modInstance, 64, 1, true, 0x2B2B2B,  0xE8660C);
 		EntityRegistry.addSpawn(EntityHoi.class, 15, 1, 4, EnumCreatureType.CREATURE, Biomes.BEACH, Biomes.SWAMPLAND, Biomes.JUNGLE, Biomes.JUNGLE_HILLS, Biomes.MUTATED_JUNGLE, Biomes.STONE_BEACH);
-		
-		registerFluids();
+        //Kofo-Jaga 104
+        EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "kofo_jaga"), EntityKofoJaga.class, "nuicraft.kofo_jaga", 104, NuiCraft.modInstance, 64, 1, true, 0xE8660C, 0xD1322B);
+        EntityRegistry.addSpawn(EntityKofoJaga.class, 15, 2, 5, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.MESA, Biomes.MESA_CLEAR_ROCK, Biomes.MESA_ROCK);
+		//Kofo-Jaga 105
+		EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "nui_jaga"), EntityNuiJaga.class, "nuicraft.nui_jaga", 105, NuiCraft.modInstance, 64, 1, true, 0x8014B6, 0xFFBC11);
+		/*
+		TODO De-comment after making it hostile
+		EntityRegistry.addSpawn(EntityNuiJaga.class, 15, 1, 2, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.MESA, Biomes.MESA_CLEAR_ROCK, Biomes.MESA_ROCK);
+		*/
+        registerFluids();
 	}
 	
 	public void init(){

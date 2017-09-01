@@ -23,6 +23,9 @@ entity.nuicraft.disc.name=Kanoka Disc
 entity.nuicraft.mahi.name=Mahi
 entity.nuicraft.fikou.name=Fikou
 entity.nuicraft.hoi.name=Hoi
+entity.nuicraft.kofo_jaga.name=Kofo-Jaga
+entity.nuicraft.nui_jaga.name=Nui-Jaga
+
 
 tile.nuicraft.koro_block_onu_0.name=Onu-Koro Lightstone Lamp
 tile.nuicraft.koro_block_onu_1.name=Smooth Onu-Koro Stone

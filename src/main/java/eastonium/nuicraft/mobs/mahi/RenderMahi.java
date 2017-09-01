@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 public class RenderMahi extends RenderLiving {
-	private static final ResourceLocation texture = new ResourceLocation(NuiCraft.MODID + ":textures/entity/Mahi.png");
+	private static final ResourceLocation texture = new ResourceLocation(NuiCraft.MODID + ":textures/entity/mahi.png");
 	protected ModelMahi model = new ModelMahi();
 	
 	public RenderMahi(RenderManager rm, ModelBase mb, float f)

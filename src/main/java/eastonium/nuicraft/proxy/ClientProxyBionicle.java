@@ -17,9 +17,15 @@ import eastonium.nuicraft.mobs.fikou.RenderFikou;
 import eastonium.nuicraft.mobs.hoi.EntityHoi;
 import eastonium.nuicraft.mobs.hoi.ModelHoi;
 import eastonium.nuicraft.mobs.hoi.RenderHoi;
+import eastonium.nuicraft.mobs.kofo_jaga.EntityKofoJaga;
+import eastonium.nuicraft.mobs.kofo_jaga.ModelKofoJaga;
+import eastonium.nuicraft.mobs.kofo_jaga.RenderKofoJaga;
 import eastonium.nuicraft.mobs.mahi.EntityMahi;
 import eastonium.nuicraft.mobs.mahi.ModelMahi;
 import eastonium.nuicraft.mobs.mahi.RenderMahi;
+import eastonium.nuicraft.mobs.nui_jaga.EntityNuiJaga;
+import eastonium.nuicraft.mobs.nui_jaga.ModelNuiJaga;
+import eastonium.nuicraft.mobs.nui_jaga.RenderNuiJaga;
 import eastonium.nuicraft.particle.TextureStitcherLightstoneFX;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -69,6 +75,16 @@ public class ClientProxyBionicle extends CommonProxyBionicle
             public Render<? super EntityHoi> createRenderFor(RenderManager manager) {
                 return new RenderHoi(manager, new ModelHoi(), 0.3F);
             }});
+
+        RenderingRegistry.registerEntityRenderingHandler(EntityKofoJaga.class, new IRenderFactory<EntityKofoJaga>(){
+            public Render<? super EntityKofoJaga> createRenderFor(RenderManager manager) {
+                return new RenderKofoJaga(manager, new ModelKofoJaga(), 0.5F);
+            }});
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityNuiJaga.class, new IRenderFactory<EntityNuiJaga>(){
+			public Render<? super EntityNuiJaga> createRenderFor(RenderManager manager) {
+				return new RenderNuiJaga(manager, new ModelNuiJaga(), 0.8F);
+			}});
 	}
 	
 	@Override
