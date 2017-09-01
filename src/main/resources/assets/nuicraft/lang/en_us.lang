@@ -5,6 +5,7 @@ tile.nuicraft.fluid_protodermis_energized.name=Energized Protodermis
 tile.nuicraft.fluid_protodermis.name=Liquid Protodermis
 tile.nuicraft.fluid_protodermis_pure.name=Pure Liquid Protodermis
 tile.nuicraft.fluid_protodermis_molten.name=Molten Protodermis
+tile.nuicraft.fluid_protodermis_pure_molten.name=Pure Molten Protodermis
 tile.nuicraft.fluid_protosteel_molten.name=Molten Protosteel
 tile.nuicraft.fluid_antidermis.name=Antidermis
 
@@ -12,6 +13,7 @@ fluid.nuicraft.protodermis_energized=Energized Protodermis
 fluid.nuicraft.protodermis=Liquid Protodermis
 fluid.nuicraft.protodermis_pure=Pure Liquid Protodermis
 fluid.nuicraft.protodermis_molten=Molten Protodermis
+fluid.nuicraft.protodermis_pure_molten=Pure Molten Protodermis
 fluid.nuicraft.protosteel_molten=Molten Protosteel
 fluid.nuicraft.antidermis=Antidermis
 
@@ -79,7 +81,7 @@ item.nuicraft.protodermis_sword.name=Protodermis Sword
 item.nuicraft.protodermis_pick.name=Protodermis Pickaxe
 item.nuicraft.protodermis_axe.name=Protodermis Hatchet
 item.nuicraft.protodermis_shovel.name=Protodermis Shovel
-item.nuicraft.protodermis_sythe.name=Protodermis Sythe
+item.nuicraft.protodermis_scythe.name=Protodermis Scythe
 
 item.nuicraft.mask_mata_gold.name=Golden Kanohi Mata
 

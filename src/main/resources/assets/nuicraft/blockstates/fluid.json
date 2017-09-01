@@ -18,6 +18,11 @@
 			"custom": {
 				"fluid": "protodermis_molten"
 			}
+		}],
+		"protodermis_pure_molten": [{
+			"custom": {
+				"fluid": "protodermis_pure_molten"
+			}
 		}]
 	}
 }

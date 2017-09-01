@@ -139,6 +139,7 @@ public class CommonProxyBionicle
 			new BlockNuiCraftFluid(NuiCraftFluids.protodermis, Material.WATER),
 			new BlockNuiCraftFluid(NuiCraftFluids.protodermis_pure, Material.WATER),
 			new BlockNuiCraftFluid(NuiCraftFluids.protodermis_molten, Material.LAVA),
+			new BlockNuiCraftFluid(NuiCraftFluids.protodermis_pure_molten, Material.LAVA),
 			
 			new BlockMaskForge().setHardness(3.5F),
 			new BlockPurifier().setHardness(3.5F),
@@ -182,7 +183,8 @@ public class CommonProxyBionicle
 		event.getRegistry().registerAll(
 			new ItemBlockGeneric(NuiCraftBlocks.fluid_protodermis),
 			new ItemBlockGeneric(NuiCraftBlocks.fluid_protodermis_pure),
-			new ItemBlockGeneric(NuiCraftBlocks.fluid_protodermis_molten),				
+			new ItemBlockGeneric(NuiCraftBlocks.fluid_protodermis_molten),	
+			new ItemBlockGeneric(NuiCraftBlocks.fluid_protodermis_pure_molten),
 				
 			new ItemBlockGeneric(NuiCraftBlocks.mask_forge),
 			new ItemPurifier(),
@@ -222,7 +224,7 @@ public class CommonProxyBionicle
 			new ItemBioniclePick("protodermis_pick", NuiCraft.PROTODERMIS),
 			new ItemBionicleAxe("protodermis_axe", NuiCraft.PROTODERMIS, 2.0F, -2.9F),
 			new ItemBionicleShovel("protodermis_shovel", NuiCraft.PROTODERMIS),
-			new ItemBionicleHoe("protodermis_sythe", NuiCraft.PROTODERMIS),
+			new ItemBionicleHoe("protodermis_scythe", NuiCraft.PROTODERMIS),
 		    
 			new ItemHeatstoneLighter(),
 			new ItemSluice(),
@@ -254,6 +256,7 @@ public class CommonProxyBionicle
 		FluidRegistry.addBucketForFluid(NuiCraftFluids.protodermis);
 		FluidRegistry.addBucketForFluid(NuiCraftFluids.protodermis_pure);
 		FluidRegistry.addBucketForFluid(NuiCraftFluids.protodermis_molten);
+		FluidRegistry.addBucketForFluid(NuiCraftFluids.protodermis_pure_molten);
 	}
 
 

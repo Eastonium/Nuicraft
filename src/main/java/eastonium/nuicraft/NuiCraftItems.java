@@ -49,7 +49,7 @@ public class NuiCraftItems {
 	public static final Item protodermis_pick = null;
 	public static final Item protodermis_axe = null;
 	public static final Item protodermis_shovel = null;
-	public static final Item protodermis_sythe = null;
+	public static final Item protodermis_scythe = null;
 	public static final Item heatstone_lighter = null;
 	public static final Item sluice = null;
 //Masks	
@@ -108,7 +108,7 @@ public class NuiCraftItems {
 	    setTextureLocation(protodermis_pick);	    
 	    setTextureLocation(protodermis_axe);	    
 	    setTextureLocation(protodermis_shovel);	    
-	    setTextureLocation(protodermis_sythe);
+	    setTextureLocation(protodermis_scythe);
 		ModelLoader.setCustomMeshDefinition(heatstone_lighter, NuiCraft.itemMeshDef);
 		ModelBakery.registerItemVariants(heatstone_lighter, NuiCraftItemMeshDef.heatLighterModLocs);
 		setTextureLocation(sluice);

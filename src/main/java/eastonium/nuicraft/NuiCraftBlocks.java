@@ -17,6 +17,7 @@ public class NuiCraftBlocks {
 	public static final Block fluid_protodermis = null;
 	public static final Block fluid_protodermis_pure = null;
 	public static final Block fluid_protodermis_molten = null;
+	public static final Block fluid_protodermis_pure_molten = null;
 	
 	public static final Block mask_forge = null;
 	public static final Block purifier = null;
