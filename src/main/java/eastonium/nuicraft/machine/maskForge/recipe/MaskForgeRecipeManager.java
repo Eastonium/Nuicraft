@@ -63,7 +63,7 @@ public class MaskForgeRecipeManager {
 	}
 	
 	public IMFRecipe getMatchingRecipe(NonNullList<ItemStack> inputItemStacks){
-		NuiCraft.logger.log(Level.INFO, "looking for recipe");
+		//NuiCraft.logger.log(Level.INFO, "looking for recipe");
 		if (inputItemStacks.isEmpty()) return null;
 		NonNullList<ItemStack> input = NonNullList.create();
 		Iterator<ItemStack> stacks;
