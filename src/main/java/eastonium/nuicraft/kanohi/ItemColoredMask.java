@@ -142,6 +142,10 @@ public class ItemColoredMask extends ItemMask {
 		this.setMetal(itemstack, (byte)3);
 		items.add(itemstack);
 		
+		itemstack = itemstack.copy();//Copper
+		this.setMetal(itemstack, (byte)4);
+		items.add(itemstack);
+		
 		itemstack = itemstack.copy();//Colorable
 		this.removeMetal(itemstack);
 		this.setColor(itemstack, DEFAULT_COLOR);

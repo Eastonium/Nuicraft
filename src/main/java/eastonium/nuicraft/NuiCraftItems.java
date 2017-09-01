@@ -157,6 +157,8 @@ public class NuiCraftItems {
 		ModelResourceLocation SilvMaskLoc = NuiCraft.itemMeshDef.getModelLocation(itemstack);
 		maskItem.setMetal(itemstack, (byte)3);
 		ModelResourceLocation BronzMaskLoc = NuiCraft.itemMeshDef.getModelLocation(itemstack);
-		ModelBakery.registerItemVariants(maskItem, ColorMaskLoc, GoldMaskLoc, SilvMaskLoc, BronzMaskLoc);
+		maskItem.setMetal(itemstack, (byte)4);
+		ModelResourceLocation CopprMaskLoc = NuiCraft.itemMeshDef.getModelLocation(itemstack);
+		ModelBakery.registerItemVariants(maskItem, ColorMaskLoc, GoldMaskLoc, SilvMaskLoc, BronzMaskLoc, CopprMaskLoc);
 	}
 }
