@@ -6,9 +6,9 @@ import eastonium.nuicraft.machine.maskForge.TileInventoryMaskForge;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
-public class KanokaTimeMFRecipe implements IMFRecipe {
+public class KanokaTimeRecipe implements IMFRecipe {
 
-	private NonNullList<ItemStack> returnStacks = NonNullList.<ItemStack>withSize(TileInventoryMaskForge.INPUT_SLOTS_COUNT, ItemStack.EMPTY);;
+	private NonNullList<ItemStack> returnStacks = NonNullList.<ItemStack>withSize(TileInventoryMaskForge.INPUT_SLOTS_COUNT, ItemStack.EMPTY);
 
 	@Override
 	public boolean matches(NonNullList<ItemStack> inputStacks) {
@@ -45,9 +45,7 @@ public class KanokaTimeMFRecipe implements IMFRecipe {
 		for(int i = 0; i < returnStacks.size(); i++){
 			if(!returnStacks.get(i).isEmpty()){
 				returnStacks.get(i).shrink(1);
-				if(returnStacks.get(i).getCount() <= 0){
-					returnStacks.set(i, ItemStack.EMPTY);
-				}
+				if(returnStacks.get(i).isEmpty()) returnStacks.remove(i);
 			}
 		}
 		return returnStacks;

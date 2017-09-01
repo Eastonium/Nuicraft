@@ -8,13 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import scala.actors.threadpool.Arrays;
 
-public class MaskMFRecipe implements IMFRecipe {
+public class MaskRecipe implements IMFRecipe {
 
 	private final ItemStack recipeOutput;
 	private final int[] requiredKanokaTypes;
 	private NonNullList<ItemStack> returnStacks = NonNullList.<ItemStack>withSize(TileInventoryMaskForge.INPUT_SLOTS_COUNT, ItemStack.EMPTY);;
 
-	public MaskMFRecipe(ItemStack recipeOutput, int[] requiredKanokaTypes){
+	public MaskRecipe(ItemStack recipeOutput, int... requiredKanokaTypes){
 		this.recipeOutput = recipeOutput;
 		this.requiredKanokaTypes = requiredKanokaTypes;
 	}
@@ -58,9 +58,7 @@ public class MaskMFRecipe implements IMFRecipe {
 		for(int i = 0; i < returnStacks.size(); i++){
 			if(!returnStacks.get(i).isEmpty()){
 				returnStacks.get(i).shrink(1);;
-				if(returnStacks.get(i).getCount() <= 0){
-					returnStacks.set(i, ItemStack.EMPTY);
-				}
+				if(returnStacks.get(i).isEmpty()) returnStacks.remove(i);
 			}
 		}
 		return returnStacks;
