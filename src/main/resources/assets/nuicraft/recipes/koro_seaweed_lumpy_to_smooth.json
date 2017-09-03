@@ -1,8 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "result": {
-    "item": "nuicraft:leafy_koro_block",
-	"data": 1,
+    "item": "nuicraft:koro_block",
+	"data": 13,
 	"count": 1
   },
   "pattern": [
@@ -10,8 +10,8 @@
   ],
   "key": {
     "s": {
-	  "item": "nuicraft:leafy_koro_block",
-	  "data": 0
+	  "item": "nuicraft:koro_block",
+	  "data": 12
     }
   }
 }

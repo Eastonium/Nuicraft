@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "nuicraft:koro_block",
+	"data": 3,
+	"count": 8
+  },
+  "pattern": [
+    "sss",
+    "sds",
+    "sss"
+  ],
+  "key": {
+    "s": {
+        "item": "nuicraft:koro_block",
+	    "data": 0
+    },
+    "d": [
+		{
+		  "item": "minecraft:sand",
+		  "data": 0
+		},{
+		  "item": "minecraft:sand",
+		  "data": 1
+		}
+	]
+  }
+}

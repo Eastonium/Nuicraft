@@ -1,14 +1,13 @@
 package eastonium.nuicraft;
 
+import eastonium.nuicraft.item.ItemBlockKoro;
 import eastonium.nuicraft.item.ItemGenericMeta;
 import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanohi.ItemGoldMataMask;
 import eastonium.nuicraft.kanohi.ItemMaskMeta;
 import eastonium.nuicraft.util.NuiCraftItemMeshDef;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.ModelLoader;
@@ -74,28 +73,8 @@ public class NuiCraftItems {
 	@SideOnly(Side.CLIENT)
     public static void initModels() {			
 		ModelLoader.setCustomModelResourceLocation(purifier_item, 0, new ModelResourceLocation(NuiCraftBlocks.purifier.getRegistryName(), "inventory"));
-		
-		Item item = Item.REGISTRY.getObject(NuiCraftBlocks.stone_koro_block.getRegistryName());
-		for(int i = 0; i < 9; i++){
-			ModelResourceLocation modReLoc = new ModelResourceLocation(NuiCraftBlocks.stone_koro_block.getRegistryName().toString(), "meta=" + i);
-			ModelLoader.setCustomModelResourceLocation(item, i, modReLoc);
-		}		
-		item = Item.REGISTRY.getObject(NuiCraftBlocks.lit_koro_block.getRegistryName());
-		for(int i = 0; i < 2; i++){
-			ModelResourceLocation modReLoc = new ModelResourceLocation(NuiCraftBlocks.lit_koro_block.getRegistryName().toString(), "meta=" + i);
-			ModelLoader.setCustomModelResourceLocation(item, i, modReLoc);
-		}		
-		item = Item.REGISTRY.getObject(NuiCraftBlocks.icy_koro_block.getRegistryName());
-		for(int i = 0; i < 2; i++){
-			ModelResourceLocation modReLoc = new ModelResourceLocation(NuiCraftBlocks.icy_koro_block.getRegistryName().toString(), "meta=" + i);
-			ModelLoader.setCustomModelResourceLocation(item, i, modReLoc);
-		}
-		item = Item.REGISTRY.getObject(NuiCraftBlocks.leafy_koro_block.getRegistryName());
-		for(int i = 0; i < 3; i++){
-			ModelResourceLocation modReLoc = new ModelResourceLocation(NuiCraftBlocks.leafy_koro_block.getRegistryName().toString(), "meta=" + i);
-			ModelLoader.setCustomModelResourceLocation(item, i, modReLoc);
-		}
-		
+
+		ItemBlockKoro.setTextureLocations();
 		ItemGenericMeta.setTextureLocations();
 		
 		setTextureLocation(kanoka_bamboo);

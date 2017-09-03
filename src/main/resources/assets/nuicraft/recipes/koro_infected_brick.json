@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "trdx_brick_small",
+  "group": "koro_infected_brick",
   "result": {
-    "item": "nuicraft:stone_koro_block",
-	"data": 8,
+    "item": "nuicraft:koro_block",
+	"data": 14,
 	"count": 8
   },
   "pattern": [

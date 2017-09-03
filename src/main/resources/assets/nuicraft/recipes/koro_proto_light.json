@@ -1,8 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "result": {
-    "item": "nuicraft:lit_koro_block",
-	"data": 0,
+    "item": "nuicraft:koro_block",
+	"data": 2,
 	"count": 8
   },
   "pattern": [
@@ -12,15 +12,11 @@
   ],
   "key": {
     "s": {
-      "item": "nuicraft:stone_koro_block",
+      "item": "nuicraft:koro_block",
 	  "data": 1
     },
-    "l": [
-	  {
-        "item": "minecraft:torch"
-      },{
+    "l": {
 	    "item": "nuicraft:lightstone"
-	  }
-    ]
+	}
   }
 }

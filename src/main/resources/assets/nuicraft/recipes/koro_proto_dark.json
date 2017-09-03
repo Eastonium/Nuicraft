@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "nuicraft:koro_block",
+	"data": 5,
+	"count": 8
+  },
+  "pattern": [
+    "sss",
+    "sds",
+    "sss"
+  ],
+  "key": {
+    "s": {
+        "item": "nuicraft:koro_block",
+	    "data": 0
+    },
+    "d": [
+	  {
+        "item": "minecraft:coal",
+        "data": 0
+      },{
+        "item": "minecraft:coal",
+        "data": 1
+      }
+	]
+  }
+}

@@ -1,8 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "koro_seaweed_lumpy",
   "result": {
-    "item": "nuicraft:stone_koro_block",
-	"data": 7,
+    "item": "nuicraft:koro_block",
+	"data": 12,
 	"count": 1
   },
   "pattern": [
@@ -10,8 +11,8 @@
   ],
   "key": {
     "s": {
-	  "item": "nuicraft:stone_koro_block",
-	  "data": 8
+	  "item": "nuicraft:koro_block",
+	  "data": 13
     }
   }
 }

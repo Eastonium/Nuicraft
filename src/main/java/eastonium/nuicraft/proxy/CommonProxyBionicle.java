@@ -8,6 +8,7 @@ import eastonium.nuicraft.NuiCraftItems;
 import eastonium.nuicraft.block.BlockBamboo;
 import eastonium.nuicraft.block.BlockBionicleStone;
 import eastonium.nuicraft.block.BlockKoro;
+import eastonium.nuicraft.block.BlockKoro.EnumKoroBlock;
 import eastonium.nuicraft.block.BlockLightstone;
 import eastonium.nuicraft.block.BlockMetal;
 import eastonium.nuicraft.block.BlockNuvaCube;
@@ -101,10 +102,9 @@ public class CommonProxyBionicle
 	    GameRegistry.addSmelting(NuiCraftBlocks.protodermis_ore, NuiCraftItems.getGIIS("raw_protodermis", 2), 0.7F);
 	    GameRegistry.addSmelting(NuiCraftItems.getGIIS("raw_protodermis", 1), NuiCraftItems.getGIIS("ingot_protodermis", 1), 0.7F);
 	    
-	    GameRegistry.addSmelting(new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 1), new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 0), 0.2F);
-	    GameRegistry.addSmelting(Blocks.SANDSTONE, new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 3), 0.2F);
-	    GameRegistry.addSmelting(new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 3), new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 2), 0.2F);
-	    GameRegistry.addSmelting(new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 5), new ItemStack(NuiCraftBlocks.stone_koro_block, 1, 4), 0.2F);
+	    GameRegistry.addSmelting(EnumKoroBlock.PROTO.getStack(1), EnumKoroBlock.PROTO_SMOOTH.getStack(1), 0.2F);
+	    GameRegistry.addSmelting(EnumKoroBlock.SANDY_PROTO.getStack(1), EnumKoroBlock.SANDY_PROTO_SMOOTH.getStack(1), 0.2F);
+	    GameRegistry.addSmelting(EnumKoroBlock.DARK_PROTO.getStack(1), EnumKoroBlock.DARK_PROTO_SMOOTH.getStack(1), 0.2F);
 
     //Ore Dictionary registries
         //TODO Find where these are supposed to actually go
@@ -144,10 +144,7 @@ public class CommonProxyBionicle
 			new BlockMaskForge().setHardness(3.5F),
 			new BlockPurifier().setHardness(3.5F),
 
-			new BlockKoro("stone_koro_block", Material.ROCK, MapColor.OBSIDIAN).setHardness(1.5F).setResistance(5F),
-			new BlockKoro("lit_koro_block", Material.REDSTONE_LIGHT, MapColor.OBSIDIAN).setLightLevel(1.0F).setHardness(1.5F).setResistance(5F),
-			new BlockKoro("icy_koro_block", Material.PACKED_ICE, MapColor.ICE).setHardness(1.5F).setResistance(3F),
-			new BlockKoro("leafy_koro_block", Material.LEAVES, MapColor.FOLIAGE).setHardness(1.5F).setResistance(3F),
+			new BlockKoro(),
 			
 			new BlockNuvaCube().setLightLevel(0.625F).setHardness(-1.0F).setResistance(6000000.0F),
 			//new BlockCrystalizedProtodermis().setBlockUnbreakable().setLightOpacity(3).setResistance(6000000.0F),
@@ -190,11 +187,8 @@ public class CommonProxyBionicle
 			new ItemPurifier(),
 			//new ItemBlockGeneric(NuiCraftBlocks.purifier),
 			
-			new ItemBlockKoro(NuiCraftBlocks.stone_koro_block),
-			new ItemBlockKoro(NuiCraftBlocks.lit_koro_block),
-			new ItemBlockKoro(NuiCraftBlocks.icy_koro_block),
-			new ItemBlockKoro(NuiCraftBlocks.leafy_koro_block),
-
+			new ItemBlockKoro(),
+			
 			new ItemBlockGeneric(NuiCraftBlocks.nuva_cube),
 			
 			new ItemBlockGeneric(NuiCraftBlocks.matanui_stone),
