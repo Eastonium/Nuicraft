@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "koro_seaweed_lumpy",
+  "result": {
+    "item": "nuicraft:koro_block",
+	"data": 12,
+	"count": 8
+  },
+  "pattern": [
+    "sss",
+    "sds",
+    "sss"
+  ],
+  "key": {
+    "s": [
+	  {
+        "item": "minecraft:leaves",
+	    "data": 0
+      },{
+        "item": "minecraft:leaves",
+	    "data": 1
+      },{
+        "item": "minecraft:leaves",
+	    "data": 2
+      },{
+        "item": "minecraft:leaves",
+	    "data": 3
+      },{
+        "item": "minecraft:leaves2",
+	    "data": 0
+      },{
+        "item": "minecraft:leaves2",
+	    "data": 1
+      }
+	],
+    "d": {
+      "item": "minecraft:water_bucket"
+    }
+  }
+}

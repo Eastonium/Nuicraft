@@ -1,0 +1,76 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "forge:item-layer",
+		"transform": "forge:default-item"
+	},
+    "variants": {
+        "type": {
+			"null": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_null"
+				}
+			},
+			"ta": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_ta"
+				}
+			},
+			"ga": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_ga"
+				}
+			},
+			"po": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_po"
+				}
+			},
+			"ko": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_ko"
+				}
+			},
+			"le": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_le"
+				}
+			},
+			"onu": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_onu"
+				}
+			},
+			"ta9": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_ta9"
+				}
+			},
+			"ga9": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_ga9"
+				}
+			},
+			"po9": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_po9"
+				}
+			},
+			"ko9": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_ko9"
+				}
+			},
+			"le9": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_le9"
+				}
+			},
+			"onu9": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_onu"
+				}
+			}
+		}
+    }
+}

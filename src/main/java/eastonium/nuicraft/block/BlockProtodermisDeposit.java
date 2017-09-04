@@ -6,6 +6,7 @@ import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.NuiCraftBlocks;
 import eastonium.nuicraft.NuiCraftItems;
 import eastonium.nuicraft.item.ItemGenericMeta;
+import eastonium.nuicraft.item.ItemGenericMeta.EnumGenericItem;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -37,7 +38,7 @@ public class BlockProtodermisDeposit extends BlockOre {
 	}
 	@Override
 	public int damageDropped(IBlockState state){
-		return ItemGenericMeta.getMetaFromName("raw_protodermis");
+		return EnumGenericItem.PROTO_BLOB.getMetadata();
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class BlockProtodermisDeposit extends BlockOre {
 				double posX = (hitX < 1.0F && hitX > 0F) ? hitX : ((hitX - 0.5) * f) + 0.5;
 				double posY = (hitY < 1.0F && hitY > 0F) ? hitY : ((hitY - 0.5) * f) + 0.5;
 				double posZ = (hitZ < 1.0F && hitZ > 0F) ? hitZ : ((hitZ - 0.5) * f) + 0.5;
-				EntityItem entityitem = new EntityItem(worldIn, posX + pos.getX(), posY + pos.getY(), posZ + pos.getZ(), NuiCraftItems.getGIIS("raw_protodermis", 1));
+				EntityItem entityitem = new EntityItem(worldIn, posX + pos.getX(), posY + pos.getY(), posZ + pos.getZ(), EnumGenericItem.PROTO_BLOB.getStack(1));
 				float f3 = 0.06F;
 				entityitem.motionX = worldIn.rand.nextGaussian() * (double)f3;
 				entityitem.motionY = worldIn.rand.nextGaussian() * (double)f3 + 0.20000000298023224D;

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "nuicraft:koro_block",
+	"data": 2,
+	"count": 8
+  },
+  "pattern": [
+    "sss",
+    "sls",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item": "nuicraft:koro_block",
+	  "data": 1
+    },
+    "l": {
+	    "item": "nuicraft:lightstone"
+	}
+  }
+}

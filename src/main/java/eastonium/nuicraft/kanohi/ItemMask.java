@@ -34,7 +34,7 @@ public class ItemMask extends ItemArmor {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String layer){
-		return NuiCraft.MODID + ":textures/models/masks/" + getRegistryName().getResourcePath() + ".png";
+		return NuiCraft.MODID + ":textures/models/masks/normal/" + getRegistryName().getResourcePath().substring(5) + ".png";
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -44,7 +44,7 @@ public class ItemMask extends ItemArmor {
 		if(!stack.isEmpty()){
 			if(stack.getItem() == NuiCraftItems.mask_mata_akaku || 
 					(stack.getItem() == NuiCraftItems.mask_mata_gold && stack.getItemDamage() == 5)){
-				armorModel = NuiCraft.proxy.getArmorModel(0);//Akaku Model
+				armorModel = NuiCraft.proxy.getArmorModel(0);//Mata Akaku Model
 			}else if(stack.getItem() == NuiCraftItems.mask_ignika && stack.getItemDamage() == 0){
 				armorModel = NuiCraft.proxy.getArmorModel(1);//VNOG Ignika Model
 			}else armorModel = NuiCraft.proxy.getArmorModel(-1);//Generic Model

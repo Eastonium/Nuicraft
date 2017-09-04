@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "koro_infected_brick",
+  "result": {
+    "item": "nuicraft:koro_block",
+	"data": 14,
+	"count": 8
+  },
+  "pattern": [
+    "sss",
+    "sds",
+    "sss"
+  ],
+  "key": {
+    "s": [
+	  {
+	    "item": "minecraft:brick_block"
+      },{
+	    "item": "minecraft:nether_brick"
+      }
+	],      
+    "d": {
+      "item": "minecraft:rotten_flesh"
+    }
+  }
+}

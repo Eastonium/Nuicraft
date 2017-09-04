@@ -1,6 +1,7 @@
 package eastonium.nuicraft.kanoka;
 
 import eastonium.nuicraft.NuiCraftItems;
+import eastonium.nuicraft.item.ItemGenericMeta.EnumGenericItem;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -21,6 +22,6 @@ public class RenderKanoka<T extends EntityKanoka> extends RenderSnowball<T> {
 
 	@Override
 	public ItemStack getStackToRender(T entityIn) {
-        return NuiCraftItems.getGIIS(entityIn.getIsBamboo() ? "kanoka_flying_black" : "kanoka_flying_white", 1);
+        return entityIn.getIsBamboo() ? EnumGenericItem.KANOKA_FLYING_BLACK.getStack(1) : EnumGenericItem.KANOKA_FLIYNG_WHITE.getStack(1);
     }
 }

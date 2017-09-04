@@ -1,0 +1,91 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "cube_all"
+	},
+    "variants": {
+		"inventory": [{}],
+        "meta": {
+			0: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_proto"
+				}
+			},
+			1: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_proto_smooth"
+				}
+			},
+			2: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_proto_light"
+				}
+			},
+			3: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_proto_sandy"
+				}
+			},
+			4: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_proto_sandy_smooth"
+				}
+			},
+			5: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_proto_dark"
+				}
+			},
+			6: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_proto_dark_smooth"
+				}
+			},
+			7: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_proto_dark_brick"
+				}
+			},
+			8: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_proto_dark_light"
+				}
+			},
+			9: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_proto_frozen"
+				}
+			},
+			10: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_proto_frozen_brick"
+				}
+			},
+			11: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_seaweed_rough"
+				}
+			},
+			12: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_seaweed_lumpy"
+				}
+			},
+			13: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_seaweed_smooth"
+				}
+			},
+			14: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_infected_brick"
+				}
+			},
+			15: {
+				"textures": {
+					"all": "nuicraft:blocks/koro_block_infected_brick_large"
+				}
+			}
+		}
+    }
+}

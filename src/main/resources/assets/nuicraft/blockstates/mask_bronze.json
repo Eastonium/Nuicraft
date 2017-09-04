@@ -1,0 +1,41 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "forge:item-layer",
+		"transform": "forge:default-item"
+	},
+    "variants": {
+        "name": {
+			"mata_kakama": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/bronze/mata_kakama_bronze"
+				}
+			},
+			"mata_pakari": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/bronze/mata_pakari_bronze"
+				}
+			},
+			"mata_kaukau": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/bronze/mata_kaukau_bronze"
+				}
+			},
+			"mata_miru": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/bronze/mata_miru_bronze"
+				}
+			},
+			"mata_hau": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/bronze/mata_hau_bronze"
+				}
+			},
+			"mata_akaku": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/bronze/mata_akaku_bronze"
+				}
+			}
+		}
+    }
+}

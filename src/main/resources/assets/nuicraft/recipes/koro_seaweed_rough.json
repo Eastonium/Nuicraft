@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "result": {
+    "item": "nuicraft:koro_block",
+	"data": 11,
+	"count": 4
+  },
+  "pattern": [
+    "ss",
+	"ss"
+  ],
+  "key": {
+    "s": {
+	  "item": "minecraft:vine"
+    }
+  }
+}

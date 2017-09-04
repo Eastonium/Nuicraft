@@ -1,5 +1,8 @@
 package eastonium.nuicraft.machine.maskForge;
 
+import org.apache.logging.log4j.Level;
+
+import eastonium.nuicraft.NuiCraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -53,7 +56,7 @@ public class ContainerMaskForge extends Container {
 	private int lastBurnTime = 0;
 	private int lastItemBurnTime = 0;
 
-	public ContainerMaskForge(InventoryPlayer playerInv, TileInventoryMaskForge maskForgeInv){
+	public ContainerMaskForge(InventoryPlayer playerInv, TileInventoryMaskForge maskForgeInv) {
 		this.maskForgeInv = maskForgeInv;
 
 		final int HOTBAR_XPOS = 8;
@@ -80,7 +83,7 @@ public class ContainerMaskForge extends Container {
 		final int INPUT_SLOTS_XPOS = 61;
 		final int INPUT_SLOTS_YPOS = 11;
 		for (int y = 0; y < 3; y++) {
-			for(int x = 0; x < 2; x++){
+			for(int x = 0; x < 2; x++) {
 				int slotNumber = y * 2 + x + FIRST_INPUT_SLOT_NUMBER;
 				addSlotToContainer(new SlotInput(maskForgeInv, slotNumber, INPUT_SLOTS_XPOS + 20 * x, INPUT_SLOTS_YPOS + 20 * y));
 			}
@@ -91,56 +94,44 @@ public class ContainerMaskForge extends Container {
 	}
 
 	@Override
-	public boolean canInteractWith(EntityPlayer par1EntityPlayer){
+	public boolean canInteractWith(EntityPlayer par1EntityPlayer) {
 		return maskForgeInv.isUsableByPlayer(par1EntityPlayer);
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex)
-	{
+	public ItemStack transferStackInSlot(EntityPlayer player, int sourceSlotIndex) {
 		Slot sourceSlot = (Slot)inventorySlots.get(sourceSlotIndex);
 		if (sourceSlot == null || !sourceSlot.getHasStack()) return ItemStack.EMPTY;
 		ItemStack sourceStack = sourceSlot.getStack();
 		ItemStack copyOfSourceStack = sourceStack.copy();
 
-		if(sourceSlotIndex >= VANILLA_FIRST_SLOT_INDEX && sourceSlotIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT){
-			if(TileInventoryMaskForge.isItemValidForFuelSlot(sourceStack)){
-				if(!mergeItemStack(sourceStack, FIRST_FUEL_SLOT_INDEX, FIRST_FUEL_SLOT_INDEX + FUEL_SLOTS_COUNT, false)){
+		if (sourceSlotIndex >= VANILLA_FIRST_SLOT_INDEX && sourceSlotIndex < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
+			if (TileInventoryMaskForge.isItemValidForFuelSlot(sourceStack)) {
+				if (!mergeItemStack(sourceStack, FIRST_FUEL_SLOT_INDEX, FIRST_FUEL_SLOT_INDEX + FUEL_SLOTS_COUNT, false)) {
 					return ItemStack.EMPTY;
 				}
-			}else if (TileInventoryMaskForge.isItemValidForInputSlot(sourceStack)){
-				if(!mergeItemStack(sourceStack, FIRST_INPUT_SLOT_INDEX, FIRST_INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT, false)){
+			} else if (TileInventoryMaskForge.isItemValidForInputSlot(sourceStack)) {
+				if (!mergeItemStack(sourceStack, FIRST_INPUT_SLOT_INDEX, FIRST_INPUT_SLOT_INDEX + INPUT_SLOTS_COUNT, false)) {
 					return ItemStack.EMPTY;
 				}
-			}else return ItemStack.EMPTY;
-		}else if(sourceSlotIndex >= FIRST_FUEL_SLOT_INDEX && sourceSlotIndex < FIRST_FUEL_SLOT_INDEX + FURNACE_SLOTS_COUNT){
-			if(!mergeItemStack(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)){
+			} else return ItemStack.EMPTY;
+		} else if (sourceSlotIndex >= FIRST_FUEL_SLOT_INDEX && sourceSlotIndex < FIRST_FUEL_SLOT_INDEX + FURNACE_SLOTS_COUNT) {
+			if (!mergeItemStack(sourceStack, VANILLA_FIRST_SLOT_INDEX, VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT, false)) {
 				return ItemStack.EMPTY;
 			}
-		}else{
+		} else {
 			System.err.print("Invalid slotIndex:" + sourceSlotIndex);
 			return ItemStack.EMPTY;
 		}
 
-		if(sourceStack.getCount() == 0){
-			sourceSlot.putStack(ItemStack.EMPTY);
-		}else{
-			sourceSlot.onSlotChanged();
-		}
-
+//		if (sourceStack.getCount() == 0) {
+//			sourceSlot.putStack(ItemStack.EMPTY);
+//		} else {
+//			sourceSlot.onSlotChanged();
+//		}
 		sourceSlot.onTake(player, sourceStack);
 		return copyOfSourceStack;
 	}
-
-	/*@Override
-	public void addCraftingToCrafters(ICrafting par1ICrafting)
-	{
-		super.addCraftingToCrafters(par1ICrafting);
-		par1ICrafting.sendProgressBarUpdate(this, 0, this.maskForgeInv.furnaceCookTime);
-		par1ICrafting.sendProgressBarUpdate(this, 1, this.maskForgeInv.furnaceBurnTime);
-		par1ICrafting.sendProgressBarUpdate(this, 2, this.maskForgeInv.currentItemBurnTime);
-	}
-	*/
 	
 	@Override
 	public void detectAndSendChanges(){

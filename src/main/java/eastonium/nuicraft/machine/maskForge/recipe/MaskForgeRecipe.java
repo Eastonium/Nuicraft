@@ -26,7 +26,7 @@ public class MaskForgeRecipe implements IMFRecipe {
 	
 	@Override
     public boolean matches(NonNullList<ItemStack> inputStacks) {
-		NuiCraft.logger.log(Level.INFO, "checking for match");
+		//NuiCraft.logger.log(Level.INFO, "checking for match");
         NonNullList<CountedIngredient> required = requiredIngCopy();
         returnStacks.clear();
         returnStacks.addAll(inputStacks);
