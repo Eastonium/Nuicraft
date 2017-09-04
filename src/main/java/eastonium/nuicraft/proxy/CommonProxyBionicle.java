@@ -96,21 +96,22 @@ public class CommonProxyBionicle
 
 		//Mahi 101
 	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "mahi"), EntityMahi.class, "nuicraft.mahi", 101, NuiCraft.modInstance, 64, 1, true, 0xE6C381, 0xD1322B);
-		EntityRegistry.addSpawn(EntityMahi.class, 15, 2, 5, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.PLAINS, Biomes.MUTATED_PLAINS, Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU);
+		EntityRegistry.addSpawn(EntityMahi.class, 15, 2, 5, EnumCreatureType.CREATURE, Biomes.PLAINS, Biomes.MUTATED_PLAINS, Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU);
+		EntityRegistry.addSpawn(EntityMahi.class, 5, 2, 5, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS);
 		//Fikou 102
 		EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "fikou"), EntityFikou.class, "nuicraft.fikou", 102, NuiCraft.modInstance, 64, 1, true, 0xE8660C, 0x2B2B2B);
-		EntityRegistry.addSpawn(EntityFikou.class, 15, 3, 8, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.MESA, Biomes.MESA_CLEAR_ROCK, Biomes.MESA_ROCK);
+		EntityRegistry.addSpawn(EntityFikou.class, 10, 3, 8, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.MESA, Biomes.MESA_CLEAR_ROCK, Biomes.MESA_ROCK);
 		//Hoi 103
 		EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "hoi"), EntityHoi.class, "nuicraft.hoi", 103, NuiCraft.modInstance, 64, 1, true, 0x2B2B2B,  0xE8660C);
 		EntityRegistry.addSpawn(EntityHoi.class, 15, 1, 4, EnumCreatureType.CREATURE, Biomes.BEACH, Biomes.SWAMPLAND, Biomes.JUNGLE, Biomes.JUNGLE_HILLS, Biomes.MUTATED_JUNGLE, Biomes.STONE_BEACH);
         //Kofo-Jaga 104
         EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "kofo_jaga"), EntityKofoJaga.class, "nuicraft.kofo_jaga", 104, NuiCraft.modInstance, 64, 1, true, 0xE8660C, 0xD1322B);
-        EntityRegistry.addSpawn(EntityKofoJaga.class, 15, 2, 5, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.MESA, Biomes.MESA_CLEAR_ROCK, Biomes.MESA_ROCK);
-		//Kofo-Jaga 105
+        EntityRegistry.addSpawn(EntityKofoJaga.class, 10, 2, 5, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.MESA, Biomes.MESA_CLEAR_ROCK, Biomes.MESA_ROCK);
+		//Nui-Jaga 105
 		EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "nui_jaga"), EntityNuiJaga.class, "nuicraft.nui_jaga", 105, NuiCraft.modInstance, 64, 1, true, 0x8014B6, 0xFFBC11);
 		/*
-		TODO De-comment after making it hostile
-		EntityRegistry.addSpawn(EntityNuiJaga.class, 15, 1, 2, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.MESA, Biomes.MESA_CLEAR_ROCK, Biomes.MESA_ROCK);
+		TODO De-comment and edit after making it hostile
+		EntityRegistry.addSpawn(EntityNuiJaga.class, 5, 1, 2, EnumCreatureType.CREATURE, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.MESA, Biomes.MESA_CLEAR_ROCK, Biomes.MESA_ROCK);
 		*/
         registerFluids();
 	}

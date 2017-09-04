@@ -5,13 +5,9 @@ import javax.annotation.Nullable;
 import eastonium.nuicraft.NuiCraft;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.pathfinding.PathNodeType;
@@ -31,9 +27,12 @@ public class EntityMahi extends EntityAnimal {
 	
     protected void initEntityAI(){
     	tasks.addTask(0, new EntityAISwimming(this));
-		tasks.addTask(1, new EntityAIWander(this, 0.4D));
-		tasks.addTask(2, new EntityAILookIdle(this));
-		tasks.addTask(3, new EntityAIPanic(this, 0.6D));
+		tasks.addTask(1, new EntityAIPanic(this, 1.6D));
+		tasks.addTask(2, new EntityAIWander(this, 1.2D));
+		tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+		tasks.addTask(6, new EntityAILookIdle(this));
+
+
     }
 	
 	protected boolean canDespawn(){
