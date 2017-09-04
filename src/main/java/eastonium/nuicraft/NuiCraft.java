@@ -24,9 +24,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-@Mod(modid = NuiCraft.MODID, name = "NuiCraft", version = "1.12.1-0.8.1.2")
-public class NuiCraft 
-{
+@Mod(modid = NuiCraft.MODID, name = "NuiCraft", version = "1.12.1-0.8.1.3")
+public class NuiCraft {
 	public static final String MODID = "nuicraft";
 	
 	@Instance(NuiCraft.MODID)
