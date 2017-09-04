@@ -1,6 +1,7 @@
 package eastonium.nuicraft.machine.maskForge.recipe;
 
 import eastonium.nuicraft.NuiCraftItems;
+import eastonium.nuicraft.item.ItemGenericMeta.EnumGenericItem;
 import eastonium.nuicraft.kanoka.ItemKanokaDisc;
 import eastonium.nuicraft.machine.maskForge.TileInventoryMaskForge;
 import net.minecraft.item.ItemStack;
@@ -37,7 +38,7 @@ public class KanokaTimeRecipe implements IMFRecipe {
 
 	@Override
 	public ItemStack getOutput() {
-		return NuiCraftItems.getGIIS("kanoka_time", 1);
+		return EnumGenericItem.KANOKA_TIME.getStack(1);
 	}
 
 	@Override

@@ -1,0 +1,41 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "forge:item-layer",
+		"transform": "forge:default-item"
+	},
+    "variants": {
+        "name": {
+			"mata_kakama": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/gold/mata_kakama_gold"
+				}
+			},
+			"mata_pakari": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/gold/mata_pakari_gold"
+				}
+			},
+			"mata_kaukau": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/gold/mata_kaukau_gold"
+				}
+			},
+			"mata_miru": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/gold/mata_miru_gold"
+				}
+			},
+			"mata_hau": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/gold/mata_hau_gold"
+				}
+			},
+			"mata_akaku": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/gold/mata_akaku_gold"
+				}
+			}
+		}
+    }
+}

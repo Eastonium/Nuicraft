@@ -5,36 +5,45 @@
 		"custom": { "flip-v": true }
     },
     "variants": {
-        "facing=up": [{
-			"transform": {
-				"translation": [ 0, -0.25, 0 ]
+		"inventory": {
+			"model": "forge:item-layer",
+			"transform": "forge:default-item",
+			"textures": {
+				"layer0": "nuicraft:items/lightstone"
 			}
-		}],
-        "facing=east": [{
-			"transform": {
-				"translation": [ -0.4, 0, 0 ],
-				"rotation": [{"z": -30}],
-				"post-rotation": [{"y": 90}]
+		},
+        "facing": {
+			"up": {
+				"transform": {
+					"translation": [ 0, -0.25, 0 ]
+				}
+			},
+			"east": {
+				"transform": {
+					"translation": [ -0.4, 0, 0 ],
+					"rotation": [{"z": -30}],
+					"post-rotation": [{"y": 90}]
+				}
+			},
+			"south": {
+				"transform": {
+					"translation": [ 0, 0, -0.4 ],
+					"rotation": [{"x": 30}]
+				}
+			},
+			"west": {
+				"transform": {
+					"translation": [ 0.4, 0, 0 ],
+					"rotation": [{"z": 30}],
+					"post-rotation": [{"y": 90}]
+				}
+			},
+			"north": {
+				"transform": {
+					"translation": [ 0, 0, 0.4 ],
+					"rotation": [{"x": -30}]
+				}
 			}
-		}],
-        "facing=south": [{
-			"transform": {
-				"translation": [ 0, 0, -0.4 ],
-				"rotation": [{"x": 30}]
-			}
-		}],
-        "facing=west": [{
-			"transform": {
-				"translation": [ 0.4, 0, 0 ],
-				"rotation": [{"z": 30}],
-				"post-rotation": [{"y": 90}]
-			}
-		}],
-        "facing=north": [{
-			"transform": {
-				"translation": [ 0, 0, 0.4 ],
-				"rotation": [{"x": -30}]
-			}
-		}]
+		}
     }
 }

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.NuiCraftItems;
+import eastonium.nuicraft.item.ItemGenericMeta.EnumGenericItem;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -28,7 +29,7 @@ public class DyeMaskRecipeFactory implements IRecipeFactory {
     
 	public static class DyeMaskRecipe extends ShapelessOreRecipe {
 		public DyeMaskRecipe(ResourceLocation group, NonNullList<Ingredient> input) {
-			super(group, input, NuiCraftItems.getGIIS("dye_mask", 1));
+			super(group, input, EnumGenericItem.DYE_MASK.getStack(1));
 	    }
 	
 		@Override

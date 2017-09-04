@@ -1,0 +1,76 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "forge:item-layer",
+		"transform": "forge:default-item"
+	},
+    "variants": {
+        "name": {
+			"ingot_protodermis": {
+				"textures": {
+					"layer0": "nuicraft:items/ingot_protodermis"
+				}
+			},
+			"ingot_protosteel": {
+				"textures": {
+					"layer0": "nuicraft:items/ingot_protosteel"
+				}
+			},
+			"nugget_protodermis": {
+				"textures": {
+					"layer0": "nuicraft:items/nugget_protodermis"
+				}
+			},
+			"nugget_protosteel": {
+				"textures": {
+					"layer0": "nuicraft:items/nugget_protosteel"
+				}
+			},
+			"dust_protodermis": {
+				"textures": {
+					"layer0": "nuicraft:items/dust_protodermis"
+				}
+			},
+			"dust_protosteel": {
+				"textures": {
+					"layer0": "nuicraft:items/dust_protosteel"
+				}
+			},
+			"protodermis_blob": {
+				"textures": {
+					"layer0": "nuicraft:items/protodermis_blob"
+				}
+			},
+			"heatstone": {
+				"textures": {
+					"layer0": "nuicraft:items/heatstone"
+				}
+			},
+			"bamboo_stick": {
+				"textures": {
+					"layer0": "nuicraft:items/bamboo_stick"
+				}
+			},
+			"kanoka_time": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_time"
+				}
+			},
+			"dye_mask": {
+				"textures": {
+					"layer0": "nuicraft:items/dye_mask"
+				}
+			},
+			"kanoka_flying_black": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_flying_black"
+				}
+			},
+			"kanoka_flying_white": {
+				"textures": {
+					"layer0": "nuicraft:items/kanoka_flying_white"
+				}
+			}
+		}
+    }
+}

@@ -31,9 +31,9 @@ public class ItemBlockKoro extends ItemBlock {
 	public static void setTextureLocations() {
 		for(EnumKoroBlock enumBlock : EnumKoroBlock.values()){
 			ModelLoader.setCustomModelResourceLocation(
-					Item.REGISTRY.getObject(NuiCraftBlocks.koro_block.getRegistryName()), 
-					enumBlock.getMetadata(), 
-					new ModelResourceLocation(NuiCraftBlocks.koro_block.getRegistryName().toString(), 
+					Item.REGISTRY.getObject(NuiCraftBlocks.koro_block.getRegistryName()),
+					enumBlock.getMetadata(),
+					new ModelResourceLocation(NuiCraftBlocks.koro_block.getRegistryName().toString(),
 							"meta=" + enumBlock.getMetadata()));
 		}
 	}

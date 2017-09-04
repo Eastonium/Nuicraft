@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.NuiCraftBlocks;
 import eastonium.nuicraft.NuiCraftItems;
+import eastonium.nuicraft.item.ItemGenericMeta.EnumGenericItem;
 import eastonium.nuicraft.util.CountedIngredient;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -46,9 +47,9 @@ public class MaskForgeRecipeManager {
 		recipeList.add(new MaskRecipe(new ItemStack(NuiCraftItems.mask_mata_akaku),  7, 8));
 		
 		recipeList.add(new MaskForgeRecipe(new ItemStack(NuiCraftItems.mask_vahi),
-				new CountedIngredient(NuiCraftItems.getGIIS("kanoka_time", 1))));
+				new CountedIngredient(EnumGenericItem.KANOKA_TIME.getStack(1))));
 		
-		recipeList.add(new MaskForgeRecipe(NuiCraftItems.getGIIS("ingot_protosteel", 1),
+		recipeList.add(new MaskForgeRecipe(EnumGenericItem.PROTOSTEEL_INGOT.getStack(1),
 				new CountedIngredient(new OreIngredient("ingotProtodermis"), 2),
 				new CountedIngredient(new OreIngredient("ingotIron"), 2),
 				new CountedIngredient(Items.COAL, 2)));

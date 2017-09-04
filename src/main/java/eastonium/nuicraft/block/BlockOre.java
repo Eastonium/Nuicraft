@@ -6,6 +6,7 @@ import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.NuiCraftBlocks;
 import eastonium.nuicraft.NuiCraftItems;
 import eastonium.nuicraft.item.ItemGenericMeta;
+import eastonium.nuicraft.item.ItemGenericMeta.EnumGenericItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -39,7 +40,7 @@ public class BlockOre extends Block {
 	
 	@Override
 	public int damageDropped(IBlockState state){
-		if (state.getBlock() == NuiCraftBlocks.heatstone_ore) return ItemGenericMeta.getMetaFromName("raw_heatstone");
+		if (state.getBlock() == NuiCraftBlocks.heatstone_ore) return EnumGenericItem.HEATSTONE.getMetadata();
 		//if (state.getBlock() == NuiCraftBlocks.protodermis_ore) return ItemGenericMeta.getMetaFromName("raw_protodermis");
 		return 0;
     }

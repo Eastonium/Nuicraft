@@ -1,0 +1,96 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "forge:item-layer",
+		"transform": "forge:default-item"
+	},
+    "variants": {
+        "name": {
+			"mata_kakama": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/mata_kakama"
+				}
+			},
+			"mata_pakari": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/mata_pakari"
+				}
+			},
+			"mata_kaukau": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/mata_kaukau"
+				}
+			},
+			"mata_miru": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/mata_miru"
+				}
+			},
+			"mata_hau": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/mata_hau"
+				}
+			},
+			"mata_akaku": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/mata_akaku"
+				}
+			},
+			"nuva_kakama": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/nuva_kakama"
+				}
+			},
+			"nuva_pakari": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/nuva_pakari"
+				}
+			},
+			"nuva_kaukau": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/nuva_kaukau"
+				}
+			},
+			"nuva_miru": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/nuva_miru"
+				}
+			},
+			"nuva_hau": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/nuva_hau"
+				}
+			},
+			"nuva_akaku": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/nuva_akaku"
+				}
+			},
+			"vahi_0": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/vahi_0"
+				}
+			},
+			"vahi_1": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/vahi_1"
+				}
+			},
+			"ignika_0": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/ignika_0"
+				}
+			},
+			"ignika_1": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/ignika_1"
+				}
+			},
+			"ignika_2": {
+				"textures": {
+					"layer0": "nuicraft:items/masks/normal/ignika_2"
+				}
+			}
+		}
+    }
+}

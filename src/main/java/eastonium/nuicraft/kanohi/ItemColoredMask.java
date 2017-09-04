@@ -15,6 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemColoredMask extends ItemMask {
+	public static final String[] METAL_COLORS = new String[]{"gold", "silver", "bronze", "copper"};
 	public static final int DEFAULT_COLOR = 11324652;
 	public static final int WHITE_COLOR = 16777215;
 
@@ -29,10 +30,10 @@ public class ItemColoredMask extends ItemMask {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String layer){
 		if(!hasColor(stack)){
-			return NuiCraft.MODID + ":textures/models/masks/" + getRegistryName().getResourcePath() + "_" + getMetal(stack) + ".png";
+			return NuiCraft.MODID + ":textures/models/masks/" + METAL_COLORS[getMetal(stack)-1] + "/" + getRegistryName().getResourcePath().substring(5) + "_" + METAL_COLORS[getMetal(stack)-1] + ".png";
 		}
 		if(layer == null){
-			return NuiCraft.MODID + ":textures/models/masks/" + getRegistryName().getResourcePath() + ".png";
+			return NuiCraft.MODID + ":textures/models/masks/normal/" + getRegistryName().getResourcePath().substring(5) + ".png";
 		}
 		return NuiCraft.MODID + ":textures/models/masks/blank.png";
 	}
@@ -129,24 +130,13 @@ public class ItemColoredMask extends ItemMask {
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items){
 		if (tab != getCreativeTab()) return;
-
+		
 		ItemStack itemstack = new ItemStack(this);
-		this.setMetal(itemstack, (byte)1);//Gold
-		items.add(itemstack);
-		
-		itemstack = itemstack.copy();//Silver
-		this.setMetal(itemstack, (byte)2);
-		items.add(itemstack);
-		
-		itemstack = itemstack.copy();//Bronze
-		this.setMetal(itemstack, (byte)3);
-		items.add(itemstack);
-		
-		itemstack = itemstack.copy();//Copper
-		this.setMetal(itemstack, (byte)4);
-		items.add(itemstack);
-		
-		itemstack = itemstack.copy();//Colorable
+		for (int i = 1; i <= METAL_COLORS.length; i++) {
+			this.setMetal(itemstack, (byte)i);
+			items.add(itemstack);
+			itemstack = itemstack.copy();
+		}
 		this.removeMetal(itemstack);
 		this.setColor(itemstack, DEFAULT_COLOR);
 		items.add(itemstack);

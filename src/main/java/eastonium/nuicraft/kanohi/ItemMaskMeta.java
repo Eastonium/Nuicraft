@@ -27,7 +27,7 @@ public class ItemMaskMeta extends ItemMask {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String layer){
-		return NuiCraft.MODID + ":textures/models/masks/" + getRegistryName().getResourcePath() + "_" + stack.getItemDamage() + ".png";
+		return NuiCraft.MODID + ":textures/models/masks/normal/" + getRegistryName().getResourcePath().substring(5) + "_" + stack.getItemDamage() + ".png";
 	}
 	
 	@SideOnly(Side.CLIENT)

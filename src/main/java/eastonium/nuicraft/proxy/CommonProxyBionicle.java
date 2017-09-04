@@ -23,6 +23,7 @@ import eastonium.nuicraft.item.ItemBionicleSword;
 import eastonium.nuicraft.item.ItemBlockGeneric;
 import eastonium.nuicraft.item.ItemBlockKoro;
 import eastonium.nuicraft.item.ItemGenericMeta;
+import eastonium.nuicraft.item.ItemGenericMeta.EnumGenericItem;
 import eastonium.nuicraft.item.ItemHeatstoneLighter;
 import eastonium.nuicraft.item.ItemSluice;
 import eastonium.nuicraft.kanohi.ItemColoredMask;
@@ -99,8 +100,8 @@ public class CommonProxyBionicle
 	
 	public void init(){
 	//Smelting Recipes
-	    GameRegistry.addSmelting(NuiCraftBlocks.protodermis_ore, NuiCraftItems.getGIIS("raw_protodermis", 2), 0.7F);
-	    GameRegistry.addSmelting(NuiCraftItems.getGIIS("raw_protodermis", 1), NuiCraftItems.getGIIS("ingot_protodermis", 1), 0.7F);
+	    GameRegistry.addSmelting(NuiCraftBlocks.protodermis_ore, EnumGenericItem.PROTO_BLOB.getStack(2), 0.7F);
+	    GameRegistry.addSmelting(EnumGenericItem.PROTO_BLOB.getStack(1), EnumGenericItem.PROTO_INGOT.getStack(1), 0.7F);
 	    
 	    GameRegistry.addSmelting(EnumKoroBlock.PROTO.getStack(1), EnumKoroBlock.PROTO_SMOOTH.getStack(1), 0.2F);
 	    GameRegistry.addSmelting(EnumKoroBlock.SANDY_PROTO.getStack(1), EnumKoroBlock.SANDY_PROTO_SMOOTH.getStack(1), 0.2F);
@@ -117,13 +118,15 @@ public class CommonProxyBionicle
 		
 		OreDictionary.registerOre("blockProtodermis", NuiCraftBlocks.block_protodermis);
 		OreDictionary.registerOre("blockProtosteel", NuiCraftBlocks.block_protosteel);		
-		OreDictionary.registerOre("ingotProtodermis", NuiCraftItems.getGIIS("ingot_protodermis", 1));
-	    OreDictionary.registerOre("ingotProtosteel", NuiCraftItems.getGIIS("ingot_protosteel", 1));
-	    OreDictionary.registerOre("nuggetProtodermis", NuiCraftItems.getGIIS("nugget_protodermis", 1));
-	    OreDictionary.registerOre("nuggetProtosteel", NuiCraftItems.getGIIS("nugget_protosteel", 1));
+		OreDictionary.registerOre("ingotProtodermis", EnumGenericItem.PROTO_INGOT.getStack(1));
+	    OreDictionary.registerOre("ingotProtosteel", EnumGenericItem.PROTOSTEEL_INGOT.getStack(1));
+	    OreDictionary.registerOre("nuggetProtodermis", EnumGenericItem.PROTO_NUGGET.getStack(1));
+	    OreDictionary.registerOre("nuggetProtosteel", EnumGenericItem.PROTOSTEEL_NUGGET.getStack(1));
+	    OreDictionary.registerOre("dustProtodermis", EnumGenericItem.PROTO_DUST.getStack(1));
+	    OreDictionary.registerOre("dustProtosteel", EnumGenericItem.PROTOSTEEL_DUST.getStack(1));
 	    
-		OreDictionary.registerOre("gemHeatstone", NuiCraftItems.getGIIS("raw_heatstone", 1));
-	    OreDictionary.registerOre("stickBamboo", NuiCraftItems.getGIIS("bamboo_stick", 1));
+		OreDictionary.registerOre("gemHeatstone", EnumGenericItem.HEATSTONE.getStack(1));
+	    OreDictionary.registerOre("stickBamboo", EnumGenericItem.BAMBOO_STICK.getStack(1));
 	}
 	
 	public void postInit(){
@@ -164,19 +167,7 @@ public class CommonProxyBionicle
 	}
 	
 	@SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event) {
-		ItemGenericMeta.addGenericItem("ingot_protodermis");//0
-		ItemGenericMeta.addGenericItem("ingot_protosteel");//1
-		ItemGenericMeta.addGenericItem("nugget_protodermis");//2
-		ItemGenericMeta.addGenericItem("nugget_protosteel");//3
-		ItemGenericMeta.addGenericItem("raw_protodermis");//4
-		ItemGenericMeta.addGenericItem("raw_heatstone");//5
-		ItemGenericMeta.addGenericItem("bamboo_stick");//6
-		ItemGenericMeta.addGenericItem("kanoka_time", true);//7
-		ItemGenericMeta.addGenericItem("dye_mask", false, true);//8
-		ItemGenericMeta.addGenericItem("kanoka_flying_black", false, true);//9
-		ItemGenericMeta.addGenericItem("kanoka_flying_white", false, true);//10
-		
+    public static void registerItems(RegistryEvent.Register<Item> event) {		
 		event.getRegistry().registerAll(
 			new ItemBlockGeneric(NuiCraftBlocks.fluid_protodermis),
 			new ItemBlockGeneric(NuiCraftBlocks.fluid_protodermis_pure),

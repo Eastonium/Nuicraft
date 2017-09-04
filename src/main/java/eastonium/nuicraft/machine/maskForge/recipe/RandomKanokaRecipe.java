@@ -1,6 +1,7 @@
 package eastonium.nuicraft.machine.maskForge.recipe;
 
 import eastonium.nuicraft.NuiCraftItems;
+import eastonium.nuicraft.item.ItemGenericMeta.EnumGenericItem;
 import eastonium.nuicraft.kanoka.ItemKanokaDisc;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -14,7 +15,7 @@ public class RandomKanokaRecipe implements IMFRecipe {
 		int totalProtoIngots = 0;
 		for(ItemStack stack : inputStacks){
 			if(!stack.isEmpty()){
-				if(ItemStack.areItemsEqual(stack, NuiCraftItems.getGIIS("ingot_protodermis", 1))){
+				if(ItemStack.areItemsEqual(stack, EnumGenericItem.PROTO_INGOT.getStack(1))){
 					totalProtoIngots += stack.getCount();
 				}else return false;
 			}
