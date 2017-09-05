@@ -36,18 +36,8 @@ public class NuiCraftItemMeshDef implements ItemMeshDefinition {
 		if (stack.getItem() == NuiCraftItems.heatstone_lighter) {
 			if (stack.getItemDamage() == NuiCraftItems.heatstone_lighter.getMaxDamage()) {
 				return heatLighterModLocs[0];
-			} else return heatLighterModLocs[1];
-			
-		} else if (stack.getItem() instanceof ItemColoredMask) {
-			ItemColoredMask maskItem = (ItemColoredMask)stack.getItem();
-			if (!maskItem.hasColor(stack) && maskItem.getMetal(stack) != 0) {
-				return new ModelResourceLocation(
-					NuiCraft.MODID + ":mask_" + ItemColoredMask.METAL_COLORS[maskItem.getMetal(stack) - 1], 
-					"name=" + maskItem.getRegistryName().getResourcePath().substring(5));
 			} else {
-				return new ModelResourceLocation(
-					NuiCraft.MODID + ":mask_normal", 
-					"name=" + maskItem.getRegistryName().getResourcePath().substring(5));
+				return heatLighterModLocs[1];
 			}
 			
 		} else if (stack.getItem() == NuiCraftItems.kanoka_disc) {			

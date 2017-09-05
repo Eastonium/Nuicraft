@@ -8,32 +8,38 @@
         "name": {
 			"mata_kakama": {
 				"textures": {
-					"layer0": "nuicraft:items/masks/normal/mata_kakama"
+					"layer0": "nuicraft:items/masks/normal/mata_kakama",
+					"layer1": "nuicraft:items/masks/overlay/mata_kakama_overlay"
 				}
 			},
 			"mata_pakari": {
 				"textures": {
-					"layer0": "nuicraft:items/masks/normal/mata_pakari"
+					"layer0": "nuicraft:items/masks/normal/mata_pakari",
+					"layer1": "nuicraft:items/masks/overlay/mata_pakari_overlay"
 				}
 			},
 			"mata_kaukau": {
 				"textures": {
-					"layer0": "nuicraft:items/masks/normal/mata_kaukau"
+					"layer0": "nuicraft:items/masks/normal/mata_kaukau",
+					"layer1": "nuicraft:items/masks/overlay/mata_kaukau_overlay"
 				}
 			},
 			"mata_miru": {
 				"textures": {
-					"layer0": "nuicraft:items/masks/normal/mata_miru"
+					"layer0": "nuicraft:items/masks/normal/mata_miru",
+					"layer1": "nuicraft:items/masks/overlay/mata_miru_overlay"
 				}
 			},
 			"mata_hau": {
 				"textures": {
-					"layer0": "nuicraft:items/masks/normal/mata_hau"
+					"layer0": "nuicraft:items/masks/normal/mata_hau",
+					"layer1": "nuicraft:items/masks/overlay/mata_hau_overlay"
 				}
 			},
 			"mata_akaku": {
 				"textures": {
-					"layer0": "nuicraft:items/masks/normal/mata_akaku"
+					"layer0": "nuicraft:items/masks/normal/mata_akaku",
+					"layer1": "nuicraft:items/masks/overlay/mata_akaku_overlay"
 				}
 			},
 			"nuva_kakama": {

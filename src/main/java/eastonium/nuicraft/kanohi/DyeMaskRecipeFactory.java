@@ -73,14 +73,14 @@ public class DyeMaskRecipeFactory implements IRecipeFactory {
 	
 						if (itemMask.hasColor(stack) && itemMask.getColor(stack) != ItemColoredMask.DEFAULT_COLOR) {
 							int maskColor = itemMask.getColor(resultStack);
-							int maskR = maskColor >> 16 & 255;
-							int maskG = maskColor >> 8 & 255;
-							int maskB = maskColor & 255;
-							i += Math.max(maskR, Math.max(maskG, maskB));
-							RGB[0] += maskR;
-							RGB[0] += maskR;
-							RGB[0] += maskR;
-							++colorCount;
+	                        float maskR = (float)(maskColor >> 16 & 255) / 255.0F;
+	                        float maskG = (float)(maskColor >> 8 & 255) / 255.0F;
+	                        float maskB = (float)(maskColor & 255) / 255.0F;
+	                        i = (int)((float)i + Math.max(maskR, Math.max(maskG, maskB)) * 255.0F);
+	                        RGB[0] = (int)((float)RGB[0] + maskR * 255.0F);
+	                        RGB[1] = (int)((float)RGB[1] + maskG * 255.0F);
+	                        RGB[2] = (int)((float)RGB[2] + maskB * 255.0F);
+	                        ++colorCount;
 						}
 					}else{
 						if (!DyeUtils.isDye(stack)) return ItemStack.EMPTY;
@@ -134,73 +134,5 @@ public class DyeMaskRecipeFactory implements IRecipeFactory {
 			}
 			return null;
 		}
-		
-	//	public static class DyeIngredient extends Ingredient {
-	//		private NonNullList<ItemStack> dyes;
-	//	    private IntList itemIds = null;
-	//	    private ItemStack[] array = null;
-	//
-	//	    public DyeIngredient() {
-	//	        super(0);
-	//	        for (EnumDyeColor color : EnumDyeColor.values()) {
-	//	        	dyes.addAll(OreDictionary.getOres("dye" + 
-	//	        		color.getUnlocalizedName().substring(0, 1).toUpperCase() + 
-	//	        		color.getUnlocalizedName().substring(1)
-	//	        	));
-	//	        }
-	//	    }
-	//
-	//	    @Override
-	//	    @Nonnull
-	//	    public ItemStack[] getMatchingStacks() {
-	//	        if (array == null || this.array.length != dyes.size()) {
-	//	            NonNullList<ItemStack> lst = NonNullList.create();
-	//	            for (ItemStack itemstack : this.dyes) {
-	//	                if (itemstack.getMetadata() == OreDictionary.WILDCARD_VALUE) {
-	//	                    itemstack.getItem().getSubItems(CreativeTabs.SEARCH, lst);
-	//	                } else lst.add(itemstack);
-	//	            }
-	//	            this.array = lst.toArray(new ItemStack[lst.size()]);
-	//	        }
-	//	        return this.array;
-	//	    }
-	//
-	//
-	//	    @Override
-	//	    @Nonnull
-	//	    @SideOnly(Side.CLIENT)
-	//	    public IntList getValidItemStacksPacked() {
-	//	        if (this.itemIds == null || this.itemIds.size() != dyes.size()) {
-	//	            this.itemIds = new IntArrayList(this.dyes.size());
-	//	            for (ItemStack itemstack : this.dyes) {
-	//	                if (itemstack.getMetadata() == OreDictionary.WILDCARD_VALUE) {
-	//	                    NonNullList<ItemStack> lst = NonNullList.create();
-	//	                    itemstack.getItem().getSubItems(CreativeTabs.SEARCH, lst);
-	//	                    for (ItemStack item : lst)
-	//	                        this.itemIds.add(RecipeItemHelper.pack(item));
-	//	                } else {
-	//	                    this.itemIds.add(RecipeItemHelper.pack(itemstack));
-	//	                }
-	//	            }
-	//	            this.itemIds.sort(IntComparators.NATURAL_COMPARATOR);
-	//	        }
-	//	        return this.itemIds;
-	//	    }
-	//
-	//
-	//	    @Override
-	//	    public boolean apply(@Nullable ItemStack input) {
-	//	        if (input == null) return false;
-	//	        for (ItemStack target : this.dyes) {
-	//	            if (OreDictionary.itemMatches(target, input, false)) return true;
-	//	        }
-	//	        return false;
-	//	    }
-	//
-	//	    @Override
-	//	    protected void invalidate() {
-	//	        this.itemIds = null;
-	//	    }
-	//	}
 	}
 }

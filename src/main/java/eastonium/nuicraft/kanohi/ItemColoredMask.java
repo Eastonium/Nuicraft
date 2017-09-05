@@ -15,7 +15,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemColoredMask extends ItemMask {
-	public static final String[] METAL_COLORS = new String[]{"gold", "silver", "bronze", "copper"};
 	public static final int DEFAULT_COLOR = 11324652;
 	public static final int WHITE_COLOR = 16777215;
 
@@ -29,13 +28,10 @@ public class ItemColoredMask extends ItemMask {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String layer){
-		if(!hasColor(stack)){
-			return NuiCraft.MODID + ":textures/models/masks/" + METAL_COLORS[getMetal(stack)-1] + "/" + getRegistryName().getResourcePath().substring(5) + "_" + METAL_COLORS[getMetal(stack)-1] + ".png";
-		}
 		if(layer == null){
 			return NuiCraft.MODID + ":textures/models/masks/normal/" + getRegistryName().getResourcePath().substring(5) + ".png";
 		}
-		return NuiCraft.MODID + ":textures/models/masks/blank.png";
+		return NuiCraft.MODID + ":textures/models/masks/overlay/" + getRegistryName().getResourcePath().substring(5) + "_overlay.png";
 	}
 
 	@Override
@@ -91,53 +87,12 @@ public class ItemColoredMask extends ItemMask {
 		nbttagcompound1.setInteger("color", color);
 	}
 	
-	public byte getMetal(ItemStack stack){
-		NBTTagCompound nbttagcompound = stack.getTagCompound();
-		if(nbttagcompound != null){
-			NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
-			if(nbttagcompound1 != null && nbttagcompound1.hasKey("metal", 1)){
-				return nbttagcompound1.getByte("metal");
-			}
-		}
-		return (byte)0;
-		//return stack.getTagCompound().getCompoundTag("display").getByte("metal");
-	}
-	
-	public void removeMetal(ItemStack stack){
-		NBTTagCompound nbttagcompound = stack.getTagCompound();
-		if(nbttagcompound != null){
-			NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
-			if(nbttagcompound1.hasKey("metal")){
-				nbttagcompound1.removeTag("metal");
-			}
-		}
-	}
-	
-	public void setMetal(ItemStack stack, byte metal){
-		NBTTagCompound nbttagcompound = stack.getTagCompound();
-		if(nbttagcompound == null){
-			nbttagcompound = new NBTTagCompound();
-			stack.setTagCompound(nbttagcompound);
-		}
-		NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("display");
-		if(!nbttagcompound.hasKey("display", 10)){
-			nbttagcompound.setTag("display", nbttagcompound1);
-		}
-		nbttagcompound1.setByte("metal", metal);
-	}
-	
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items){
 		if (tab != getCreativeTab()) return;
 		
 		ItemStack itemstack = new ItemStack(this);
-		for (int i = 1; i <= METAL_COLORS.length; i++) {
-			this.setMetal(itemstack, (byte)i);
-			items.add(itemstack);
-			itemstack = itemstack.copy();
-		}
-		this.removeMetal(itemstack);
 		this.setColor(itemstack, DEFAULT_COLOR);
 		items.add(itemstack);
 	}

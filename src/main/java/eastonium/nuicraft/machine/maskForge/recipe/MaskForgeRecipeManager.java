@@ -26,7 +26,6 @@ public class MaskForgeRecipeManager {
 	}
 
 	private MaskForgeRecipeManager(){
-		recipeList.add(new MetalizeMaskRecipe());
 		recipeList.add(new RandomKanokaRecipe());
 		recipeList.add(new KanokaTimeRecipe());
 		/*

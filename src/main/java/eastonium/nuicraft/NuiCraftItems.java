@@ -80,12 +80,12 @@ public class NuiCraftItems {
 				
 		ItemGoldMataMask.setTextureLocations();
 		
-		setColoredMaskTextureLocation(mask_mata_kakama);
-		setColoredMaskTextureLocation(mask_mata_pakari);
-		setColoredMaskTextureLocation(mask_mata_kaukau);
-		setColoredMaskTextureLocation(mask_mata_miru);
-		setColoredMaskTextureLocation(mask_mata_hau);
-		setColoredMaskTextureLocation(mask_mata_akaku);
+		setMaskTextureLocation(mask_mata_kakama);
+		setMaskTextureLocation(mask_mata_pakari);
+		setMaskTextureLocation(mask_mata_kaukau);
+		setMaskTextureLocation(mask_mata_miru);
+		setMaskTextureLocation(mask_mata_hau);
+		setMaskTextureLocation(mask_mata_akaku);
 		
 		setMaskTextureLocation(mask_nuva_kakama);
 		setMaskTextureLocation(mask_nuva_pakari);
@@ -100,20 +100,6 @@ public class NuiCraftItems {
 	
 	private static void setTextureLocation(Item item){
 		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
-	}
-	
-	private static void setColoredMaskTextureLocation(ItemColoredMask item){
-		ModelLoader.setCustomMeshDefinition(item, NuiCraft.itemMeshDef);
-		ModelResourceLocation[] models = new ModelResourceLocation[ItemColoredMask.METAL_COLORS.length + 1];
-		ItemStack itemstack = new ItemStack(item);
-		item.setColor(itemstack, 0);
-		models[0] = NuiCraft.itemMeshDef.getModelLocation(itemstack);
-		item.removeColor(itemstack);
-		for (byte i = 1; i <= ItemColoredMask.METAL_COLORS.length; i++) {
-			item.setMetal(itemstack, i);
-			models[i] = NuiCraft.itemMeshDef.getModelLocation(itemstack);
-		}
-		ModelBakery.registerItemVariants(item, models);
 	}
 	
 	private static void setMaskTextureLocation(ItemMask item) {
