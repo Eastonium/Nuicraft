@@ -22,6 +22,6 @@ public class RenderKanoka<T extends EntityKanoka> extends RenderSnowball<T> {
 
 	@Override
 	public ItemStack getStackToRender(T entityIn) {
-        return entityIn.getIsBamboo() ? EnumGenericItem.KANOKA_FLYING_BLACK.getStack(1) : EnumGenericItem.KANOKA_FLIYNG_WHITE.getStack(1);
+        return entityIn.isBamboo() ? EnumGenericItem.KANOKA_FLYING_BLACK.getStack(1) : EnumGenericItem.KANOKA_FLIYNG_WHITE.getStack(1);
     }
 }
