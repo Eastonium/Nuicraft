@@ -46,12 +46,12 @@ public class NuiCraftItems {
 	public static final ItemColoredMask mask_mata_hau = null;
 	public static final ItemColoredMask mask_mata_akaku = null;
 	
-	public static final ItemMask mask_nuva_kakama = null;
-	public static final ItemMask mask_nuva_pakari = null;
-	public static final ItemMask mask_nuva_kaukau = null;
-	public static final ItemMask mask_nuva_miru = null;
-	public static final ItemMask mask_nuva_hau = null;
-	public static final ItemMask mask_nuva_akaku = null;
+	public static final ItemColoredMask mask_nuva_kakama = null;
+	public static final ItemColoredMask mask_nuva_pakari = null;
+	public static final ItemColoredMask mask_nuva_kaukau = null;
+	public static final ItemColoredMask mask_nuva_miru = null;
+	public static final ItemColoredMask mask_nuva_hau = null;
+	public static final ItemColoredMask mask_nuva_akaku = null;
 
 	public static final ItemMaskMeta mask_ignika = null;
 	public static final ItemMaskMeta mask_vahi = null;

@@ -243,12 +243,12 @@ public class CommonProxyBionicle
 			new ItemColoredMask("mask_mata_akaku"),
 			
 			//Nuva Masks
-			new ItemMask("mask_nuva_kakama"),
-			new ItemMask("mask_nuva_pakari"),
-			new ItemMask("mask_nuva_kaukau"),
-			new ItemMask("mask_nuva_miru"),
-			new ItemMask("mask_nuva_hau"),
-			new ItemMask("mask_nuva_akaku"),
+			new ItemColoredMask("mask_nuva_kakama"),
+			new ItemColoredMask("mask_nuva_pakari"),
+			new ItemColoredMask("mask_nuva_kaukau"),
+			new ItemColoredMask("mask_nuva_miru"),
+			new ItemColoredMask("mask_nuva_hau"),
+			new ItemColoredMask("mask_nuva_akaku"),
 			
 			//Legendary Masks    
 			new ItemMaskMeta("mask_ignika", 3, true),

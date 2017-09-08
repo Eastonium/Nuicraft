@@ -2,12 +2,12 @@ package eastonium.nuicraft.kanohi;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 import eastonium.nuicraft.NuiCraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
@@ -15,15 +15,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemColoredMask extends ItemMask {
+	public static List<ItemColoredMask> coloredMaskItems = Lists.<ItemColoredMask>newArrayList();
 	public static final int DEFAULT_COLOR = 11324652;
 	public static final int WHITE_COLOR = 16777215;
 
 	public ItemColoredMask(String name, boolean isShiny){
 		super(name, isShiny);
+		coloredMaskItems.add(this);
 	}
 	
 	public ItemColoredMask(String name) {
-		super(name);
+		this(name, false);
 	}
 
 	@Override

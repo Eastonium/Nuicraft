@@ -44,32 +44,38 @@
 			},
 			"nuva_kakama": {
 				"textures": {
-					"layer0": "nuicraft:items/masks/normal/nuva_kakama"
+					"layer0": "nuicraft:items/masks/normal/nuva_kakama",
+					"layer1": "nuicraft:items/masks/overlay/nuva_kakama_overlay"
 				}
 			},
 			"nuva_pakari": {
 				"textures": {
-					"layer0": "nuicraft:items/masks/normal/nuva_pakari"
+					"layer0": "nuicraft:items/masks/normal/nuva_pakari",
+					"layer1": "nuicraft:items/masks/overlay/nuva_pakari_overlay"
 				}
 			},
 			"nuva_kaukau": {
 				"textures": {
-					"layer0": "nuicraft:items/masks/normal/nuva_kaukau"
+					"layer0": "nuicraft:items/masks/normal/nuva_kaukau",
+					"layer1": "nuicraft:items/masks/overlay/nuva_kaukau_overlay"
 				}
 			},
 			"nuva_miru": {
 				"textures": {
-					"layer0": "nuicraft:items/masks/normal/nuva_miru"
+					"layer0": "nuicraft:items/masks/normal/nuva_miru",
+					"layer1": "nuicraft:items/masks/overlay/nuva_miru_overlay"
 				}
 			},
 			"nuva_hau": {
 				"textures": {
-					"layer0": "nuicraft:items/masks/normal/nuva_hau"
+					"layer0": "nuicraft:items/masks/normal/nuva_hau",
+					"layer1": "nuicraft:items/masks/overlay/nuva_hau_overlay"
 				}
 			},
 			"nuva_akaku": {
 				"textures": {
-					"layer0": "nuicraft:items/masks/normal/nuva_akaku"
+					"layer0": "nuicraft:items/masks/normal/nuva_akaku",
+					"layer1": "nuicraft:items/masks/overlay/nuva_akaku_overlay"
 				}
 			},
 			"vahi_0": {

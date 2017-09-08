@@ -32,6 +32,9 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -97,8 +100,7 @@ public class ClientProxyBionicle extends CommonProxyBionicle
             		return -1;
             	} else return ((ItemColoredMask)stack.getItem()).getColor(stack);
             }
-        }, NuiCraftItems.mask_mata_kakama, NuiCraftItems.mask_mata_pakari, NuiCraftItems.mask_mata_kaukau, 
-        		NuiCraftItems.mask_mata_miru, NuiCraftItems.mask_mata_hau, NuiCraftItems.mask_mata_akaku);
+        }, ItemColoredMask.coloredMaskItems.toArray(new Item[ItemColoredMask.coloredMaskItems.size()]));
 	}
 	
 	public void postInit(){
