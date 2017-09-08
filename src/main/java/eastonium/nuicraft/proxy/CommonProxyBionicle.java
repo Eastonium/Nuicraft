@@ -263,20 +263,6 @@ public class CommonProxyBionicle
 		FluidRegistry.addBucketForFluid(NuiCraftFluids.protodermis_pure_molten);
 	}
 
-
-	private void registerFluidModel(IFluidBlock fluidBlock) {
-		Item item = Item.REGISTRY.getObject(((Block)fluidBlock).getRegistryName());
-		ModelBakery.registerItemVariants(item);
-		ModelResourceLocation modelResourceLocation = new ModelResourceLocation(NuiCraft.MODID + ":fluid", fluidBlock.getFluid().getName());
-		ModelLoader.setCustomMeshDefinition(item, MeshDefinitionFix.create(stack -> modelResourceLocation));
-		ModelLoader.setCustomStateMapper((Block) fluidBlock, new StateMapperBase() {
-			@Override
-			protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-				return modelResourceLocation;
-			}
-		});
-	}
-
 	public ModelBiped getArmorModel(int id){
 		return null;
 	}

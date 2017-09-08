@@ -49,36 +49,4 @@ public class NuiCraftFluids {
 			}
 		});
 	}
-	
-	
-	
-//	public static <T extends Block & IFluidBlock> Fluid createFluid(String name, Consumer<Fluid> fluidPropertyApplier, Function<Fluid, T> blockFactory) {
-//		ResourceLocation still = new ResourceLocation(NuiCraft.MODID, name + "_still");
-//		ResourceLocation flowing = new ResourceLocation(NuiCraft.MODID, name + "_flow");
-//
-//		Fluid fluid = new Fluid(name, still, flowing);
-//		boolean useOwnFluid = FluidRegistry.registerFluid(fluid);
-//		FluidRegistry.addBucketForFluid(fluid);
-//
-//		if(useOwnFluid){
-//			fluidPropertyApplier.accept(fluid);
-//			registerFluidBlock(blockFactory.apply(fluid));
-//		}else{
-//			fluid = FluidRegistry.getFluid(name);
-//		}
-//		fluids.add(fluid);
-//		return fluid;
-//	}
-//
-//	private static <T extends Block & IFluidBlock> T registerFluidBlock(T block) {
-//		String fluidName = "fluid." + block.getFluid().getName();
-//		block.setRegistryName(fluidName);
-//		block.setUnlocalizedName(NuiCraft.MODID + "." + fluidName);
-////		CommonProxyBionicle.registerBlock(block); TODO 
-////		GameRegistry.register(block);
-////		CommonProxyBionicle.registerItem(new ItemBlock(block).setRegistryName(block.getRegistryName()));
-////		GameRegistry.register(new ItemBlock(block), block.getRegistryName());
-//		modFluidBlocks.add(block);
-//		return block;
-//	}
 }
