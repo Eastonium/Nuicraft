@@ -4,13 +4,14 @@ import org.apache.logging.log4j.Logger;
 
 import eastonium.nuicraft.item.ItemGenericMeta.EnumGenericItem;
 import eastonium.nuicraft.kanohi.ItemColoredMask;
-import eastonium.nuicraft.machine.maskForge.recipe.MaskForgeRecipeManager;
 import eastonium.nuicraft.proxy.CommonProxyBionicle;
+import eastonium.nuicraft.util.NuiCraftEventHooks;
 import eastonium.nuicraft.util.NuiCraftItemMeshDef;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.Fluid;
@@ -40,6 +41,8 @@ public class NuiCraft {
 
 	public static ToolMaterial PROTODERMIS = EnumHelper.addToolMaterial("Protodermis", 2, 500, 5.0F, 2.0F, 7);
 	public static ToolMaterial PROTOSTEEL = EnumHelper.addToolMaterial("Protosteel", 7, 4620, 11.0F, 5.0F, 15);
+	
+	public static final DamageSource SHATTER = (new DamageSource("shatter")).setDamageBypassesArmor();
 //Fluids
 	public static Fluid protodermis;
 
@@ -66,6 +69,7 @@ public class NuiCraft {
 
 		proxy.preInit();
 		MinecraftForge.EVENT_BUS.register(new ServerTickHandler());
+		MinecraftForge.EVENT_BUS.register(new NuiCraftEventHooks());
 		GameRegistry.registerWorldGenerator(new NuiCraftWorldGenerator(), 2);
 	}
 	

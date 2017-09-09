@@ -2,10 +2,8 @@ package eastonium.nuicraft.kanoka;
 
 import java.util.Set;
 
-import org.apache.logging.log4j.Level;
-
-import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.NuiCraftItems;
+import eastonium.nuicraft.kanoka.freezeEntity.EntityFreezeIce;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -183,23 +181,32 @@ public class EntityKanoka extends EntityThrowable {
 		return true;
 	}
 
-	private void onImpactFreeze(RayTraceResult result){
-		if (result.entityHit != null && result.entityHit instanceof EntityLivingBase) {
-			EntityLivingBase entityHit = (EntityLivingBase)result.entityHit;
-			boolean isPlayer = entityHit instanceof EntityPlayerMP;
-			
-			entityHit.extinguish();
-			entityHit.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, isPlayer ? 150 : 500, 3));
-			entityHit.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, isPlayer ? 150 : 500, 3));
-
-			if (entityHit instanceof EntityBlaze){
-				entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), 10F);
+	private boolean onImpactFreeze(RayTraceResult result){
+		if (result.entityHit != null && !(result.entityHit instanceof EntityFreezeIce)) {
+			if (result.entityHit.isRiding() && result.entityHit.getRidingEntity() instanceof EntityFreezeIce) {
+				return true; //TODO reset freeze timer
 			}
-			for (int i = 0; i < 24; ++i){
-				world.spawnParticle(EnumParticleTypes.SNOWBALL, posX, posY, posZ, 0.0D, 0.0D, 0.0D);
-				world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, posX, posY, posZ, 0.0D, 0.0D, 0.0D, new int[]{Block.getStateId(Blocks.PACKED_ICE.getDefaultState())});
-			}
+			EntityFreezeIce ice = new EntityFreezeIce(world, result.entityHit);
+			if (ice.getBaseHeight() == 0.0F) return true;
+			return !world.spawnEntity(ice);
 		}
+		return true;
+//		if (result.entityHit != null && result.entityHit instanceof EntityLivingBase) {
+//			EntityLivingBase entityHit = (EntityLivingBase)result.entityHit;
+//			boolean isPlayer = entityHit instanceof EntityPlayerMP;
+//			
+//			entityHit.extinguish();
+//			entityHit.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, isPlayer ? 150 : 500, 3));
+//			entityHit.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, isPlayer ? 150 : 500, 3));
+//
+//			if (entityHit instanceof EntityBlaze){
+//				entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), 10F);
+//			}
+//			for (int i = 0; i < 24; ++i){
+//				world.spawnParticle(EnumParticleTypes.SNOWBALL, posX, posY, posZ, 0.0D, 0.0D, 0.0D);
+//				world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, posX, posY, posZ, 0.0D, 0.0D, 0.0D, new int[]{Block.getStateId(Blocks.PACKED_ICE.getDefaultState())});
+//			}
+//		}
 	}
 
 	private boolean onImpactRegeneration(RayTraceResult result){

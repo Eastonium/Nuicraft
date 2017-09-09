@@ -11,6 +11,8 @@ import eastonium.nuicraft.kanohi.ModelLongMask;
 import eastonium.nuicraft.kanohi.ModelMaskIgnika;
 import eastonium.nuicraft.kanoka.EntityKanoka;
 import eastonium.nuicraft.kanoka.RenderKanoka;
+import eastonium.nuicraft.kanoka.freezeEntity.EntityFreezeIce;
+import eastonium.nuicraft.kanoka.freezeEntity.RenderFreezeIce;
 import eastonium.nuicraft.mobs.fikou.EntityFikou;
 import eastonium.nuicraft.mobs.fikou.ModelFikou;
 import eastonium.nuicraft.mobs.fikou.RenderFikou;
@@ -33,7 +35,6 @@ import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -62,6 +63,11 @@ public class ClientProxyBionicle extends CommonProxyBionicle
 		RenderingRegistry.registerEntityRenderingHandler(EntityKanoka.class, new IRenderFactory<EntityKanoka>(){
 			public Render<? super EntityKanoka> createRenderFor(RenderManager manager) {
 			return new RenderKanoka(manager, Minecraft.getMinecraft().getRenderItem());
+		}});
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityFreezeIce.class, new IRenderFactory<EntityFreezeIce>(){
+			public Render<? super EntityFreezeIce> createRenderFor(RenderManager manager) {
+			return new RenderFreezeIce(manager, Blocks.ICE, Minecraft.getMinecraft().getRenderItem());
 		}});
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityMahi.class, new IRenderFactory<EntityMahi>(){

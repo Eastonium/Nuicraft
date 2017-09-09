@@ -4,7 +4,6 @@ import eastonium.nuicraft.GuiHandler;
 import eastonium.nuicraft.NuiCraft;
 import eastonium.nuicraft.NuiCraftBlocks;
 import eastonium.nuicraft.NuiCraftFluids;
-import eastonium.nuicraft.NuiCraftItems;
 import eastonium.nuicraft.block.BlockBamboo;
 import eastonium.nuicraft.block.BlockBionicleStone;
 import eastonium.nuicraft.block.BlockKoro;
@@ -28,12 +27,12 @@ import eastonium.nuicraft.item.ItemHeatstoneLighter;
 import eastonium.nuicraft.item.ItemSluice;
 import eastonium.nuicraft.kanohi.ItemColoredMask;
 import eastonium.nuicraft.kanohi.ItemGoldMataMask;
-import eastonium.nuicraft.kanohi.ItemMask;
 import eastonium.nuicraft.kanohi.ItemMaskMeta;
 import eastonium.nuicraft.kanoka.EntityKanoka;
 import eastonium.nuicraft.kanoka.ItemBambooDisc;
 import eastonium.nuicraft.kanoka.ItemDiscLauncher;
 import eastonium.nuicraft.kanoka.ItemKanokaDisc;
+import eastonium.nuicraft.kanoka.freezeEntity.EntityFreezeIce;
 import eastonium.nuicraft.machine.maskForge.BlockMaskForge;
 import eastonium.nuicraft.machine.maskForge.GuiHandlerMaskForge;
 import eastonium.nuicraft.machine.maskForge.TileInventoryMaskForge;
@@ -46,26 +45,16 @@ import eastonium.nuicraft.mobs.hoi.EntityHoi;
 import eastonium.nuicraft.mobs.kofo_jaga.EntityKofoJaga;
 import eastonium.nuicraft.mobs.mahi.EntityMahi;
 import eastonium.nuicraft.mobs.nui_jaga.EntityNuiJaga;
-import eastonium.nuicraft.util.MeshDefinitionFix;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -88,6 +77,7 @@ public class CommonProxyBionicle
 		//Technical entities ID 0-100
 
 	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "kanoka_disk"), EntityKanoka.class, "nuicraft.disc", 1, NuiCraft.modInstance, 64, 10, true);
+	    EntityRegistry.registerModEntity(new ResourceLocation(NuiCraft.MODID, "kanoka_ice"), EntityFreezeIce.class, "nuicraft.disc_ice", 2, NuiCraft.modInstance, 64, 1, true);
 	    
 	    /*EntityRegistry.registerModEntity(EntityKolhiiBall.class, "Kolhii_Ball", 10, this, 64, 10, true),
 	    new ItemKolhiiBall().setName("KolhiiBall"),
