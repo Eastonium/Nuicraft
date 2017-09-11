@@ -141,8 +141,10 @@ public class TileInventoryPurifier extends TileEntity implements ITickable, IInv
 				needsUpdate = true;
 			}
 			if (!pureItemstacks.get(FILTER_SLOT_NUMBER).isEmpty() && !isTankEmpty(rawTank) && !isTankFull(pureTank)) {
-				rawTank.drainInternal(2, true);
-				pureTank.fillInternal(new FluidStack(NuiCraftFluids.protodermis_pure, 2), true);
+				int rate = (int)Math.ceil((double)rawTank.getFluidAmount() / (double)rawTank.getCapacity() * 16.0D);
+				rate -= (int)Math.floor((double)pureTank.getFluidAmount() / (double)pureTank.getCapacity() * 4.0D);
+				rawTank.drainInternal(rate, true);
+				pureTank.fillInternal(new FluidStack(NuiCraftFluids.protodermis_pure, rate), true);
 				needsUpdate = true;
 			}
 		}
