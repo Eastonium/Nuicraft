@@ -51,4 +51,9 @@ public class KanokaTimeRecipe implements IMFRecipe {
 		}
 		return returnStacks;
 	}
+	
+	@Override
+	public int getRecipeDuration() {
+		return 4000;
+	}
 }

@@ -47,10 +47,9 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 
 	private NonNullList<ItemStack> forgeItemstacks = NonNullList.<ItemStack>withSize(TOTAL_SLOTS_COUNT, ItemStack.EMPTY);
     protected FluidTank tank = new FluidTank(BUCKET_VOLUME * 4);
-    private IMFRecipe currentRecipe = null;
+    private IMFRecipe currentRecipe = null; //used server-side only
+    private int recipeDuration = 0; //used for client-side stuff
 	public int cookTime = 0;
-
-	private static final short COOK_TIME_FOR_COMPLETION = 200;
 
 	public double fractionOfFuelRemaining(){
 		if(isTankEmpty()) return 0;
@@ -59,7 +58,7 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 	}
 
 	public double fractionLeftOfCompletion(){
-		double fraction = cookTime / (double)COOK_TIME_FOR_COMPLETION;
+		double fraction = cookTime / (double)recipeDuration;
 		return MathHelper.clamp(fraction, 0.0, 1.0);
 	}
 	
@@ -113,10 +112,11 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 			if(!isTankEmpty() && currentRecipe != null){
 				drain(2, true);
 				++cookTime;
-				if(cookTime >= COOK_TIME_FOR_COMPLETION){
+				if(cookTime >= currentRecipe.getRecipeDuration()){
+					cookTime = currentRecipe.getRecipeDuration(); //prevent over-cooking
 					if (smeltItem()) {
 						updateCurrentRecipe();
-						cookTime = 0;
+						cookTime -= currentRecipe.getRecipeDuration();
 					}
 				}
 				needsUpdate = true;
@@ -137,6 +137,7 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 	public void updateCurrentRecipe() {
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) return;
 		currentRecipe = MaskForgeRecipeManager.getInstance().getMatchingRecipe(getInputItemStacks());
+		recipeDuration = currentRecipe == null ? 0 : currentRecipe.getRecipeDuration();
 	}
 
 	private boolean hasOutputRoom(){		
@@ -149,8 +150,7 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 	}
 
 	public boolean smeltItem() {
-		// this function does not use setInventorySlotContents to not update recipe
-		if (!currentRecipe.matches(getInputItemStacks())) { // sanity check, and updates output/returnstacks since it is shared across all mask forges
+		if (!currentRecipe.matches(getInputItemStacks())) { // sanity check and updates output/returnstacks since recipes are shared across all mask forges
 			NuiCraft.logger.log(Level.ERROR, "The maskforge has somehow managed to not update its recipe. Please contact the author of NuiCraft.");
 			return false;
 		}
@@ -270,29 +270,33 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 	}	
 	
 	private static final byte COOK_FIELD_ID = 0;
-	private static final byte FUEL_AMOUNT_FIELD_ID = 1;
-	private static final byte NUMBER_OF_FIELDS = 2;
+	private static final byte RECIPE_DURATION_FIELD_ID = 1;
+	private static final byte FUEL_AMOUNT_FIELD_ID = 2;
+	private static final byte NUMBER_OF_FIELDS = 3;
 
 	@Override
 	public int getField(int id){
-		if(id == COOK_FIELD_ID) return cookTime;
-		if(id == FUEL_AMOUNT_FIELD_ID) return tank.getFluidAmount();
+		if (id == COOK_FIELD_ID) return cookTime;
+		if (id == RECIPE_DURATION_FIELD_ID) return recipeDuration;
+		if (id == FUEL_AMOUNT_FIELD_ID) return tank.getFluidAmount();
 		System.err.println("Invalid field ID in TileInventoryMaskForge.getField:" + id);
 		return 0;
 	}
 
 	@Override
 	public void setField(int id, int value){
-		if(id == COOK_FIELD_ID){
+		if (id == COOK_FIELD_ID) {
 			cookTime = (short)value;
-		}else if(id == FUEL_AMOUNT_FIELD_ID){
+		} else if (id == RECIPE_DURATION_FIELD_ID) {
+			recipeDuration = value;
+		} else if (id == FUEL_AMOUNT_FIELD_ID) {
 			FluidStack flStack = new FluidStack(FluidRegistry.LAVA, Math.abs(tank.getFluidAmount() - value));
-			if(value > tank.getFluidAmount()){
+			if (value > tank.getFluidAmount()) {
 				fill(flStack, true);
-			}else if(value < tank.getFluidAmount()){
+			} else if (value < tank.getFluidAmount()) {
 				drain(flStack, true);
 			}
-		}else{
+		} else {
 			System.err.println("Invalid field ID in TileInventoryMaskForge.setField:" + id);
 		}
 	}
@@ -354,7 +358,6 @@ public class TileInventoryMaskForge extends TileEntity implements ITickable, ISi
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		readFromNBT(pkt.getNbtCompound());
 	}
-	
 	
 	@Override
 	public void clear() {

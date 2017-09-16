@@ -16,4 +16,8 @@ public interface IMFRecipe {
 	default NonNullList<CountedIngredient> getIngredients() {
         return NonNullList.<CountedIngredient>create();
     }
+	
+	default int getRecipeDuration() {
+		return 200;
+	}
 }

@@ -63,4 +63,9 @@ public class MaskRecipe implements IMFRecipe {
 		}
 		return returnStacks;
 	}
+	
+	@Override
+	public int getRecipeDuration() {
+		return 1000;
+	}
 }

@@ -13,13 +13,15 @@ import net.minecraft.util.NonNullList;
 
 public class MaskForgeRecipe implements IMFRecipe {
 
+	private final int duration;
 	@Nonnull
 	protected ItemStack output = ItemStack.EMPTY;
 	protected NonNullList<CountedIngredient> reqInputs = NonNullList.create();
 	private NonNullList<ItemStack> returnStacks = NonNullList.create();
 
 
-	public MaskForgeRecipe(ItemStack output, CountedIngredient... inputs) {
+	public MaskForgeRecipe(int duration, ItemStack output, CountedIngredient... inputs) {
+		this.duration = duration;
 		this.output = output;
 		for (CountedIngredient input : inputs) this.reqInputs.add(input);
 	}
@@ -57,67 +59,6 @@ public class MaskForgeRecipe implements IMFRecipe {
 		return copy;
 	}
 
-//	@Override
-//	public boolean matches(NonNullList<ItemStack> inputStacks) {
-//		Object[] reqInputs = new Object[requiredInput.length];
-//		for (int i = 0; i < requiredInput.length; i++) {
-//			if (requiredInput[i] instanceof ItemStack) {
-//				reqInputs[i] = ((ItemStack)requiredInput[i]).copy();
-//			} else {
-//				reqInputs[i] = requiredInput[i];
-//			}
-//		}
-//		returnStacks = inputStacks;
-//		for (int i = 0; i < returnStacks.size(); i++) {
-//			if (returnStacks.get(i).isEmpty()) continue;
-//			boolean flag = false;
-//			inputLoop:
-//			for (int j = 0; j < reqInputs.length; j++) {
-//				if (reqInputs[j] instanceof ItemStack) {
-//					if (ItemStack.areItemsEqual(returnStacks.get(i), ((ItemStack)reqInputs[j]) )) {
-//						flag = true;
-//						int commonSize = Math.min(returnStacks.get(i).getCount(), ((ItemStack)reqInputs[j]).getCount());
-//						returnStacks.get(i).shrink(commonSize);
-//						((ItemStack)reqInputs[j]).shrink(commonSize);
-//						if (returnStacks.get(i).isEmpty()) {
-//							returnStacks.set(i, ItemStack.EMPTY);
-//							break inputLoop;
-//						}
-//					}
-//				} else { // Ore dict
-//					String reqInputODName = ((String)reqInputs[j]).substring(2);
-//					int[] oreIDs = OreDictionary.getOreIDs(returnStacks.get(i));
-//					for (int oreID : oreIDs) {
-//						if (OreDictionary.getOreName(oreID).equals(reqInputODName)) {
-//							flag = true;
-//							int reqInputStackSize = Integer.parseInt(((String)reqInputs[j]).substring(0, 2));
-//							if (reqInputStackSize > 0) {
-//								int commonSize = Math.min(returnStacks.get(i).getCount(), reqInputStackSize);
-//								returnStacks.get(i).shrink(commonSize);
-//								reqInputStackSize -= commonSize;
-//								reqInputs[j] = String.format("%02d", reqInputStackSize) + reqInputODName;
-//								if (returnStacks.get(i).isEmpty()) {
-//									returnStacks.set(i, ItemStack.EMPTY);
-//									break inputLoop;
-//								}
-//							}
-//						}
-//					}
-//				}
-//			}
-//			if (!flag) return false;
-//			
-//		}
-//		for (int i = 0; i < reqInputs.length; i++) {
-//			if (reqInputs[i] instanceof ItemStack) {
-//				if (((ItemStack)reqInputs[i]).getCount() > 0) return false;
-//			} else if (!((String)reqInputs[i]).startsWith("00")) {
-//				return false;
-//			}
-//		}
-//		return true;
-//	}
-
 	@Override
 	public ItemStack getOutput() {
 		return this.output.copy();
@@ -134,5 +75,10 @@ public class MaskForgeRecipe implements IMFRecipe {
 	@Override
 	public NonNullList<CountedIngredient> getIngredients() { 
 		return reqInputs;
+	}
+	
+	@Override
+	public int getRecipeDuration() {
+		return duration;
 	}
 }
