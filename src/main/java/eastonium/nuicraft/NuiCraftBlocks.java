@@ -23,7 +23,7 @@ public class NuiCraftBlocks {
 	public static final Block fluid_protodermis_pure_molten = null;
 	
 	public static final Block mask_forge = null;
-	public static final Block purifier = null;
+	public static final Block reservior = null;
 	
 	public static final Block koro_block = null;
 	
@@ -45,8 +45,8 @@ public class NuiCraftBlocks {
 	@SideOnly(Side.CLIENT)
     public static void initModels() {
 		setTextureLocation(mask_forge);		
-		//ModelLoader.setCustomModelResourceLocation(Item.REGISTRY.getObject(purifier.getRegistryName()), 0, new ModelResourceLocation(purifier.getRegistryName(), "normal"));
-
+		setTextureLocation(reservior);
+		
 		setTextureLocation(nuva_cube);
 		//setTextureLocation(crystalized_protodermis);
 		setTextureLocation(matanui_stone);

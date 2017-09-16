@@ -36,10 +36,9 @@ import eastonium.nuicraft.kanoka.freezeEntity.EntityFreezeIce;
 import eastonium.nuicraft.machine.maskForge.BlockMaskForge;
 import eastonium.nuicraft.machine.maskForge.GuiHandlerMaskForge;
 import eastonium.nuicraft.machine.maskForge.TileInventoryMaskForge;
-import eastonium.nuicraft.machine.purifier.BlockPurifier;
-import eastonium.nuicraft.machine.purifier.GuiHandlerPurifier;
-import eastonium.nuicraft.machine.purifier.ItemPurifier;
-import eastonium.nuicraft.machine.purifier.TileInventoryPurifier;
+import eastonium.nuicraft.machine.reservior.BlockReservior;
+import eastonium.nuicraft.machine.reservior.GuiHandlerReservior;
+import eastonium.nuicraft.machine.reservior.TileInventoryReservior;
 import eastonium.nuicraft.mobs.fikou.EntityFikou;
 import eastonium.nuicraft.mobs.hoi.EntityHoi;
 import eastonium.nuicraft.mobs.kofo_jaga.EntityKofoJaga;
@@ -71,8 +70,8 @@ public class CommonProxyBionicle
 		GameRegistry.registerTileEntity(TileInventoryMaskForge.class, "tileEntityMaskForge");
 		GuiHandler.getInstance().registerGuiHandler(new GuiHandlerMaskForge(), GuiHandlerMaskForge.getGuiID());
 		
-		GameRegistry.registerTileEntity(TileInventoryPurifier.class, "tileEntityPurifier");
-		GuiHandler.getInstance().registerGuiHandler(new GuiHandlerPurifier(), GuiHandlerPurifier.getGuiID());
+		GameRegistry.registerTileEntity(TileInventoryReservior.class, "tileEntityReservior");
+		GuiHandler.getInstance().registerGuiHandler(new GuiHandlerReservior(), GuiHandlerReservior.getGuiID());
 
 		//Technical entities ID 0-100
 
@@ -154,7 +153,7 @@ public class CommonProxyBionicle
 			new BlockNuiCraftFluid(NuiCraftFluids.protodermis_pure_molten, Material.LAVA),
 			
 			new BlockMaskForge().setHardness(3.5F),
-			new BlockPurifier().setHardness(3.5F),
+			new BlockReservior().setHardness(3.5F),
 
 			new BlockKoro(),
 			
@@ -184,8 +183,7 @@ public class CommonProxyBionicle
 			new ItemBlockGeneric(NuiCraftBlocks.fluid_protodermis_pure_molten),
 				
 			new ItemBlockGeneric(NuiCraftBlocks.mask_forge),
-			new ItemPurifier(),
-			//new ItemBlockGeneric(NuiCraftBlocks.purifier),
+			new ItemBlockGeneric(NuiCraftBlocks.reservior),
 			
 			new ItemBlockKoro(),
 			

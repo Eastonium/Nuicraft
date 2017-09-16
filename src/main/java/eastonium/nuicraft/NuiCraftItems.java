@@ -18,8 +18,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @GameRegistry.ObjectHolder(NuiCraft.MODID)
 public class NuiCraftItems {
-	public static final Item purifier_item = null;
-	
 	public static final Item generic_item = null;	
 	
 	//public static final Item kolhii_ball = null;	
@@ -58,8 +56,6 @@ public class NuiCraftItems {
 	
 	@SideOnly(Side.CLIENT)
     public static void initModels() {			
-		ModelLoader.setCustomModelResourceLocation(purifier_item, 0, new ModelResourceLocation(NuiCraftBlocks.purifier.getRegistryName(), "inventory"));
-
 		ItemBlockKoro.setTextureLocations();
 		ItemGenericMeta.setTextureLocations();
 		

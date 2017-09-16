@@ -1,0 +1,8 @@
+# Blender MTL File: 'Resivior.blend'
+# Material Count: 1
+
+newmtl ReserviorTexture
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd nuicraft:blocks/reservior

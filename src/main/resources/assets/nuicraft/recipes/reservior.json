@@ -1,22 +1,17 @@
 {
   "type": "forge:ore_shaped",
   "result": {
-    "item": "nuicraft:purifier_item"
+    "item": "nuicraft:reservior"
   },
   "pattern": [
-    "BIC",
+    "I I",
+	"I I",
     "III"
   ],
   "key": {
     "I": {
       "type": "forge:ore_dict",
       "ore": "ingotProtodermis"
-    },
-    "B": {
-      "item": "minecraft:bucket"
-    },
-    "C": {
-      "item": "minecraft:cauldron"
     }
   }
 }

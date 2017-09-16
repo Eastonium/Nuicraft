@@ -18,8 +18,7 @@ fluid.nuicraft.protosteel_molten=Molten Protosteel
 fluid.nuicraft.antidermis=Antidermis
 
 tile.nuicraft.mask_forge.name=Mask Forge
-tile.nuicraft.purifier.name=Purifier
-item.nuicraft.purifier_item.name=Purifier
+tile.nuicraft.reservior.name=Reservior
 
 entity.nuicraft.disc.name=Kanoka Disc
 entity.nuicraft.mahi.name=Mahi
